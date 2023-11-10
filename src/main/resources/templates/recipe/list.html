@@ -3,8 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .modal-content {
+            text-align: center; /* 텍스트를 가운데 정렬합니다. */
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 라디오 버튼을 가운데 정렬합니다. */
+        }
+    </style>
+
 </head>
 <body>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="container mt-3">
+            <div class="text-lg-end">
+                <!-- Button to Open the Modal -->
+                <button type="button" class="btn text-white mb-3" style="background-color: #E67E22" data-bs-toggle="modal" data-bs-target="#myModal">
+                    자세히
+                </button>
+            </div>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal body -->
+                            <div class="modal-body">
+
+                                <!-- 조리 시간 -->
+                                <h4>조리 시간</h4>
+                                <div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cooktime1" name="cooktime" value="ct1" checked>간단(10분 이내)
+                                    <label class="form-check-label" for="cooktime1"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cooktime2" name="cooktime" value="ct2">정성(20분 이내)
+                                    <label class="form-check-label" for="cooktime2"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cooktime3" name="cooktime" value="ct3">고수(30분 이상)
+                                    <label class="form-check-label" for="cooktime3"></label>
+                                </div>
+                                </div>
+                                <!-- 조리 시간 끝-->
+                                <hr>
+                                <!-- 요리별 분류 -->
+                                <h4>분류</h4>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass1" name="cookclass" value="cc1" checked>한끼 뚝딱
+                                    <label class="form-check-label" for="cookclass1"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass2" name="cookclass" value="cc2">면류
+                                    <label class="form-check-label" for="cookclass2"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass3" name="cookclass" value="cc3">반찬
+                                    <label class="form-check-label" for="cookclass3"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass4" name="cookclass" value="cc4">디저트
+                                    <label class="form-check-label" for="cookclass4"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass5" name="cookclass" value="cc5">찌개/국
+                                    <label class="form-check-label" for="cookclass5"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="cookclass6" name="cookclass" value="cc6">인스턴트
+                                    <label class="form-check-label" for="cookclass6"></label>
+                                </div>
+                                <!-- 요리별 분류 끝 -->
+                                <hr>
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">설정</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                            </div> <!-- Modal body 끝-->
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>메뉴명</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>음식 사진</td>
+                    <td>김치찌개</td>
+                    <td>작성자1</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>음식 사진</td>
+                    <td>김치찌개</td>
+                    <td>작성자2</td>
+                    <td>5</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-lg-end">
+                <button type="button" class="btn text-white" style="background-color: #E67E22">글쓰기</button>
+            </div>
+
+            <ul class="pagination justify-content-center" style="margin:20px 0">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" style="background-color: #E67E22" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
 
 </body>
 </html>
