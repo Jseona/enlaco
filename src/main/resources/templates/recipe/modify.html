@@ -1,10 +1,115 @@
+<!--작성자 : 정선아-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>엔라꼬 - 레시피 수정</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--추가 식재료 입력 창을 작업하기 위한 jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!--디자인작업을 위한 부트스트랩-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!--상세레시피 입력창을 위한 summernote-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <!--추가 식재료 입력 창 띄워주는 스크립트-->
+    <script>
+        $(document).ready(function() {
+            $("#bnt").click(function() {
+                $("#inputA").append("<div class=\"row ms-1 mt-1\">" +
+                        "                    <div class=\"col-3 mt-2\"></div>\n" +
+                        "                    <div class=\"col-9\">\n" +
+                        "                        <input type=\"text\" class=\"form-control\" placeholder=\"식재료를 입력해주세요.\" name=\"rselect\">\n" +
+                        "                    </div>\n" +
+                        "                </div>");
+            });
+        });
+    </script>
+
 </head>
 <body>
-
+<div class="row">
+    <div class="col-1 col-lg-3"></div>
+    <div class="col-10 col-lg-6">
+        <form action="/recipe/insert" method="post" enctype="multipart/form-data">
+            <div class="container mt-3"> <!--레시피 입력 창-->
+                <h3>레시피 수정</h3>
+                <div class="row mt-1 mb-3"> <!--메뉴명 입력 줄-->
+                    <div class="col-3 mt-2">
+                        <label for="rmenu" class="form-label">메뉴명</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" id="rmenu" placeholder="메뉴명을 입력해주세요." name="rmenu">
+                    </div>
+                </div>  <!--메뉴명 입력 줄 끝-->
+                <div class="row mb-3"> <!--대표사진 입력 줄-->
+                    <div class="col-3 mt-2">
+                        <label for="rimg" class="form-label">대표 사진</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="file" class="form-control" id="rimg" name="rimg">
+                    </div>
+                </div>  <!--대표사진 입력 줄 끝-->
+                <div class="row mb-3">
+                    <img alt="대표 사진을 선택해 주세요.">  <!--테스트 이미지 src="../../static/image/포도.jpg"-->
+                </div>
+                <div class="row mt-1 mb-1"> <!--식재료 입력 줄-->
+                    <div class="col-3 mt-2">
+                        <label for="rselect" class="form-label">식재료</label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" id="rselect" placeholder="식재료를 입력해주세요." name="rselect">
+                    </div>
+                </div>  <!--식재료 입력 줄 끝-->
+                <div class="row" id="inputA"> <!--추가 식재료 입력 줄-->
+                    <div class="col-3 mt-2"></div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="식재료를 입력해주세요." name="rselect">
+                    </div>
+                </div>  <!--추가 식재료 입력 줄 끝-->
+                <div class="row mt-3">  <!--식재료 입력창 추가 버튼-->
+                    <div class="col-4"></div>
+                    <div class="col-4">
+                        <button type="button" id="bnt">추가</button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>  <!--식재료 입력창 추가 버튼 끝-->
+                <div class="row mt-1 mb-1"> <!--상세레시피 입력 줄-->
+                    <label for="rselect" class="form-label">상세 레시피</label>
+                </div>
+                <div class="row mt-1 mb-1">
+                    <div id="summernote"></div>
+                    <script>
+                        $('#summernote').summernote({
+                            placeholder: '텍스트를 입력하거나 사진을 첨부해 주세요.',
+                            tabsize: 2,
+                            height: 500,
+                            toolbar: [
+                                ['style', ['style']],
+                                ['font', ['bold', 'underline', 'clear']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['table', ['table']],
+                                ['insert', ['link', 'picture', 'video']],
+                                ['view', ['fullscreen', 'codeview', 'help']]
+                            ]
+                        });
+                    </script>
+                </div>  <!--상세레시피 입력 줄 끝-->
+                <div class="row mt-5 mb-5">
+                    <div class="col-sm-6 col-lg-8"></div>
+                    <div class="col-sm-6 col-lg-4">
+                        <button type="submit" class="btn btn-primary">수정</button>
+                        <button type="button" class="btn btn-danger">삭제</button>
+                    </div>
+                </div>
+            </div> <!--레시피 입력 창 끝-->
+        </form>
+    </div>
+    <div class="col-1 col-lg-3"></div>
+</div>
 </body>
 </html>
