@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="row mt-3 mb-3">
+    <div class="col-1 col-xl-2">
 
+    </div>
+    <div class="col-10 col-xl-8">
+        <span style="font-size: xx-large; ">메뉴명</span><span style="padding-left: 10px">작성자</span><span>(등록일 수정일)</span>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+        <img class="rounded"  style="padding-left: 20px" src="../../static/image/사과.jpg" alt="그림" width="400px">
+            </div>
+            <div class="col-lg-1">
+        <span class="text-end">재료</span>
+            </div>
+            <div class="col-lg-5">
+                <span class="text-start"><!--재료-->
+                -------------------------------------------------------------------------------------------------------------------
+                    </span><!--재료 끝-->
+            </div>
+        </div>
+        <hr>
+        <!--내용-->
+        <p>내용</p>
+        <!--내용 끝-->
+        <table class="table">
+            <thead>
+            <tr>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><!--댓글-->
+                <td class="p-0"><span style="font-size:small">생성일</span>&nbsp;<span style="font-size: small">수정일</span> <p style="font-size: large">댓글</p></td>
+
+            </tr>
+            <tr>
+                <td class="p-0"><span style="font-size:small">생성일</span>&nbsp;<span style="font-size: small">수정일</span> <p style="font-size: large">댓글</p></td>
+
+            </tr>
+            <tr>
+                <td class="p-0"><span style="font-size:small">생성일</span>&nbsp;<span style="font-size: small">수정일</span> <p style="font-size: large">댓글</p></td>
+
+            </tr><!--댓글 끝-->
+            </tbody>
+        </table>
+        <div class="mb-3 mt-3"><!--댓글 입력-->
+            <input type="password" class="form-control" id="pwd" placeholder="내용을 입력해주세요" name="pswd">
+            <div class="text-lg-end mt-1">
+                <button type="button" class="btn text-white" style="background-color: #E67E22">입력</button>
+            </div>
+        </div><!--댓글입력 끝-->
+    <div calss="col-1 col-xl-2">
+
+    </div>
+</div>
+</div>
 </body>
 </html>
