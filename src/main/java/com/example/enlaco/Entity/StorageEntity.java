@@ -32,8 +32,8 @@ public class StorageEntity extends BaseEntity {
     private String  sYutong;    //유통기한
     @Column(name = "squan")
     private Integer squan;      //식재료 개수
-    @Column(name = "show")
-    private String  show;       //보관 방법
+    @Column(name = "skeep")
+    private String  skeep;       //보관 방법
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mid")
