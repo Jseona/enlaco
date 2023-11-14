@@ -19,7 +19,7 @@
     <script>
         $(document).ready(function() {
             $("#bnt").click(function() {
-                $("#inputA").append("<div class=\"row ms-1 mt-1\">" +
+                $("#inputA").append("<div class=\"row mt-2 mb-1\">" +
                         "                    <div class=\"col-3 mt-2\"></div>\n" +
                         "                    <div class=\"col-9\">\n" +
                         "                        <input type=\"text\" class=\"form-control\" placeholder=\"식재료를 입력해주세요.\" name=\"rselect\">\n" +
@@ -64,12 +64,14 @@
                         <input type="text" class="form-control" id="rselect" placeholder="식재료를 입력해주세요." name="rselect">
                     </div>
                 </div>  <!--식재료 입력 줄 끝-->
-                <div class="row" id="inputA"> <!--추가 식재료 입력 줄-->
-                    <div class="col-3 mt-2"></div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="식재료를 입력해주세요." name="rselect">
-                    </div>
-                </div>  <!--추가 식재료 입력 줄 끝-->
+                <div id="inputA">
+                    <div class="row"> <!--추가 식재료 입력 줄-->
+                        <div class="col-3 mt-2"></div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" placeholder="식재료를 입력해주세요." name="rselect">
+                        </div>
+                    </div>  <!--추가 식재료 입력 줄 끝-->
+                </div>
                 <div class="row mt-3">  <!--식재료 입력창 추가 버튼-->
                     <div class="col-4"></div>
                     <div class="col-4">
