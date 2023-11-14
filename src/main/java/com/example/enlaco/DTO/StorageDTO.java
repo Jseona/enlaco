@@ -2,6 +2,8 @@ package com.example.enlaco.DTO;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -10,11 +12,12 @@ import lombok.*;
 public class StorageDTO {
     private Integer sid;
     private String simg;
+    @NotBlank(message = "재료명을 입력하세요")
     private String singre;
     private String sBuyDate;
     private String sYutong;
     private Integer squan;
-    private String show;
+    private String skeep;
     private Integer rid;
     private Integer mid;
 }
