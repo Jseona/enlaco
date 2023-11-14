@@ -9,4 +9,5 @@ public class StartController {
     public String gyuindex() throws Exception {
         return "/gyuindex";
     }
+
 }
