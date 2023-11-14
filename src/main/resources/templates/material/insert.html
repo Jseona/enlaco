@@ -49,28 +49,37 @@
     </div>
 </div>
 <div layout:fragment="content">
-    <div class="row">
-        <div class="col-2 col-md-4"></div>
-        <div class="col-8 col-md-4">
-            <h2 style="padding-bottom: 22px; font-size: 48px">식재료 등록</h2>
-            <form action="">
-                <div class="input-group mb-3 mt-3 ">
-                    <label for="material" class="input-group-text w-25">식재료명</label>
-                    <input type="text" class="form-control" id="material" name="material">
-                </div>
-                <div class="input-group mb-3 mt-3">
-                    <label for="mdate" class="input-group-text w-25">유통기한</label>
-                    <input type="date" class="form-control" id="mdate" name="mdate">
-                </div>
-                <div class="text-lg-end">
-                    <button type="submit" class="btn btn-outline-dark" style="width: 120px; background-color: #E67E22; color: white">등록</button>
-                </div>
-            </form>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-2 col-md-4"></div>
+            <div class="col-8 col-md-4">
+                <h2 style="padding-bottom: 22px; font-size: 48px">식재료 등록</h2>
+                <form action="">
+                    <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
+                        <div class="col-3 mt-3">
+                            <label for="rimg" class="form-label">식재료명</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="text" name="text">
+                            <input type="file" class="form-control" id="rimg" name="rimg">
+                        </div>
+                    </div>
+                    <div class="row mb-3"> <!-- 유통기한 -->
+                        <div class="col-3 mt-2">
+                            <label for="rimg" class="form-label">유통기한</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                    </div>
+                    <div class="text-lg-end">
+                        <button type="submit" class="btn text-white fw-bold" style="background-color:rgb(230,128,34)">등&emsp;록</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-2 col-md-4"></div>
         </div>
-        <div class="col-2 col-md-4"></div>
-
     </div>
-
 </div>
 </body>
 </html>
