@@ -1,4 +1,46 @@
 package com.example.enlaco.Entity;
 
-public class StorageEntity {
+import lombok.*;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
+@Table(name = "storage")
+@SequenceGenerator(
+        name = "storage_SEQ",
+        sequenceName = "storage_SEQ",
+        initialValue = 1,
+        allocationSize = 1
+)
+public class StorageEntity extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "storage_SEQ")
+    private Integer sid;        //번호
+    @Column(name = "simg")
+    private String  simg;       //재료사진
+    @Column(name = "singre")
+    private String  singre;     //식재료명
+    @Column(name = "sBuyDate")
+    private String  sBuyDate;   //구매일
+    @Column(name = "sYutong")
+    private String  sYutong;    //유통기한
+    @Column(name = "squan")
+    private Integer squan;      //식재료 개수
+    @Column(name = "show")
+    private String  show;       //보관 방법
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mid")
+    private MemberEntity memberEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rid")
+    private RecipeEntity recipeEntity;
+
 }
