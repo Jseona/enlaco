@@ -1,3 +1,4 @@
+//2023-11-15 정선아 : StorageRepository Test시 에러 발생하여 @ToString 제거
 package com.example.enlaco.Entity;
 
 import lombok.*;
@@ -9,7 +10,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @Table(name = "storage")
 @SequenceGenerator(
