@@ -60,5 +60,6 @@ public class RecipeService {
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .build());
+        return recipeDTOS;
     }
 }
