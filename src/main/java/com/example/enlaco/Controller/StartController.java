@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StartController {
     @GetMapping({"/start","/"})
-    public String gyuindex() throws Exception {
+    public String start() throws Exception {
         return "/gyuindex";
     }
 

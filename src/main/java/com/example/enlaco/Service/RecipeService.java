@@ -65,6 +65,7 @@ public class RecipeService {
                 .rcontent(data.getRcontent())
                 .rwriter(data.getRwriter())
                 .rclass(data.getRclass())
+                .rtime(data.getRtime())
                 .rselect(data.getRselect())
                 .rviewcnt(data.getRviewcnt())
                 .rgoodcnt(data.getRgoodcnt())

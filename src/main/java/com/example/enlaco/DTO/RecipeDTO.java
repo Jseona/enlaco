@@ -19,6 +19,7 @@ public class RecipeDTO {
     private String  rcontent;
     private String  rwriter;
     private String  rclass;
+    private String  rtime;
     private String  rselect;
     private Integer rviewcnt;
     private Integer rgoodcnt;
