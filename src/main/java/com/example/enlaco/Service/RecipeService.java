@@ -59,7 +59,28 @@ public class RecipeService {
         Page<RecipeEntity> recipeEntities = recipeRepository.findAll(newPage);
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
+                .rid(data.getRid())
+                .rimg(data.getRimg())
+                .rmenu(data.getRmenu())
+                .rcontent(data.getRcontent())
+                .rwriter(data.getRwriter())
+                .rclass(data.getRclass())
+                .rselect(data.getRselect())
+                .rviewcnt(data.getRviewcnt())
+                .rgoodcnt(data.getRgoodcnt())
+                .rRegDate(data.getRegDate())
+                .rModDate(data.getModDate())
+                .mid(data.getMemberEntity().getMid())
                 .build());
+
         return recipeDTOS;
+    }
+    //조회수
+    public void viewcnt(int rid) throws Exception {
+        recipeRepository.rviewcnt(rid);
+    }
+    //좋아요
+    public void goodcnt(int rid) throws Exception {
+        recipeRepository.rgoodcnt(rid);
     }
 }
