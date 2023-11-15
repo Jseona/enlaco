@@ -12,7 +12,7 @@ xmlns:th="http://www.thymeleaf.org">
             color: white; margin-left: 50px;
         }
         #logo{
-            margin-left: 60px; color: #E67E22; font-size: xx-large; font-weight: bold;
+            margin-left: 60px; color: #E67E22; font-size: 40px; font-weight: bold;
         }
         #member{
             margin-right: auto;
@@ -28,16 +28,17 @@ xmlns:th="http://www.thymeleaf.org">
 </head>
 <body>
 <div th:fragment="header">
-<div class="row">
+<div class="row mt-4 mb-4">
     <!--로고-->
     <div class="col-4"><span id="logo" onclick="location.href='/start'" style="cursor: pointer">엔라꼬</span></div>
     <!--로고 끝-->
     <div class="col-3"></div>
-    <div class="col-5"><span class="d-flex justify-content-end" id="member" style="margin-right: 30px; margin-top: 20px;">
+    <div class="col-5"><span class="d-flex justify-content-end" id="member" style="margin-right: 30px; margin-top: 40px;">
         <!--로그인 회원가입-->
-    <span onclick="location.href='/member/login'" style="cursor: pointer">로그인</span>&nbsp;&nbsp;&nbsp;<span onclick="location.href='/member/insert'" style="cursor: pointer">회원가입</span>
+    <span onclick="location.href='/member/login'" style="cursor: pointer">로그인</span>&nbsp;&nbsp;&nbsp;<span onclick="location.href='/member/insert'" style="cursor: pointer; margin-right: 60px">회원가입</span>
         <!--로그인 회원가입 끝-->
-</span></div>
+</span>
+    </div>
 </div>
     <!--네비바-->
 <nav class="navbar navbar-expand-md" style="background-color: #E67E22">
