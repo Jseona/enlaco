@@ -1,3 +1,4 @@
+//2023-11-15 정선아 : rRegDate, rModDate 추가
 package com.example.enlaco.DTO;
 
 import lombok.*;
@@ -21,6 +22,8 @@ public class RecipeDTO {
     private String  rselect;
     private Integer rviewcnt;
     private Integer rgoodcnt;
+    private LocalDateTime rRegDate;
+    private LocalDateTime rModDate;
 
     private Integer         mid;
 }
