@@ -5,12 +5,14 @@ import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -18,7 +20,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RecipeService {
+    @Value("${imgLocation}")
+    private String imgLocation;
     private final RecipeRepository recipeRepository;
+    private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
 
     //삭제
@@ -37,8 +42,17 @@ public class RecipeService {
         recipeRepository.save(update);
     }
     //삽입
-    public void insert(RecipeDTO recipeDTO) throws Exception {
+    public void insert(RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
+        String originalFileName = imgFile.getOriginalFilename();
+        String newFileName = "";
+        if (originalFileName != null) {
+            newFileName = fileService.uploadFile(imgLocation,
+                    originalFileName, imgFile.getBytes());
+        }
+        recipeDTO.setRimg(newFileName);
+
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);
+
         recipeRepository.save(recipe);
     }
     //개별조회
@@ -77,11 +91,11 @@ public class RecipeService {
         return recipeDTOS;
     }
     //조회수
-   /* public void viewcnt(int rid) throws Exception {
+   public void viewcnt(int rid) throws Exception {
         recipeRepository.rviewcnt(rid);
     }
     //좋아요
     public void goodcnt(int rid) throws Exception {
         recipeRepository.rgoodcnt(rid);
-    }*/
+    }
 }
