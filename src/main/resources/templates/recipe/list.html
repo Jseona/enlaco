@@ -116,10 +116,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="cursor: pointer" onclick="location.href='/recipe/detail'">
-                        <td>음식 사진</td>
-                        <td>김치찌개</td>
-                        <td>작성자1</td>
+                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail}'|" th:each="data:${recipeDTOS}">
+                        <td th:text="${data.rimg}">음식 사진</td>
+                        <td th:text="${data.rmenu}">김치찌개</td>
+                        <td th:text="${data.rwriter}">작성자1</td>
                         <td>10</td>
                     </tr>
                     <tr style="cursor: pointer" onclick="location.href='/recipe/detail'">

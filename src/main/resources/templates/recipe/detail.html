@@ -59,7 +59,9 @@
           </div>
         </div>
         <br>
+
         <div class="card">
+          <!-- 댓글 목록 -->
           <div class="card-body">
             <table class="table">
               <thead>
@@ -70,10 +72,10 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>강규진</td>
-                <td>너무 맛있어요</td>
-                <td>2023-11-13</td>
+              <tr th:each="data:${commentDTOS}">
+                <td th:text="${data.cwriter}">강규진</td>
+                <td th:text="${data.cbody}">너무 맛있어요</td>
+                <td th:text="${#temporals.format(data.modDate, 'yyyy-MM-dd')}">2023-11-13</td>
               </tr>
               <tr>
                 <td>위영국</td>
@@ -83,6 +85,7 @@
               </tbody>
             </table>
           </div>
+          <!-- 댓글 목록 끝 -->
           <div class="card-footer">
             <form action="#">
               <div class="mb-3 mt-3">
