@@ -34,4 +34,8 @@ public class RecipeController {
     public String modifyProc() throws Exception {
         return "redirect:/member/mypage";
     }
+    @GetMapping("remove")
+    public String remove() throws Exception {
+        return "redirect:/member/mypage";
+    }
 }

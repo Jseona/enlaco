@@ -22,4 +22,12 @@ public class MemberController {
     public String login() throws Exception {
         return "/member/login";
     }
+    @GetMapping("/mypage")
+    public String mypage() throws Exception {
+        return "/member/mypage";
+    }
+    @GetMapping("/myrecipedetail")
+    public String myrecipedetail() throws Exception {
+        return "/member/myrecipedetail";
+    }
 }
