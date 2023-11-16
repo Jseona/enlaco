@@ -21,6 +21,7 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     public void rgoodcnt(int rid);
 
     //제목, 내용, 식재료로 검색
-    @Query(value = "SELECT u FROM RecipeEntity u WHERE u.rmenu like %:keyword% or u.rcontent like %:keyword% or u.rselect like %:keyword%")
+    /*@Query("SELECT u FROM GuestbookEntity u WHERE u.title like %:keyword% or u.content like %:keyword% or u.writer like %:keyword%")*/
+    @Query("SELECT u FROM RecipeEntity u WHERE u.rmenu like %:keyword% or u.rcontent like %:keyword% or u.rselect like %:keyword%")
     Page<RecipeEntity> searchRecipe(String keyword, Pageable pageable);
 }
