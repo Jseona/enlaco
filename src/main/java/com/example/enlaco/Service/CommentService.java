@@ -45,8 +45,8 @@ public class CommentService {
     }
 
     //삽입
-    public void create(Integer rid, CommentDTO commentDTO) throws Exception {
-        Optional<RecipeEntity> data = recipeRepository.findById(rid);
+    public void create(int id, CommentDTO commentDTO) throws Exception {
+        Optional<RecipeEntity> data = recipeRepository.findById(id);
         RecipeEntity recipeEntity = data.orElseThrow();
 
         CommentEntity commentEntity = modelMapper.map(commentDTO, CommentEntity.class);

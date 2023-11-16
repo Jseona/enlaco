@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -16,11 +17,13 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/register")
-    public String registerProc(int no, CommentDTO commentDTO,
+    public String registerProc(@RequestParam("rid") Integer rid, CommentDTO commentDTO,
                                RedirectAttributes redirectAttributes) throws Exception {
-        commentService.create(no, commentDTO);
 
-        redirectAttributes.addAttribute("rid", no);
+
+        commentService.create(rid, commentDTO);
+
+        redirectAttributes.addAttribute("rid", rid);
         return "redirect:/recipe/detail";
     }
 

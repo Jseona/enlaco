@@ -76,9 +76,9 @@ public class RecipeController {
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
         int endPage = Math.min(startPage+blockLimit-1, recipeDTOS.getTotalPages());
 
-        int prevPage = recipeDTOS.getNumber();
-        int curPage = recipeDTOS.getNumber()+1;
-        int nextPage = recipeDTOS.getNumber()+2;
+        int prevPage = recipeDTOS.getNumber()-1;
+        int curPage = recipeDTOS.getNumber();
+        int nextPage = recipeDTOS.getNumber()+1;
         int lastPage = recipeDTOS.getTotalPages()-1;
 
         model.addAttribute("recipeDTOS", recipeDTOS);

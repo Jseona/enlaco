@@ -90,7 +90,7 @@
           <div class="card-footer">
             <form th:action="@{/comment/register}" method="post">
               <div th:if="${recipeDTO != null}">
-                <input type="hidden" name="no" th:value="${recipeDTO.rid}">
+                <input type="hidden" name="rid" th:value="${recipeDTO.rid}">
               </div>
               <div class="mb-3 mt-3">
                 <textarea class="form-control" rows="3" id="cbody" name="cbody"></textarea>
