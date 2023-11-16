@@ -69,7 +69,7 @@ public class RecipeController {
         Page<RecipeDTO> recipeDTOS = recipeService.list(pageable);
 
         //페이지 정보
-        int blockLimit = 10;
+        int blockLimit = 5;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
         int endPage = Math.min(startPage+blockLimit-1, recipeDTOS.getTotalPages());
 
