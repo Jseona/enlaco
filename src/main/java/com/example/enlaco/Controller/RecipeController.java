@@ -69,17 +69,17 @@ public class RecipeController {
     public String list(@PageableDefault(page = 1) Pageable pageable,
                        @RequestParam(value = "keyword", defaultValue = "") String keyword,
                        Model model) throws Exception {
-        Page<RecipeDTO> recipeDTOS = recipeService.list(pageable, keyword);
+        Page<RecipeDTO> recipeDTOS = recipeService.list(keyword, pageable);
 
         //페이지 정보
         int blockLimit = 5;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
-        int endPage = Math.min(startPage+blockLimit-1, recipeDTOS.getTotalPages());
+        int endPage = ((startPage+blockLimit-1)<recipeDTOS.getTotalPages())? startPage+blockLimit-1:recipeDTOS.getTotalPages();
 
-        int prevPage = recipeDTOS.getNumber()-1;
-        int curPage = recipeDTOS.getNumber();
-        int nextPage = recipeDTOS.getNumber()+1;
-        int lastPage = recipeDTOS.getTotalPages()-1;
+        int prevPage = recipeDTOS.getNumber();
+        int curPage = recipeDTOS.getNumber()+1;
+        int nextPage = recipeDTOS.getNumber()+2;
+        int lastPage = recipeDTOS.getTotalPages();
 
         model.addAttribute("recipeDTOS", recipeDTOS);
 

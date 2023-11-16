@@ -3,7 +3,6 @@ package com.example.enlaco.Service;
 import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.RecipeRepository;
-import javassist.compiler.ast.Keyword;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,7 +64,7 @@ public class RecipeService {
         return recipeDTO;
     }
     //전체조회
-    public Page<RecipeDTO> list(Pageable pageable, String keyword) throws Exception {
+    public Page<RecipeDTO> list(String keyword, Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
         int pageLimit = 10;
 
@@ -75,7 +74,7 @@ public class RecipeService {
         Page<RecipeEntity> recipeEntities;
 
         if (keyword != null) {
-            recipeEntities = recipeRepository.searchRecipe(keyword, pageable);
+            recipeEntities = recipeRepository.searchRecipe(keyword, newPage);
         } else {
             recipeEntities = recipeRepository.findAll(newPage);
         }
