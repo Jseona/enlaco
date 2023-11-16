@@ -88,10 +88,10 @@
                     </div>
                 </div>  <!--식재료 입력창 추가 버튼 끝-->
                 <div class="row mt-1 mb-1"> <!--상세레시피 입력 줄-->
-                    <label for="rcontent" class="form-label">상세 레시피</label>
+                    <label for="rselect" class="form-label">상세 레시피</label>
                 </div>
                 <div class="row mt-1 mb-1">
-                    <div id="summernote" th:field="*{rcontent}"></div>
+                    <textarea id="summernote" th:field="*{rcontent}"></textarea>
                     <script>
                         $('#summernote').summernote({
                             placeholder: '텍스트를 입력하거나 사진을 첨부해 주세요.',
@@ -110,23 +110,23 @@
                     </script>
                     <div class="row mt-3 mb-3">
                         <div class="col-sm-5">
-                            <select class="form-select" name="cooktime">
-                                <option selected disabled>조리 시간</option>
-                                <option value="easy">간단(10분 이내)</option>
-                                <option value="normal">정성(20분 이내)</option>
-                                <option value="hard">고수(30분 이상)</option>
+                            <select class="form-select" name="rtime" th:field="*{rtime}">
+                                <option th:value="0" th:selected th:disabled="${someCondition}" >조리 시간</option>
+                                <option th:value="1">간단(10분 이내)</option>
+                                <option th:value="2">정성(20분 이내)</option>
+                                <option th:value="3">고수(30분 이상)</option>
                             </select>
                         </div>
                         <div class="col-sm-2"></div>
                         <div class="col-sm-5">
-                            <select class="form-select" name="cookclass">
-                                <option selected disabled>분류</option>
-                                <option value="hankki">한끼 뚝딱</option>
-                                <option value="noodle">면류</option>
-                                <option value="banchan">반찬</option>
-                                <option value="dessert">디저트</option>
-                                <option value="soup">찌개/국</option>
-                                <option value="instant">인스턴트</option>
+                            <select class="form-select" name="rclass" th:field="*{rclass}">
+                                <option th:value="0" th:selected th:disabled="${someCondition}">분류</option>
+                                <option th:value="1">한끼 뚝딱</option>
+                                <option th:value="2">면류</option>
+                                <option th:value="3">반찬</option>
+                                <option th:value="4">디저트</option>
+                                <option th:value="5">찌개/국</option>
+                                <option th:value="6">인스턴트</option>
                             </select>
                         </div>
                     </div>

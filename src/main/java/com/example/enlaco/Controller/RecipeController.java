@@ -44,14 +44,14 @@ public class RecipeController {
     }
 
     //입력
-    @GetMapping("insert")
+    @GetMapping("/insert")
     public String insertForm(Model model) throws Exception {
         RecipeDTO recipeDTO = new RecipeDTO();
 
         model.addAttribute("recipeDTO", recipeDTO);
         return "recipe/insert";
     }
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public String insertProc(@Valid RecipeDTO recipeDTO,
                              MultipartFile imgFile,
                              BindingResult bindingResult) throws Exception {
@@ -65,7 +65,7 @@ public class RecipeController {
     }
 
     //목록
-    @GetMapping("list")
+    @GetMapping("/list")
     public String list(@PageableDefault(page = 1) Pageable pageable,
                        @RequestParam(value = "keyword", defaultValue = "") String keyword,
                        Model model) throws Exception {
@@ -96,14 +96,14 @@ public class RecipeController {
     }
 
     //수정
-    @GetMapping("modify")
+    @GetMapping("/modify")
     public String modifyForm(int rid, Model model) throws Exception {
         RecipeDTO recipeDTO = recipeService.detail(rid);
 
         model.addAttribute("recipeDTO", recipeDTO);
         return "recipe/modify";
     }
-    @PostMapping("modify")
+    @PostMapping("/modify")
     public String modifyProc(@Valid RecipeDTO recipeDTO, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             return "recipe/modify";
@@ -114,7 +114,7 @@ public class RecipeController {
     }
 
     //삭제
-    @GetMapping("remove")
+    @GetMapping("/remove")
     public String remove(int rid) throws Exception {
         recipeService.remove(rid);
         return "redirect:/member/mypage";
