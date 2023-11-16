@@ -30,8 +30,8 @@
       <div class="container mt-5">
         <div class="row">
           <h2 th:text="${recipeDTO.rmenu}">메뉴명</h2>
-          <span th:text="${recipeDTO.rwriter}">작성자</span>
-          <span>(</span><span>등록일</span><span>)</span>
+          <span><span th:text="${recipeDTO.rwriter}">작성자</span>
+            <span>(</span><span th:text="${#temporals.format(recipeDTO.rRegDate, 'yyyy-MM-dd')}">등록일</span><span>)</span></span>
           <hr>
           <div class="col-sm-5">
             <div class="fakeimg">
