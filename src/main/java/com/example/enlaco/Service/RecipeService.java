@@ -91,8 +91,8 @@ public class RecipeService {
                 .rselect(data.getRselect())
                 .rviewcnt(data.getRviewcnt())
                 .rgoodcnt(data.getRgoodcnt())
-                .rRegDate(data.getRegDate())
-                .rModDate(data.getModDate())
+                .regDate(data.getRegDate())
+                .modDate(data.getModDate())
                 .mid(data.getMemberEntity().getMid())
                 .build());
 
@@ -104,6 +104,6 @@ public class RecipeService {
     }
     //좋아요
     public void goodcnt(int rid) throws Exception {
-        recipeRepository.rgoodcnt(rid);
+         recipeRepository.rgoodcnt(rid);
     }
 }

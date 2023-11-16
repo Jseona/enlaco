@@ -23,8 +23,8 @@ public class RecipeDTO {
     private String  rselect;
     private Integer rviewcnt;
     private Integer rgoodcnt;
-    private LocalDateTime rRegDate;
-    private LocalDateTime rModDate;
+    private LocalDateTime regDate;
+    private LocalDateTime modDate;
 
-    private Integer         mid;
+    private Integer          mid;
 }
