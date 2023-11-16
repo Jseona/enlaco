@@ -66,9 +66,10 @@ public class RecipeService {
     //전체조회
     public Page<RecipeDTO> list(Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
-        int pageLimit = 30;
+        int pageLimit = 10;
 
-        Pageable newPage = PageRequest.of(curPage, pageLimit, Sort.by(Sort.Direction.DESC,"rviewcnt"));
+        Pageable newPage = PageRequest.of(curPage, pageLimit,
+                Sort.by(Sort.Direction.DESC,"rviewcnt"));
 
         Page<RecipeEntity> recipeEntities = recipeRepository.findAll(newPage);
 
