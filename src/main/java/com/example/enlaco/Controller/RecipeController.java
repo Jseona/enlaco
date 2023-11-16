@@ -31,7 +31,7 @@ public class RecipeController {
     //상세페이지
     @GetMapping("/detail")
     public String detail(int rid, Model model) throws Exception {
-       // recipeService.viewcnt(rid);
+        recipeService.viewcnt(rid);
 
         RecipeDTO recipeDTO = recipeService.detail(rid);
 

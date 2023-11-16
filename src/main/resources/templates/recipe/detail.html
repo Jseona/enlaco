@@ -75,7 +75,7 @@
               <tr th:each="data:${commentDTOS}">
                 <td th:text="${data.cwriter}">강규진</td>
                 <td th:text="${data.cbody}">너무 맛있어요</td>
-                <td th:text="${#temporals.format(data.modDate, 'yyyy-MM-dd')}">2023-11-13</td>
+                <td th:text="${#temporals.format(data.regDate, 'yyyy-MM-dd')}">2023-11-13</td>
               </tr>
               <tr>
                 <td>위영국</td>
@@ -86,8 +86,10 @@
             </table>
           </div>
           <!-- 댓글 목록 끝 -->
+          <!-- 댓글 추가 -->
           <div class="card-footer">
-            <form action="#">
+            <form th:action="@{/comment/register}" method="post">
+              <input type="hidden" name="recipeid" th:value="${recipeDTO.rid}">
               <div class="mb-3 mt-3">
                 <textarea class="form-control" rows="3" id="cbody" name="cbody"></textarea>
               </div>
@@ -95,7 +97,8 @@
                 <div class="col-md-9"></div>
                 <div class="col-md-3">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="작성자">
+                    <label for="cwriter" class="form-label mt-3">작성자:</label>
+                    <input type="text" class="form-control" id="cwriter" >
                   </div>
                 </div>
               </div>
@@ -105,6 +108,7 @@
               </div>
             </form>
           </div>
+          <!-- 댓글 추가 -->
         </div>
 
       </div>

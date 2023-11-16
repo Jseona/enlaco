@@ -91,9 +91,9 @@ public class RecipeService {
         return recipeDTOS;
     }
     //조회수
-   /*public void viewcnt(int rid) throws Exception {
+   public void viewcnt(int rid) throws Exception {
         recipeRepository.rviewcnt(rid);
-    }*/
+    }
     //좋아요
     public void goodcnt(int rid) throws Exception {
         recipeRepository.rgoodcnt(rid);
