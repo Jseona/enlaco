@@ -16,9 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <!--[if IE 7]>
+    <!--[if IE 7]-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome-ie7.min.css">
-    <![endif]-->
+    <!--[endif]-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 리스트 카드형식 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Figtree:wght@300;600&amp;display=swap">
@@ -130,15 +130,15 @@
 
                 <ul class="pagination justify-content-center" style="margin:20px 0">
                     <li class="page-item" th:if="${startPage != 1}">
-                        <a class="page-link" th:href="@{/recipe/list(page=1)}">first</a>
+                        <a class="page-link" th:href="@{/recipe/list(page=1,keyword=${keyword})}">first</a>
                     </li>
                     <li class="page-item" th:if="${curPage != 1}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${prevPage})}">prev</a>
+                        <a class="page-link" th:href="@{/recipe/list(page=${prevPage},keyword=${keyword})}">prev</a>
                     </li>
 
-                    <span th:each="page:${#numbers.sequence(startPage,endPage)}">
+                    <span th:each="page:${#numbers.sequence(startPage, endPage)}">
                         <li class="page-item" th:if="${page != curPage}">  <!--현재 페이지가 아니면-->
-                            <a class="page-link" th:href="@{/recipe/list(page=${page})}">[[${page}]]</a>
+                            <a class="page-link" th:href="@{/recipe/list(page=${page},keyword=${keyword})}">[[${page}]]</a>
                         </li>
                         <li class="page-item active" th:if="${page == curPage}">  <!--현재 페이지 이면-->
                             <a class="page-link" style="background-color: #E67E22" href="#">[[${page}]]</a>
@@ -146,10 +146,10 @@
                     </span>
 
                     <li class="page-item" th:if="${curPage != lastPage}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${nextPage})}">next</a>
+                        <a class="page-link" th:href="@{/recipe/list(page=${nextPage},keyword=${keyword})}">next</a>
                     </li>
                     <li class="page-item" th:if="${endPage != lastPage}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${lastPage})}">last</a>
+                        <a class="page-link" th:href="@{/recipe/list(page=${lastPage},keyword=${keyword})}">last</a>
                     </li>
                 </ul>
 

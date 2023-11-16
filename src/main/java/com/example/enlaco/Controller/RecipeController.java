@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -65,8 +66,10 @@ public class RecipeController {
 
     //목록
     @GetMapping("list")
-    public String list(@PageableDefault(page = 1) Pageable pageable, Model model) throws Exception {
-        Page<RecipeDTO> recipeDTOS = recipeService.list(pageable);
+    public String list(@PageableDefault(page = 1) Pageable pageable,
+                       @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                       Model model) throws Exception {
+        Page<RecipeDTO> recipeDTOS = recipeService.list(pageable, keyword);
 
         //페이지 정보
         int blockLimit = 5;
@@ -76,15 +79,18 @@ public class RecipeController {
         int prevPage = recipeDTOS.getNumber();
         int curPage = recipeDTOS.getNumber()+1;
         int nextPage = recipeDTOS.getNumber()+2;
-        int lastPage = recipeDTOS.getTotalPages();
+        int lastPage = recipeDTOS.getTotalPages()-1;
 
         model.addAttribute("recipeDTOS", recipeDTOS);
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("prevPage", prevPage);
         model.addAttribute("curPage", curPage);
         model.addAttribute("nextPage", nextPage);
         model.addAttribute("lastPage", lastPage);
+
+        model.addAttribute("keyword", keyword);
 
         return "recipe/list";
     }
