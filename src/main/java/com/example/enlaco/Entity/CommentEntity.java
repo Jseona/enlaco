@@ -28,6 +28,6 @@ public class CommentEntity extends BaseEntity {
     private String  cwriter;    //작성자
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rid")
+    @JoinColumn(name = "recipeid")
     private RecipeEntity recipeEntity;
 }

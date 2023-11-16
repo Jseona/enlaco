@@ -25,12 +25,19 @@
 <div layout:fragment="content">
   <div class="row">
     <div class="col-md-2"></div>
-    <div class="col-md-8">
+    <div class="col-md-8" >
 
       <div class="container mt-5">
         <div class="row">
-          <h2>메뉴명</h2>
-          <h6>작성자(등록일)</h6>
+          <h2><span th:text="${recipeDTO.rmenu}"> 메뉴명</span></h2>
+          <h6><span th:text="${recipeDTO.rwriter}">작성자</span>
+            <span style="text-align: -moz-right" th:text="${#temporals.format(recipeDTO.regDate, 'yyyy-MM-dd')}">(등록일)</span></h6><br>
+          <div>
+            <span th:if="${recipeDTO.rtime==0}"></span>
+            <span th:if="${recipeDTO.rtime==1}">간단(10분 이내)</span>
+            <span th:if="${recipeDTO.rtime==2}">정성(20분 이내)</span>
+            <span th:if="${recipeDTO.rtime==3}">고수(30분 이상)</span>
+          </div>&nbsp;&nbsp;&nbsp;<span th:text="${recipeDTO.rclass}"></span>
           <hr>
           <div class="col-sm-5">
             <div class="fakeimg">
@@ -40,7 +47,7 @@
           <div class="col-sm-7">
             <h3>재료</h3>
             <div>
-              <h6>감자, 당근, 고구마, 물 등등</h6>
+              <h6><span th:text="${recipeDTO.rselect}" 감자, 당근, 고구마, 물 등등</h6>
             </div>
           </div>
           <hr class="mt-3">
@@ -48,7 +55,7 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <div class="row">
+            <div class="row" th:utext="${recipeDTO.rcontent}">
               레시피 내용<br>
               1. 물을 끓인다<br>
               2. 스프를 넣는다<br>
@@ -59,32 +66,34 @@
           </div>
         </div>
         <br>
+
         <div class="card">
+          <!-- 댓글 목록 -->
           <div class="card-body">
             <table class="table">
               <thead>
               <tr>
                 <th>작성자</th>
                 <th>내용</th>
-                <th>수정일</th>
+                <th>등록일</th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>강규진</td>
-                <td>너무 맛있어요</td>
-                <td>2023-11-13</td>
-              </tr>
-              <tr>
-                <td>위영국</td>
-                <td>만들기 쉬워요</td>
-                <td>2023-11-15</td>
+              <tr th:each="data:${commentDTOS}">
+                <td th:text="${data.cwriter}">강규진</td>
+                <td th:text="${data.cbody}">너무 맛있어요</td>
+                <td th:text="${#temporals.format(data.regDate, 'yyyy-MM-dd')}">2023-11-13</td>
               </tr>
               </tbody>
             </table>
           </div>
+          <!-- 댓글 목록 끝 -->
+          <!-- 댓글 추가 -->
           <div class="card-footer">
-            <form action="#">
+            <form th:action="@{/comment/register}" method="post">
+              <div th:if="${recipeDTO != null}">
+                <input type="hidden" name="rid" th:value="${recipeDTO.rid}">
+              </div>
               <div class="mb-3 mt-3">
                 <textarea class="form-control" rows="3" id="cbody" name="cbody"></textarea>
               </div>
@@ -92,7 +101,8 @@
                 <div class="col-md-9"></div>
                 <div class="col-md-3">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="작성자">
+                    <label for="cwriter" class="form-label mt-3">작성자:</label>
+                    <input type="text" class="form-control" id="cwriter" >
                   </div>
                 </div>
               </div>
@@ -102,6 +112,7 @@
               </div>
             </form>
           </div>
+          <!-- 댓글 추가 -->
         </div>
 
       </div>

@@ -16,9 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <!--[if IE 7]>
+    <!--[if IE 7]-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome-ie7.min.css">
-    <![endif]-->
+    <!--[endif]-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 리스트 카드형식 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Figtree:wght@300;600&amp;display=swap">
@@ -116,17 +116,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="cursor: pointer" onclick="location.href='/recipe/detail'">
-                        <td>음식 사진</td>
-                        <td>김치찌개</td>
-                        <td>작성자1</td>
-                        <td>10</td>
-                    </tr>
-                    <tr style="cursor: pointer" onclick="location.href='/recipe/detail'">
-                        <td>음식 사진</td>
-                        <td>부대찌개</td>
-                        <td>작성자2</td>
-                        <td>5</td>
+                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:each="data:${recipeDTOS}">
+                        <td th:text="${data.rimg}">음식 사진</td>
+                        <td th:text="${data.rmenu}">김치찌개</td>
+                        <td th:text="${data.rwriter}">작성자1</td>
+                        <td th:text="${data.rviewcnt}">10</td>
                     </tr>
                     </tbody>
                 </table>
@@ -135,11 +129,28 @@
                 </div>
 
                 <ul class="pagination justify-content-center" style="margin:20px 0">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active"><a class="page-link" style="background-color: #E67E22" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <li class="page-item" th:if="${startPage != 1}">
+                        <a class="page-link" th:href="@{/recipe/list(page=1,keyword=${keyword})}">first</a>
+                    </li>
+                    <li class="page-item" th:if="${curPage != 1}">
+                        <a class="page-link" th:href="@{/recipe/list(page=${prevPage},keyword=${keyword})}">prev</a>
+                    </li>
+
+                    <span th:each="page:${#numbers.sequence(startPage, endPage)}">
+                        <li class="page-item" th:if="${page != curPage}">  <!--현재 페이지가 아니면-->
+                            <a class="page-link" th:href="@{/recipe/list(page=${page},keyword=${keyword})}">[[${page}]]</a>
+                        </li>
+                        <li class="page-item active" th:if="${page == curPage}">  <!--현재 페이지 이면-->
+                            <a class="page-link" style="background-color: #E67E22" href="#">[[${page}]]</a>
+                        </li>
+                    </span>
+
+                    <li class="page-item" th:if="${curPage != lastPage}">
+                        <a class="page-link" th:href="@{/recipe/list(page=${nextPage},keyword=${keyword})}">next</a>
+                    </li>
+                    <li class="page-item" th:if="${endPage != lastPage}">
+                        <a class="page-link" th:href="@{/recipe/list(page=${lastPage},keyword=${keyword})}">last</a>
+                    </li>
                 </ul>
 
             </div>

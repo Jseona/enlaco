@@ -13,6 +13,6 @@ public class CommentDTO {
     private Integer cid;
     private String cbody;
     private String cwriter;
-    private LocalDateTime modDate;
-    private Integer rid;
+    private LocalDateTime regDate;
+    private Integer recipeid;
 }

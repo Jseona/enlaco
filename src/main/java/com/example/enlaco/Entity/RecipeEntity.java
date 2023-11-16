@@ -3,7 +3,6 @@ package com.example.enlaco.Entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -34,6 +33,8 @@ public class RecipeEntity extends BaseEntity {
     private String  rwriter;    //작성자
     @Column(name = "rclass")
     private String  rclass;     //분류
+    @Column(name = "rtime")
+    private String  rtime;      //조리시간
     @Column(name = "rselect")
     private String  rselect;    //식재료 선택
     @Column(name = "rviewcnt")

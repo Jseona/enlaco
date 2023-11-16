@@ -19,11 +19,12 @@ public class RecipeDTO {
     private String  rcontent;
     private String  rwriter;
     private String  rclass;
+    private String  rtime;
     private String  rselect;
     private Integer rviewcnt;
     private Integer rgoodcnt;
-    private LocalDateTime rRegDate;
-    private LocalDateTime rModDate;
+    private LocalDateTime regDate;
+    private LocalDateTime modDate;
 
-    private Integer         mid;
+    private Integer          mid;
 }

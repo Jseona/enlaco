@@ -3,14 +3,17 @@ package com.example.enlaco.Service;
 import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.RecipeRepository;
+import javassist.compiler.ast.Keyword;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -18,7 +21,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RecipeService {
+    @Value("${imgLocation}")
+    private String imgLocation;
     private final RecipeRepository recipeRepository;
+    private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
 
     //삭제
@@ -37,8 +43,17 @@ public class RecipeService {
         recipeRepository.save(update);
     }
     //삽입
-    public void insert(RecipeDTO recipeDTO) throws Exception {
+    public void insert(RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
+        String originalFileName = imgFile.getOriginalFilename();
+        String newFileName = "";
+        if (originalFileName != null) {
+            newFileName = fileService.uploadFile(imgLocation,
+                    originalFileName, imgFile.getBytes());
+        }
+        recipeDTO.setRimg(newFileName);
+
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);
+
         recipeRepository.save(recipe);
     }
     //개별조회
@@ -50,13 +65,20 @@ public class RecipeService {
         return recipeDTO;
     }
     //전체조회
-    public Page<RecipeDTO> list(Pageable pageable) throws Exception {
+    public Page<RecipeDTO> list(Pageable pageable, String keyword) throws Exception {
         int curPage = pageable.getPageNumber()-1;
-        int pageLimit = 30;
+        int pageLimit = 10;
 
-        Pageable newPage = PageRequest.of(curPage, pageLimit, Sort.by(Sort.Direction.DESC,"rviewcnt"));
+        Pageable newPage = PageRequest.of(curPage, pageLimit,
+                Sort.by(Sort.Direction.DESC,"rviewcnt"));
 
-        Page<RecipeEntity> recipeEntities = recipeRepository.findAll(newPage);
+        Page<RecipeEntity> recipeEntities;
+
+        if (keyword != null) {
+            recipeEntities = recipeRepository.searchRecipe(keyword, pageable);
+        } else {
+            recipeEntities = recipeRepository.findAll(newPage);
+        }
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())
@@ -65,22 +87,23 @@ public class RecipeService {
                 .rcontent(data.getRcontent())
                 .rwriter(data.getRwriter())
                 .rclass(data.getRclass())
+                .rtime(data.getRtime())
                 .rselect(data.getRselect())
                 .rviewcnt(data.getRviewcnt())
                 .rgoodcnt(data.getRgoodcnt())
-                .rRegDate(data.getRegDate())
-                .rModDate(data.getModDate())
+                .regDate(data.getRegDate())
+                .modDate(data.getModDate())
                 .mid(data.getMemberEntity().getMid())
                 .build());
 
         return recipeDTOS;
     }
     //조회수
-   /* public void viewcnt(int rid) throws Exception {
+   public void viewcnt(int rid) throws Exception {
         recipeRepository.rviewcnt(rid);
     }
     //좋아요
     public void goodcnt(int rid) throws Exception {
-        recipeRepository.rgoodcnt(rid);
-    }*/
+         recipeRepository.rgoodcnt(rid);
+    }
 }
