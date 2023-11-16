@@ -16,10 +16,11 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/comment/register")
-    public String registerProc(int rid, CommentDTO commentDTO, RedirectAttributes redirectAttributes) throws Exception {
-        commentService.create(rid, commentDTO);
+    public String registerProc(int no, CommentDTO commentDTO,
+                               RedirectAttributes redirectAttributes) throws Exception {
+        commentService.create(no, commentDTO);
 
-        redirectAttributes.addAttribute("id", rid);
+        redirectAttributes.addAttribute("rid", no);
         return "redirect:/recipe/detail";
     }
 
