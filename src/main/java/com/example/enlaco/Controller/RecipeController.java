@@ -76,7 +76,7 @@ public class RecipeController {
         int prevPage = recipeDTOS.getNumber();
         int curPage = recipeDTOS.getNumber()+1;
         int nextPage = recipeDTOS.getNumber()+2;
-        int lastPage = recipeDTOS.getTotalPages();
+        int lastPage = recipeDTOS.getTotalPages()-1;
 
         model.addAttribute("recipeDTOS", recipeDTOS);
         model.addAttribute("startPage", startPage);
