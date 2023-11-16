@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
-    @Query(value = "SELECT * FROM Comment WHERE rid =:rid", nativeQuery = true)
-    List<CommentEntity> findByRid(Integer rid);
+    @Query(value = "SELECT * FROM Comment WHERE recipeid =:recipeid", nativeQuery = true)
+    List<CommentEntity> findByRecipeId(Integer recipeid);
 }

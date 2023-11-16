@@ -34,7 +34,7 @@ public class CommentService {
         Optional<CommentEntity> read = commentRepository.findById(cid);
         CommentEntity commentEntity = read.orElseThrow();
 
-        Optional<RecipeEntity> data = recipeRepository.findById(commentDTO.getRid());
+        Optional<RecipeEntity> data = recipeRepository.findById(commentDTO.getRecipeid());
         RecipeEntity recipeEntity = data.orElseThrow();
 
         CommentEntity update = modelMapper.map(commentDTO, CommentEntity.class);
@@ -58,7 +58,7 @@ public class CommentService {
 
     //전체조회
     public List<CommentDTO> list(Integer rid) throws Exception {
-        List<CommentEntity> commentEntities = commentRepository.findByRid(rid);
+        List<CommentEntity> commentEntities = commentRepository.findByRecipeId(rid);
         List<CommentDTO> commentDTOS = Arrays.asList(modelMapper.map(commentEntities, CommentDTO[].class));
 
         return commentDTOS;
