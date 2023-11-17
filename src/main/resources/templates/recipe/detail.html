@@ -16,9 +16,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <!--[if IE 7]-->
+  <!--[if IE 7]>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome-ie7.min.css">
-  <!--[endif]-->
+  <![endif]-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -30,23 +30,33 @@
       <div class="container mt-5">
         <div class="row">
           <h2><span th:text="${recipeDTO.rmenu}"> 메뉴명</span></h2>
-          <h6><span th:text="${recipeDTO.rwriter}">작성자</span>
+          <h6><span th:text="${recipeDTO.rwriter}"> 작성자</span>
             <span style="text-align: -moz-right" th:text="${#temporals.format(recipeDTO.regDate, 'yyyy-MM-dd')}">(등록일)</span></h6><br>
-          <div>
-            <span class="badge text-dark" style="background-color: #ffb30e" th:if="${recipeDTO.rtime=='0'}">간단(10분 이내)</span>
-            <span class="badge text-dark" style="background-color: #ffb30e" th:if="${recipeDTO.rtime=='1'}">정성(20분 이내)</span>
-            <span class="badge text-dark" style="background-color: #ffb30e" th:if="${recipeDTO.rtime=='2'}">고수(30분 이상)</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='0'}">한끼 뚝딱</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='1'}">면류</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='2'}">반찬</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='3'}">디저트</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='4'}">찌개/국</span>
-            <span class="badge" style="background-color: #623100" th:if="${recipeDTO.rclass=='5'}">인스턴트</span>
-          </div>&nbsp;&nbsp;&nbsp;
+          <div class="row">
+            <div class="col-sm-3 mb-3">
+              <div class="badge rounded-pill bg-success">
+                <span th:if="${recipeDTO.rtime=='1'}">간단(10분 이내)</span>
+                <span th:if="${recipeDTO.rtime=='2'}">정성(20분 이내)</span>
+                <span th:if="${recipeDTO.rtime=='3'}">고수(30분 이상)</span>
+              </div>&nbsp;
+              <div class="badge rounded-pill bg-info">
+                <span th:if="${recipeDTO.rclass=='1'}">한끼 뚝딱</span>
+                <span th:if="${recipeDTO.rclass=='2'}">면류</span>
+                <span th:if="${recipeDTO.rclass=='3'}">반찬</span>
+                <span th:if="${recipeDTO.rclass=='4'}">디저트</span>
+                <span th:if="${recipeDTO.rclass=='5'}">찌개/국</span>
+                <span th:if="${recipeDTO.rclass=='6'}">인스턴트</span>
+              </div>
+            </div>
+            <div class="col-sm-9"></div>
+
+          </div>
+
           <hr>
           <div class="col-sm-5">
             <div class="fakeimg">
-              <img src="/image/포도.jpg"  class="img-thumbnail"></div>
+              <img th:src="|/images/image/@{${recipeDTO.rimg}}|" class="img-thumbnail">
+            </div>
             <hr class="d-sm-none">
           </div>
           <div class="col-sm-7">

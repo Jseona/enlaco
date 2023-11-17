@@ -54,9 +54,10 @@ public class RecipeController {
     @PostMapping("/insert")
     public String insertProc(@Valid RecipeDTO recipeDTO,
                              BindingResult bindingResult,
-                             MultipartFile imgFile) throws Exception {
+                             MultipartFile imgFile
+                             ) throws Exception {
         if (bindingResult.hasErrors()) {
-            return "recipe/insert";
+            return "/recipe/insert";
         }
 
         recipeService.insert(recipeDTO, imgFile);
@@ -91,6 +92,7 @@ public class RecipeController {
         model.addAttribute("lastPage", lastPage);
 
         model.addAttribute("keyword", keyword);
+
 
         return "recipe/list";
     }

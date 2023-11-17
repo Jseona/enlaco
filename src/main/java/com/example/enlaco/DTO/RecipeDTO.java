@@ -4,6 +4,7 @@ package com.example.enlaco.DTO;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class RecipeDTO {
     private Integer rid;
     private String  rimg;
-    @NotBlank(message = "메뉴명을 입력하세요")
+    @NotEmpty(message = "메뉴명을 입력하세요")
     private String  rmenu;
     private String  rcontent;
     private String  rwriter;

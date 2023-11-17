@@ -24,4 +24,13 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     /*@Query("SELECT u FROM GuestbookEntity u WHERE u.title like %:keyword% or u.content like %:keyword% or u.writer like %:keyword%")*/
     @Query("SELECT u FROM RecipeEntity u WHERE u.rmenu like %:keyword% or u.rcontent like %:keyword% or u.rselect like %:keyword%")
     Page<RecipeEntity> searchRecipe(String keyword, Pageable pageable);
+
+    //조리 시간 - 간단(10분 이내)
+
+    /*
+    @Query("SELECT u FROM RecipeEntity u WHERE u.rtime like %:keyword% or u.rclass like %:keyword%")
+    Page<RecipeEntity> searchRtimeRclass(String rtime, String rclass, Pageable pageable);
+
+
+     */
 }

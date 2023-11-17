@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RecipeService {
-    @Value("${imgLocation}")
+    @Value("c:/enlaco/image/")
     private String imgLocation;
     private final RecipeRepository recipeRepository;
     private final FileService fileService;
@@ -61,7 +61,7 @@ public class RecipeService {
 
         RecipeDTO recipeDTO = modelMapper.map(recipeEntity, RecipeDTO.class);
 
-        return recipeDTO;
+        return  recipeDTO;
     }
     //전체조회
     public Page<RecipeDTO> list(String keyword, Pageable pageable) throws Exception {
@@ -78,6 +78,14 @@ public class RecipeService {
         } else {
             recipeEntities = recipeRepository.findAll(newPage);
         }
+        /*
+        if(rtime.equals("rtime1")) {
+            recipeEntities = recipeRepository.searchRtimeRclass("rtime1", pageable);
+        } else if (rtime.equals("rtime2")) {
+
+        }
+
+         */
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())
