@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" id="rmenu" placeholder="메뉴명을 입력해주세요." name="rmenu" th:field="*{rmenu}">
-                        <p class="text-danger" th:if="${#fields.hasErrors('rmenu')}" th:errors="*{rmenu}"></p>
+                        <p class="text-danger" th:if="${#fields.hasErrors('rmenu')}" th:errors="*{rmenu}"> </p>
                     </div>
                 </div>  <!--메뉴명 입력 줄 끝-->
                 <div class="row mb-3"> <!--대표사진 입력 줄-->

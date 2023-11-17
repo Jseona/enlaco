@@ -93,6 +93,7 @@ public class RecipeController {
 
         model.addAttribute("keyword", keyword);
 
+
         return "recipe/list";
     }
 
