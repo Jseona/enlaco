@@ -53,8 +53,8 @@ public class RecipeController {
     }
     @PostMapping("/insert")
     public String insertProc(@Valid RecipeDTO recipeDTO,
-                             MultipartFile imgFile,
-                             BindingResult bindingResult) throws Exception {
+                             BindingResult bindingResult,
+                             MultipartFile imgFile) throws Exception {
         if (bindingResult.hasErrors()) {
             return "recipe/insert";
         }
