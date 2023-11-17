@@ -1,5 +1,6 @@
 package com.example.enlaco.Entity;
 
+import com.example.enlaco.Constant.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,4 +33,6 @@ public class MemberEntity extends BaseEntity {
     private String  mphone;     //폰번호
     @Column(name = "mbirth", length = 10)
     private String  mbirth;     //생년월일
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
