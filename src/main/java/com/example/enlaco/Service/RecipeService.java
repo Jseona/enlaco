@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RecipeService {
-    @Value("${imgLocation}")
+    @Value("c:/enlaco/image/")
     private String imgLocation;
     private final RecipeRepository recipeRepository;
     private final FileService fileService;

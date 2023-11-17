@@ -32,16 +32,31 @@
           <h2><span th:text="${recipeDTO.rmenu}"> 메뉴명</span></h2>
           <h6><span th:text="${recipeDTO.rwriter}">작성자</span>
             <span style="text-align: -moz-right" th:text="${#temporals.format(recipeDTO.regDate, 'yyyy-MM-dd')}">(등록일)</span></h6><br>
-          <div>
-            <span th:if="${recipeDTO.rtime==0}"></span>
-            <span th:if="${recipeDTO.rtime==1}">간단(10분 이내)</span>
-            <span th:if="${recipeDTO.rtime==2}">정성(20분 이내)</span>
-            <span th:if="${recipeDTO.rtime==3}">고수(30분 이상)</span>
-          </div>&nbsp;&nbsp;&nbsp;<span th:text="${recipeDTO.rclass}"></span>
+          <div class="row">
+            <div class="col-sm-3 mb-3">
+              <div class="badge rounded-pill bg-success">
+                <span th:if="${recipeDTO.rtime=='1'}">간단(10분 이내)</span>
+                <span th:if="${recipeDTO.rtime=='2'}">정성(20분 이내)</span>
+                <span th:if="${recipeDTO.rtime=='3'}">고수(30분 이상)</span>
+              </div>&nbsp;
+              <div class="badge rounded-pill bg-info">
+                <span th:if="${recipeDTO.rclass=='1'}">한끼 뚝딱</span>
+                <span th:if="${recipeDTO.rclass=='2'}">면류</span>
+                <span th:if="${recipeDTO.rclass=='3'}">반찬</span>
+                <span th:if="${recipeDTO.rclass=='4'}">디저트</span>
+                <span th:if="${recipeDTO.rclass=='5'}">찌개/국</span>
+                <span th:if="${recipeDTO.rclass=='6'}">인스턴트</span>
+              </div>
+            </div>
+            <div class="col-sm-9"></div>
+
+          </div>
+
           <hr>
           <div class="col-sm-5">
             <div class="fakeimg">
-              <img src="/image/포도.jpg"  class="img-thumbnail"></div>
+              <img th:src="|/images/image/@{${recipeDTO.rimg}}|" class="img-thumbnail">
+            </div>
             <hr class="d-sm-none">
           </div>
           <div class="col-sm-7">
