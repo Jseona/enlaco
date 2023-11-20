@@ -133,15 +133,15 @@
 
                 <ul class="pagination justify-content-center" style="margin:20px 0">
                     <li class="page-item" th:if="${startPage != 1}">
-                        <a class="page-link" th:href="@{/recipe/list(page=1,keyword=${keyword})}">first</a>
+                        <a class="page-link" th:href="@{/recipe/listClass(page=1, rtime=${rtime}, rclass=${rclass})}">first</a>
                     </li>
                     <li class="page-item" th:if="${curPage != 1}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${prevPage},keyword=${keyword})}">prev</a>
+                        <a class="page-link" th:href="@{/recipe/listClass(page=${prevPage}, rtime=${rtime}, rclass=${rclass})}">prev</a>
                     </li>
 
                     <span th:each="page:${#numbers.sequence(startPage, endPage)}">
                         <li class="page-item" th:if="${page != curPage}">  <!--현재 페이지가 아니면-->
-                            <a class="page-link" th:href="@{/recipe/list(page=${page},keyword=${keyword})}">[[${page}]]</a>
+                            <a class="page-link" th:href="@{/recipe/listClass(page=${page}, rtime=${rtime}, rclass=${rclass})}">[[${page}]]</a>
                         </li>
                         <li class="page-item active" th:if="${page == curPage}">  <!--현재 페이지 이면-->
                             <a class="page-link" style="background-color: #E67E22" href="#">[[${page}]]</a>
@@ -149,10 +149,10 @@
                     </span>
 
                     <li class="page-item" th:if="${curPage != lastPage}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${nextPage},keyword=${keyword})}">next</a>
+                        <a class="page-link" th:href="@{/recipe/listClass(page=${nextPage}, rtime=${rtime}, rclass=${rclass})}">next</a>
                     </li>
                     <li class="page-item" th:if="${endPage != lastPage}">
-                        <a class="page-link" th:href="@{/recipe/list(page=${lastPage},keyword=${keyword})}">last</a>
+                        <a class="page-link" th:href="@{/recipe/listClass(page=${lastPage}, rtime=${rtime}, rclass=${rclass})}">last</a>
                     </li>
                 </ul>
 
