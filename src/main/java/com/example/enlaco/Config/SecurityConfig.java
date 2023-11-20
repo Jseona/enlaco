@@ -26,7 +26,7 @@ public class SecurityConfig {
         //매핑에 따른 접근권한 부여
         http.authorizeHttpRequests((auth)->{
             auth.antMatchers("/","/recipe/list","/recipe/detail","/member/login","/member/insert").permitAll();
-            auth.antMatchers("/recipe/insert","/recipe/modify","/material/list","/material/detail","/material/insert","/material/modify","/material/remove").hasAnyRole("USER");
+            auth.antMatchers("/recipe/insert","/recipe/modify","/material/list","/material/detail","/material/insert","/material/modify","/material/remove","/member/mypage").hasAnyRole("USER");
         });
 
         //로그인 처리에 대한 설정

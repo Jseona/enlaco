@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -37,6 +39,8 @@ public class MemberController {
     @PostMapping("/insert")
     public String insertProc(@Valid MemberDTO memberDTO,
                              BindingResult bindingResult,
+                             int mid,
+                             HttpServletResponse response,
                              RedirectAttributes redirectAttributes) throws Exception {
         if (bindingResult.hasErrors()) {
             return "member/insert";
@@ -45,6 +49,10 @@ public class MemberController {
         try {
             memberService.saveMember(memberDTO);
             redirectAttributes.addAttribute("errorMessage", "가입을 축하합니다.");
+
+            /*Cookie cookie = new Cookie("mid", String.valueOf(mid));
+            response.addCookie(cookie);*/
+
         } catch (IllegalStateException e) {
             redirectAttributes.addAttribute("errorMessage", e.getMessage());
             return "member/insert";
@@ -65,7 +73,7 @@ public class MemberController {
     @GetMapping("/mypage")
     public String mypage(@PageableDefault(page = 1) Pageable pageable,
                          Model model) throws Exception {
-        int mid = 1;
+        int mid = 1; //에러 방지를 위한 임의의 값 입력
         Page<RecipeDTO> recipeDTOS = memberService.myList(mid, pageable);
 
         //페이지 정보
