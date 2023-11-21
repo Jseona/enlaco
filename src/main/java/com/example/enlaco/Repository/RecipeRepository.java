@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     @Modifying
@@ -35,5 +37,6 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     @Query("SELECT u FROM RecipeEntity u WHERE u.rtime =:rtime AND u.rclass =:rclass")
     Page<RecipeEntity> searchRtimeRclass(String rtime, String rclass, Pageable pageable);
 
-
+    @Query(value = "SELECT * FROM  Recipe WHERE mid=:mid",nativeQuery = true)
+    List<RecipeEntity> findByMid(@Param("mid") Integer mid);
 }
