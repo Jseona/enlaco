@@ -36,76 +36,79 @@
                         자세히
                     </button>
                 </div>
-
+                <form th:action="@{/recipe/listClass}" method="get">
                 <!-- The Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4">
-                                        <!-- 조리 시간 -->
-                                        <h4>조리 시간</h4>
-                                        <div>
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input" id="rtime1" name="rtime" value="rtime1" >간단(10분 이내)
-                                                <label class="form-check-label" for="rtime1"></label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input" id="rtime2" name="rtime" value="rtime2">정성(20분 이내)
-                                                <label class="form-check-label" for="rtime2"></label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input type="radio" class="form-check-input" id="rtime3" name="rtime" value="rtime3">고수(30분 이상)
-                                                <label class="form-check-label" for="rtime3"></label>
-                                            </div>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <!-- 조리 시간 -->
+                                            <h4>조리 시간</h4>
+
+                                                <input type="hidden" name="page" value="1">
+                                                <div>
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" id="rtime1" name="rtime" value="1" th:selected="${rtime=='1'}" >간단(10분 이내)
+                                                        <label class="form-check-label" for="rtime1"></label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" id="rtime2" name="rtime" value="2" th:selected="${rtime=='2'}">정성(20분 이내)
+                                                        <label class="form-check-label" for="rtime2"></label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" id="rtime3" name="rtime" value="3" th:selected="${ritme=='3'}">고수(30분 이상)
+                                                        <label class="form-check-label" for="rtime3"></label>
+                                                    </div>
+                                                </div>
+                                                <!-- 조리 시간 끝-->
+                                                <div class="col-md-4 ms-auto"></div>
+                                                <hr>
+                                                <!-- 요리별 분류 -->
+                                                <h4>분류</h4>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass1" name="rclass" value="1" th:selected="${rclass=='1'}" >한끼 뚝딱
+                                                    <label class="form-check-label" for="rclass1"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass2" name="rclass" value="2" th:selected="${rclass=='2'}">면류
+                                                    <label class="form-check-label" for="rclass2"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass3" name="rclass" value="3" th:selected="${rclass=='3'}">반찬
+                                                    <label class="form-check-label" for="rclass3"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass4" name="rclass" value="4" th:selected="${rclass=='4'}">디저트
+                                                    <label class="form-check-label" for="rclass4"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass5" name="rclass" value="5" th:selected="${rclass=='5'}">찌개/국
+                                                    <label class="form-check-label" for="rclass5"></label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" class="form-check-input" id="rclass6" name="rclass" value="6" th:selected="${rclass=='6'}">인스턴트
+                                                    <label class="form-check-label" for="rclass6"></label>
+                                                </div>
+
+                                            <!-- 요리별 분류 끝 -->
                                         </div>
-                                        <!-- 조리 시간 끝-->
                                         <div class="col-md-4 ms-auto"></div>
-                                        <hr>
-                                        <!-- 요리별 분류 -->
-                                        <h4>분류</h4>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass1" name="rclass" value="rclass1" >한끼 뚝딱
-                                            <label class="form-check-label" for="rclass1"></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass2" name="rclass" value="rclass2">면류
-                                            <label class="form-check-label" for="rclass2"></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass3" name="rclass" value="rclass3">반찬
-                                            <label class="form-check-label" for="rclass3"></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass4" name="rclass" value="rclass4">디저트
-                                            <label class="form-check-label" for="rclass4"></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass5" name="rclass" value="rclass5">찌개/국
-                                            <label class="form-check-label" for="rclass5"></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input type="radio" class="form-check-input" id="rclass6" name="rclass" value="rclass6">인스턴트
-                                            <label class="form-check-label" for="rclass6"></label>
-                                        </div>
-                                        <!-- 요리별 분류 끝 -->
                                     </div>
-                                    <div class="col-md-4 ms-auto"></div>
-                                </div>
-                            </div> <!-- Modal body 끝-->
-                            <div class="modal-footer">
-                                <div class="text-lg-end">
-                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">설정</button>
-                                    <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                </div> <!-- Modal body 끝-->
+                                <div class="modal-footer">
+                                    <div class="text-lg-end">
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">설정</button>
+                                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </form>
                 <table class="table">
                     <thead>
                     <tr>
@@ -116,7 +119,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:each="data:${recipeDTOS}">
+                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:if="recipeDTO" th:each="data:${recipeDTOS}">
                         <td> <img th:src="|/images/image/@{${data.rimg}}|" width="150" height="100"> </td>
                         <td th:text="${data.rmenu}">김치찌개</td>
                         <td th:text="${data.rwriter}">작성자1</td>
