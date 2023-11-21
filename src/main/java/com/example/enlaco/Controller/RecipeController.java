@@ -97,6 +97,38 @@ public class RecipeController {
         return "recipe/list";
     }
 
+    //분류 리스트
+    @GetMapping("/listClass")
+    public String recipeClass(@RequestParam(value = "rtime", defaultValue = "") String rtime,
+                              @RequestParam(value = "rclass", defaultValue = "") String rclass,
+                              @PageableDefault(page = 1) Pageable pageable,
+                              Model model) throws Exception {
+
+        Page<RecipeDTO> recipeDTOS = recipeService.listClass(rtime, rclass, pageable);
+        int blockLimit = 5;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
+        int endPage = ((startPage+blockLimit-1)<recipeDTOS.getTotalPages())? startPage+blockLimit-1:recipeDTOS.getTotalPages();
+
+        int prevPage = recipeDTOS.getNumber();
+        int curPage = recipeDTOS.getNumber()+1;
+        int nextPage = recipeDTOS.getNumber()+2;
+        int lastPage = recipeDTOS.getTotalPages();
+
+        model.addAttribute("recipeDTOS", recipeDTOS);
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("prevPage", prevPage);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("nextPage", nextPage);
+        model.addAttribute("lastPage", lastPage);
+
+        model.addAttribute("rtime", rtime);
+        model.addAttribute("rclass", rclass);
+
+        return "recipe/listrclass";
+    }
+
     //수정
     @GetMapping("/modify")
     public String modifyForm(int rid, Model model) throws Exception {

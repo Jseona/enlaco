@@ -105,6 +105,122 @@ public class RecipeService {
 
         return recipeDTOS;
     }
+
+    //리스트 조회
+    public Page<RecipeDTO> listClass(String rtime, String rclass, Pageable pageable) throws Exception {
+        int curPage = pageable.getPageNumber()-1;
+        int pageLimit = 5;
+
+        Pageable newPage = PageRequest.of(curPage, pageLimit,
+                Sort.by(Sort.Direction.DESC,"rviewcnt"));
+
+        Page<RecipeEntity> recipeEntities;
+
+        /*
+        switch (rtime) {
+            case "1":
+            case "2":
+            case "3":
+                if (rtime.equals("1") && rclass.equals("1")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("1") && rclass.equals("2")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("1") && rclass.equals("3")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("1") && rclass.equals("4")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("1") && rclass.equals("5")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("1") && rclass.equals("6")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("1")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("2")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("3")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("4")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("5")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("2") && rclass.equals("6")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("3") && rclass.equals("2")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("3") && rclass.equals("3")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("3") && rclass.equals("4")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("3") && rclass.equals("5")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else if (rtime.equals("3") && rclass.equals("6")) {
+                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
+                } else {
+                    recipeEntities = recipeRepository.searchRtime(rtime, pageable);
+                }
+                break;
+
+            default:
+                recipeEntities = switch (rclass) {
+                    case "1" -> recipeRepository.searchRclass(rclass, pageable);
+                    case "2" -> recipeRepository.searchRclass(rclass, pageable);
+                    case "3" -> recipeRepository.searchRclass(rclass, pageable);
+                    case "4" -> recipeRepository.searchRclass(rclass, pageable);
+                    case "5" -> recipeRepository.searchRclass(rclass, pageable);
+                    case "6" -> recipeRepository.searchRclass(rclass, pageable);
+                    default -> recipeRepository.findAll(pageable);
+                };
+                break;
+        }
+
+         */
+
+        if (rtime.equals("1") || rtime.equals("2") || rtime.equals("3")) {
+            if (rtime.equals("1") && (rclass.equals("1") || rclass.equals("2") || rclass.equals("3") || rclass.equals("4") || rclass.equals("5") || rclass.equals("6"))) {
+                recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, newPage);
+            } else if (rtime.equals("2") && (rclass.equals("1") || rclass.equals("2") || rclass.equals("3") || rclass.equals("4") || rclass.equals("5") || rclass.equals("6"))) {
+                recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, newPage);
+            } else if (rtime.equals("3") && (rclass.equals("2") || rclass.equals("3") || rclass.equals("4") || rclass.equals("5") || rclass.equals("6"))) {
+                recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, newPage);
+            } else {
+                recipeEntities = recipeRepository.searchRtime(rtime, newPage);
+            }
+        } else {
+            switch (rclass) {
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                    recipeEntities = recipeRepository.searchRclass(rclass, newPage);
+                    break;
+                default:
+                    recipeEntities = recipeRepository.findAll(newPage);
+                    break;
+            }
+        }
+
+
+        Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
+                .rid(data.getRid())
+                .rimg(data.getRimg())
+                .rmenu(data.getRmenu())
+                .rcontent(data.getRcontent())
+                .rwriter(data.getRwriter())
+                .rclass(data.getRclass())
+                .rtime(data.getRtime())
+                .rselect(data.getRselect())
+                .rviewcnt(data.getRviewcnt())
+                .rgoodcnt(data.getRgoodcnt())
+                .regDate(data.getRegDate())
+                .modDate(data.getModDate())
+                .mid(data.getMemberEntity().getMid())
+                .build());
+
+        return recipeDTOS;
+    }
+
     //조회수
    public void viewcnt(int rid) throws Exception {
         recipeRepository.rviewcnt(rid);
