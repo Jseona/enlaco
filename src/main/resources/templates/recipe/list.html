@@ -32,7 +32,7 @@
             <div class="container mt-3">
                 <div class="text-lg-end">
                     <!-- Button to Open the Modal -->
-                    <button type="button" class="btn text-white mb-3" style="background-color: #E67E22" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn text-white mb-3" style="background-color: #f7931e" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         자세히
                     </button>
                 </div>
@@ -128,7 +128,7 @@
                     </tbody>
                 </table>
                 <div class="text-lg-end">
-                    <button type="button" class="btn text-white" style="background-color: #E67E22" onclick="location.href='/recipe/insert'">글쓰기</button>
+                    <button type="button" class="btn text-white" style="background-color: #f7931e" onclick="location.href='/recipe/insert'">글쓰기</button>
                 </div>
 
                 <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -144,7 +144,7 @@
                             <a class="page-link" th:href="@{/recipe/list(page=${page},keyword=${keyword})}">[[${page}]]</a>
                         </li>
                         <li class="page-item active" th:if="${page == curPage}">  <!--현재 페이지 이면-->
-                            <a class="page-link" style="background-color: #E67E22" href="#">[[${page}]]</a>
+                            <a class="page-link" style="background-color: #f7931e" href="#">[[${page}]]</a>
                         </li>
                     </span>
 
