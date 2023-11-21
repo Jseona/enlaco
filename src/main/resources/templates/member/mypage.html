@@ -25,31 +25,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" th:onclick="|location.href='/recipe/detail?rid=${data.rid}'|" th:each="data:${recipeDTOS}">
+                <tr style="cursor: pointer" th:each="data:${recipeDTOS}" th:onclick="|location.href='/recipe/detail?rid=${data.rid}'|">
                     <td th:text="${data.rmenu}">김치찌개 레시피</td>
                     <td th:text="${#temporals.format(data.regDate,'yyyy-MM-dd')}">2023-11-17</td>
                 </tr>
 
                 </tbody>
             </table>
-            <ul class="pagination">
+            <!--<ul class="pagination">
                 <li class="page-item" th:if="${curPage != 1}">
                     <a class="page-link" th:href="@{/member/mypage(page=${prevPage})}"><</a>
                 </li>
 
                 <span th:each="page:${#numbers.sequence(startPage, endPage)}">
-                    <li class="page-item" th:if="${page != curPage}">  <!--현재 페이지가 아니면-->
+                    <li class="page-item" th:if="${page != curPage}">  &lt;!&ndash;현재 페이지가 아니면&ndash;&gt;
                         <a class="page-link" th:href="@{/member/mypage(page=${page})}">[[${page}]]</a>
                     </li>
-                    <li class="page-item active" th:if="${page == curPage}">  <!--현재 페이지 이면-->
-                        <a class="page-link" style="background-color: #f7931e" href="#">[[${page}]]</a>
+                    <li class="page-item active" th:if="${page == curPage}">  &lt;!&ndash;현재 페이지 이면&ndash;&gt;
+                        <a class="page-link" href="#">[[${page}]]</a>
                     </li>
                 </span>
 
                 <li class="page-item" th:if="${curPage != lastPage}">
                     <a class="page-link" th:href="@{/member/mypage(page=${nextPage})}">></a>
                 </li>
-            </ul>
+            </ul>-->
         </div>
     </div>
     <div class="col-1 col-lg-3"></div>
