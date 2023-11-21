@@ -6,18 +6,16 @@ import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -53,9 +51,13 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login() throws Exception {
+    public String login(HttpServletResponse response) throws Exception {
+
+        Cookie cookie = new Cookie("memberId", "1001");
+        response.addCookie(cookie);
         return "member/login";
     }
+
     @GetMapping("/login/error")
     public String loginError(Model model) throws Exception {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해 주세요.");
@@ -63,7 +65,17 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(@PageableDefault(page = 1) Pageable pageable,
+    public String mypage(@CookieValue(name = "memberId", required = false) String memberId, Model model) throws Exception {
+        int mid = Integer.parseInt(memberId);
+        MemberDTO memberDTO = memberService.detail(mid);
+
+        List<RecipeDTO> recipeDTOS = memberService.list(mid);
+
+        model.addAttribute("memberDTO", memberDTO);
+        model.addAttribute("recipeDTOS", recipeDTOS);
+        return "member/mypage";
+    }
+    /*public String mypage(@PageableDefault(page = 1) Pageable pageable,
                          Model model) throws Exception {
         int mid = 1;
         Page<RecipeDTO> recipeDTOS = memberService.myList(mid, pageable);
@@ -88,10 +100,23 @@ public class MemberController {
         model.addAttribute("lastPage", lastPage);
 
         return "member/mypage";
-    }
+    }*/
 
     @GetMapping("/myrecipedetail")
     public String myrecipedetail() throws Exception {
         return "member/myrecipedetail";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        expiredCookie(response, "memberId");
+        return "redirect:/";
+    }
+
+    private void expiredCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 }
+

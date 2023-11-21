@@ -8,10 +8,7 @@ import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final RecipeRepository recipeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     //로그인 처리
     @Override
@@ -43,6 +45,18 @@ public class MemberService implements UserDetailsService {
                 .username(memberEntity.getMemail())
                 .password(memberEntity.getMpwd())
                 .roles(memberEntity.getRole().toString())
+                .build();
+    }
+
+    //로그인 시 회원번호 전달
+    public MemberDTO loginId(String memail, String mpwd) throws Exception {
+        MemberEntity member = memberRepository.findByMemail(memail);
+        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+
+        return memberDTO.builder()
+                .mid(member.getMid())
+                .memail(member.getMemail())
+                .mpwd(member.getMpwd())
                 .build();
     }
 
@@ -75,12 +89,18 @@ public class MemberService implements UserDetailsService {
     }
 
     //마이페이지조회
-    public Page<RecipeDTO> myList(int mid, Pageable pageable) throws Exception {
+    public List<RecipeDTO> list(Integer mid) throws Exception {
+        List<RecipeEntity> recipeEntities = recipeRepository.findByMid(mid);
+
+        List<RecipeDTO> recipeDTOS = Arrays.asList(modelMapper.map(recipeEntities, RecipeDTO[].class));
+
+        return recipeDTOS;
+    }
+    /*public Page<RecipeDTO> myList(int mid, Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
         int pageLimit = 10;
 
-        Pageable newPage = PageRequest.of(curPage, pageLimit,
-                Sort.by(Sort.Direction.DESC,"regDate"));
+        Pageable newPage = PageRequest.of(curPage, pageLimit);
 
         Page<RecipeEntity> recipeEntities = memberRepository.myList(mid, newPage);
 
@@ -101,7 +121,23 @@ public class MemberService implements UserDetailsService {
                 .build());
 
         return recipeDTOS;
+    }*/
+
+    //개별조회
+    public MemberDTO detail(int mid) throws Exception {
+        Optional<MemberEntity> member = memberRepository.findById(mid);
+
+        MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+
+        return memberDTO;
     }
 
+    //이메일로 조회해서 mid 값 뱉어주기
+    public int findByMemail1(String memail) throws Exception {
+        MemberEntity member = memberRepository.findByMemail(memail);
+        int mid = member.getMid();
+
+        return mid;
+    }
 
 }
