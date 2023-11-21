@@ -26,16 +26,16 @@ public class StorageEntity extends BaseEntity {
     private String  simg;       //재료사진
     @Column(name = "singre")
     private String  singre;     //식재료명
-    @Column(name = "sBuyDate")
+    @Column(name = "sbuydate")
     private String  sBuyDate;   //구매일
     @Column(name = "sYutong")
-    private String  sYutong;    //유통기한
+    private String  syutong;    //유통기한
     @Column(name = "squan")
     private Integer squan;      //식재료 개수
     @Column(name = "skeep")
     private String  skeep;       //보관 방법
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mid")
     private MemberEntity memberEntity;
 

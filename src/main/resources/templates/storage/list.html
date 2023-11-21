@@ -93,12 +93,29 @@
 <div layout:fragment="content">
 <div class="container">
     <h3 class="mt-3 mb-5">냉장고</h3>
-    <div id="flex">
-        <div class="image-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data:${storageDTOS}">
+            <td th:text="${data.syutong}">John</td>
+            <td th:text="${data.singre}">Doe</td>
+            <td>john@example.com</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="flex" >
+        <div class="image-container" >
             <img src="/image/test.jpg" onclick="location.href='/material/detail'" style="cursor: pointer">
-            <div class="expdate blue">D-10</div>
+            <div class="expdate blue" >D-10</div>
             <div class="material-name"><!--식재료 이름 칸-->
-                <div style="text-align: center; font-weight: bold; color: white">김치</div>
+                <div style="text-align: center; font-weight: bold; color: white" >김치</div>
             </div>
         </div>
 

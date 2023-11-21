@@ -14,8 +14,8 @@ public class StorageDTO {
     private String simg;
     @NotBlank(message = "재료명을 입력하세요")
     private String singre;
-    private String sBuyDate;
-    private String sYutong;
+    private String sbuydate;
+    private String syutong;
     private Integer squan;
     private String skeep;
     private Integer rid;
