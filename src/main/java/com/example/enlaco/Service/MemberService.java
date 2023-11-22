@@ -140,4 +140,12 @@ public class MemberService implements UserDetailsService {
         return mid;
     }
 
+    //댓글 작성자에 닉네임을 넣기 위해 이메일로 조회해서 닉네임을 뱉어주기
+    public String nickname(String memail) throws Exception {
+        MemberEntity member = memberRepository.findByMemail1(memail);
+        String nickname = member.getMnick();
+
+        return nickname;
+    }
+
 }

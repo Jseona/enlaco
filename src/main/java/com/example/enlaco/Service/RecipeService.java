@@ -1,7 +1,9 @@
 package com.example.enlaco.Service;
 
 import com.example.enlaco.DTO.RecipeDTO;
+import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.RecipeEntity;
+import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,8 @@ public class RecipeService {
     @Value("c:/enlaco/image/")
     private String imgLocation;
     private final RecipeRepository recipeRepository;
+    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -31,15 +35,49 @@ public class RecipeService {
         recipeRepository.deleteById(rid);
     }
     //수정
-    public void modify(RecipeDTO recipeDTO) throws Exception {
-        int id = recipeDTO.getRid();
-        Optional<RecipeEntity> read = recipeRepository.findById(id);
+    public void modify(RecipeDTO recipeDTO, String memail, MultipartFile imgFile) throws Exception {
+        int rid = recipeDTO.getRid();
+        int mid = memberService.findByMemail1(memail);
+
+        Optional<RecipeEntity> read = recipeRepository.findById(rid);
         RecipeEntity recipe = read.orElseThrow();
+
+        Optional<MemberEntity> data = memberRepository.findById(mid);
+        MemberEntity member = data.orElseThrow();
+
+        String deleteFile = recipe.getRimg();
+
+        String originalFileName = imgFile.getOriginalFilename();
+        String newFileName = "";
+
+        if (originalFileName.length() != 0) {
+            if (deleteFile.length() != 0) {
+                fileService.deleteFile(imgLocation, deleteFile);
+            }
+
+            newFileName = fileService.uploadFile(imgLocation, originalFileName,
+                    imgFile.getBytes());
+            recipe.setRimg(newFileName);
+        }
 
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);
         update.setRid(recipe.getRid());
+        update.setRclass(recipe.getRclass());
+        update.setRgoodcnt(recipe.getRgoodcnt());
+        update.setRimg(recipe.getRimg());
+        update.setRviewcnt(recipe.getRviewcnt());
+        update.setRwriter(recipe.getRwriter());
+        update.setMemberEntity(member);
+        update.setRtime(recipe.getRtime());
 
         recipeRepository.save(update);
+    }
+    //수정 시 rid에 해당하는 rselect 불러오기
+    public String readRselect(int rid) throws Exception {
+        RecipeEntity recipe = recipeRepository.findByRid(rid);
+        String select = recipe.getRselect();
+
+        return select;
     }
     //삽입
     public void insert(RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
@@ -87,6 +125,7 @@ public class RecipeService {
 
          */
 
+
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())
                 .rimg(data.getRimg())
@@ -100,7 +139,7 @@ public class RecipeService {
                 .rgoodcnt(data.getRgoodcnt())
                 .regDate(data.getRegDate())
                 .modDate(data.getModDate())
-                .mid(data.getMemberEntity().getMid())
+                /*.mid(data.getMemberEntity().getMid())*/
                 .build());
 
         return recipeDTOS;

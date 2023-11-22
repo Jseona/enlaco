@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" th:each="data:${recipeDTOS}" th:onclick="|location.href='/recipe/detail?rid=${data.rid}'|">
+                <tr style="cursor: pointer" th:each="data:${recipeDTOS}" th:onclick="|location.href='/member/myrecipedetail?rid=${data.rid}&mid=${mid}'|">
                     <td th:text="${data.rmenu}">김치찌개 레시피</td>
                     <td th:text="${#temporals.format(data.regDate,'yyyy-MM-dd')}">2023-11-17</td>
                 </tr>

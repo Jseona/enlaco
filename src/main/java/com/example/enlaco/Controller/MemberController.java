@@ -68,13 +68,13 @@ public class MemberController {
     public String mypage(Principal principal,
                          Model model) throws Exception {
         int mid = memberService.findByMemail1(principal.getName());
-        System.out.println("조회한 mid : " + mid);
 
         MemberDTO memberDTO = memberService.detail(mid);
         List<RecipeDTO> recipeDTOS = memberService.list(mid);
 
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("recipeDTOS", recipeDTOS);
+        model.addAttribute("mid", mid);
         return "member/mypage";
     }
     /*public String mypage(@PageableDefault(page = 1) Pageable pageable,
@@ -105,7 +105,13 @@ public class MemberController {
     }*/
 
     @GetMapping("/myrecipedetail")
-    public String myrecipedetail() throws Exception {
+    public String myrecipedetail(Principal principal,
+            int rid, Model model) throws Exception {
+        int mid = memberService.findByMemail1(principal.getName());
+        RecipeDTO recipeDTO = recipeService.detail(rid);
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("recipeDTO", recipeDTO);
         return "member/myrecipedetail";
     }
 

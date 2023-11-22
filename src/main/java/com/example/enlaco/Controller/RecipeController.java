@@ -3,6 +3,7 @@ package com.example.enlaco.Controller;
 import com.example.enlaco.DTO.CommentDTO;
 import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.Service.CommentService;
+import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,11 +30,20 @@ import java.util.List;
 public class RecipeController {
     private final RecipeService recipeService;
     private final CommentService commentService;
+    private final MemberService memberService;
 
     //상세페이지
     @GetMapping("/detail")
-    public String detail(int rid, Model model) throws Exception {
+    public String detail(Principal principal, int rid, Model model) throws Exception {
+        String writer = "";
+        if (principal == null) {
+            writer = "";
+        } else {
+            writer = principal.getName();
+        }
+
         recipeService.viewcnt(rid);
+
 
         RecipeDTO recipeDTO = recipeService.detail(rid);
 
@@ -40,14 +51,19 @@ public class RecipeController {
 
         model.addAttribute("recipeDTO", recipeDTO);
         model.addAttribute("commentDTOS", commentDTOS);
+        model.addAttribute("writer", writer);
         return "recipe/detail";
     }
 
     //입력
     @GetMapping("/insert")
-    public String insertForm(Model model) throws Exception {
+    public String insertForm(Principal principal, Model model) throws Exception {
+        String writer = principal.getName();
+        int mid = memberService.findByMemail1(writer);
         RecipeDTO recipeDTO = new RecipeDTO();
 
+        model.addAttribute("writer", writer);
+        model.addAttribute("mid", mid);
         model.addAttribute("recipeDTO", recipeDTO);
         return "recipe/insert";
     }
@@ -133,16 +149,28 @@ public class RecipeController {
     @GetMapping("/modify")
     public String modifyForm(int rid, Model model) throws Exception {
         RecipeDTO recipeDTO = recipeService.detail(rid);
+        String select = recipeDTO.getRselect();
+        System.out.println("recipeDTO에서 가져온 rselect : " + select);
+
+        String list[] = select.split(",");
+        for (int i=0; i<list.length; i++) {
+            System.out.println(list[i]);
+        }
 
         model.addAttribute("recipeDTO", recipeDTO);
+        model.addAttribute("list", list);
         return "recipe/modify";
     }
     @PostMapping("/modify")
-    public String modifyProc(@Valid RecipeDTO recipeDTO, BindingResult bindingResult, Model model) throws Exception {
+    public String modifyProc(@Valid RecipeDTO recipeDTO,
+                             Principal principal,
+                             MultipartFile imgFile,
+                             BindingResult bindingResult, Model model) throws Exception {
+        String memail = principal.getName();
         if (bindingResult.hasErrors()) {
             return "recipe/modify";
         }
-        recipeService.modify(recipeDTO);
+        recipeService.modify(recipeDTO, memail, imgFile);
 
         return "redirect:/member/mypage";
     }

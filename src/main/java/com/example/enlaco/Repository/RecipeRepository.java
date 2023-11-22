@@ -13,11 +13,13 @@ import java.util.List;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
+    //조회수
     @Modifying
     @Query(value = "UPDATE recipe u SET  u.rviewcnt=u.rviewcnt+1 WHERE u.rid=:rid",
     nativeQuery = true)
     public void rviewcnt(@Param("rid") Integer rid);
 
+    //좋아요
     @Modifying
     @Query(value = "UPDATE RecipeEntity u SET u.rgoodcnt=u.rgoodcnt+1 WHERE u.rid=:rid")
     public void rgoodcnt(int rid);
@@ -37,6 +39,10 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     @Query("SELECT u FROM RecipeEntity u WHERE u.rtime =:rtime AND u.rclass =:rclass")
     Page<RecipeEntity> searchRtimeRclass(String rtime, String rclass, Pageable pageable);
 
-    @Query(value = "SELECT * FROM  Recipe WHERE mid=:mid",nativeQuery = true)
+    //Mid로 조회해서 목록으로 가져오기
+    @Query(value = "SELECT * FROM  Recipe WHERE mid=:mid", nativeQuery = true)
     List<RecipeEntity> findByMid(@Param("mid") Integer mid);
+
+    //Rid로 조회
+    RecipeEntity findByRid(int rid);
 }

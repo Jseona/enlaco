@@ -45,6 +45,9 @@
         <form th:action="@{/recipe/insert}" method="post" enctype="multipart/form-data" th:object="${recipeDTO}">
             <div class="container mt-3"> <!--레시피 입력 창-->
                 <h3 class="">레시피 등록</h3>
+                <input type="hidden" name="rviewcnt" value=0>
+                <input type="hidden" name="rwriter" th:value="${writer}">
+                <input type="hidden" name="mid" th:value="${mid}">
                 <div class="row mt-4 mb-3"> <!--메뉴명 입력 줄-->
                     <div class="col-3 mt-2">
                         <label for="rmenu" class="form-label fw-bold">메뉴명</label>
