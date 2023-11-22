@@ -19,20 +19,24 @@ layout:decorate="~{layouts/layout}">
         <div class="mb-3 mt-3 row">
             <!--식재료명-->
             <div class="col-3">
-                <label for="email" class="form-label mt-1">식재료명</label>
+                <label for="jj" class="form-label mt-1">식재료명</label>
             </div>
             <div class="col-9">
-                <input type="email" class="form-control" id="name" placeholder="식재료명을 입력해주세요" name="email">
+                <div class="alert alert-light" id="jj">
+                    <span th:text="${storageDTO.singre}"></span>
+                </div>
             </div>
             <!--식재료명 긑-->
         </div>
         <div class="mb-3 mt-3 row">
             <!--유통기한-->
             <div class="col-3">
-                <label for="email" class="form-label mt-1">유통기한</label>
+                <label for="kk" class="form-label mt-1">유통기한</label>
             </div>
             <div class="col-9">
-                <input type="email" class="form-control" id="email" placeholder="--년--월--일" name="email">
+                <div class="alert alert-light" id="kk">
+                    <span th:text="${storageDTO.syutong}"></span>
+                </div>
             </div>
             <!--유통기한 끋-->
         </div>
@@ -40,9 +44,8 @@ layout:decorate="~{layouts/layout}">
         <div class="mb-3 mt-1">
             <div class="row">
                 <div class="col text-lg-end text-sm-end text-end">
-                    <button class="btn text-white" type="button" style="background-color: #ffb30e;" onclick="location.href='/material/modify'">수정</button>
-                    <button class="btn text-white" type="button" style="background-color: #f7931e; margin-left: 3%" onclick="location.href='/material/remove'">삭제</button>
-                    <button class="btn text-white" type="reset" style="background-color:#E67E22; margin-left: 3%">취소</button>
+                    <button class="btn text-white" type="button" style="background-color: #ffb30e;" th:onclick="|location.href='@{/storage/modify(sid=${storageDTO.sid})}'|">수정</button>
+                    <button class="btn text-white" type="button" style="background-color: #f7931e; margin-left: 3%" th:onclick="|location.href='@{/storage/remove(sid=${storageDTO.sid})}'|">삭제</button>
                 </div>
             </div>
 

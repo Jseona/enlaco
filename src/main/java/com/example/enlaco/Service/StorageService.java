@@ -58,6 +58,8 @@ public class StorageService {
         }
         storageDTO.setSimg(newFIleName);
 
+
+
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
 
         storageRepository.save(storage);
