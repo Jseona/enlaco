@@ -155,65 +155,6 @@ public class RecipeService {
 
         Page<RecipeEntity> recipeEntities;
 
-        /*
-        switch (rtime) {
-            case "1":
-            case "2":
-            case "3":
-                if (rtime.equals("1") && rclass.equals("1")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("1") && rclass.equals("2")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("1") && rclass.equals("3")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("1") && rclass.equals("4")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("1") && rclass.equals("5")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("1") && rclass.equals("6")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("1")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("2")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("3")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("4")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("5")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("2") && rclass.equals("6")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("3") && rclass.equals("2")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("3") && rclass.equals("3")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("3") && rclass.equals("4")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("3") && rclass.equals("5")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else if (rtime.equals("3") && rclass.equals("6")) {
-                    recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, pageable);
-                } else {
-                    recipeEntities = recipeRepository.searchRtime(rtime, pageable);
-                }
-                break;
-
-            default:
-                recipeEntities = switch (rclass) {
-                    case "1" -> recipeRepository.searchRclass(rclass, pageable);
-                    case "2" -> recipeRepository.searchRclass(rclass, pageable);
-                    case "3" -> recipeRepository.searchRclass(rclass, pageable);
-                    case "4" -> recipeRepository.searchRclass(rclass, pageable);
-                    case "5" -> recipeRepository.searchRclass(rclass, pageable);
-                    case "6" -> recipeRepository.searchRclass(rclass, pageable);
-                    default -> recipeRepository.findAll(pageable);
-                };
-                break;
-        }
-
-         */
-
         if (rtime.equals("1") || rtime.equals("2") || rtime.equals("3")) {
             if (rtime.equals("1") && (rclass.equals("1") || rclass.equals("2") || rclass.equals("3") || rclass.equals("4") || rclass.equals("5") || rclass.equals("6"))) {
                 recipeEntities = recipeRepository.searchRtimeRclass(rtime, rclass, newPage);

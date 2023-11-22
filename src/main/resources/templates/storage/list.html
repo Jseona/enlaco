@@ -39,7 +39,7 @@
             padding-left: 15px;
             padding-top: 1px;
             border-radius: 8px;
-            width: 70px;
+            width: 120px;
             height: 30px;
             font-weight: bold;
         }
@@ -96,12 +96,13 @@
 
     <div id="flex" >
         <div class="image-container" th:each="data:${storageDTOS}">
-            <img src="/image/test.jpg" th:onclick="|location.href='@{/storage/detail(sid=${data.sid})}'|" style="cursor: pointer">
-            <div class="expdate blue" th:text="${data.syutong}">D-10</div>
+            <img th:src="|/images/image/@{${data.simg}}|" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|" style="cursor: pointer">
+            <div class="expdate blue" th:text="${dDay}">D-10</div>
             <div class="material-name"><!--식재료 이름 칸-->
                 <div style="text-align: center; font-weight: bold; color: white" th:text="${data.singre}">김치</div>
             </div>
         </div>
+
 
 
         <div class="image-container">

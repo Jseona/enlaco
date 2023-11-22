@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,20 +52,19 @@ public class StorageService {
     }
     //삽입
     public void insert(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
-        String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
-        if (originalFileName != null) { //기존 파일이 존재하면
-            newFIleName = fileService.uploadFile(imgLocation,
-                    originalFileName, imgFile.getBytes());  //새로운 이미지
+
+        if (imgFile != null && !imgFile.isEmpty()) {
+            String originalFileName = imgFile.getOriginalFilename();
+            newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
         }
+
         storageDTO.setSimg(newFIleName);
 
-
-
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
-
         storageRepository.save(storage);
     }
+
     //수정
     public void modify(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
         StorageEntity storage = storageRepository.findById(storageDTO.getSid()).orElseThrow();
@@ -86,5 +87,17 @@ public class StorageService {
         StorageEntity storageEntity = modelMapper.map(storageDTO, StorageEntity.class);
 
         storageRepository.save(storageEntity);
+    }
+    //디데이 구하기
+    public long calculateDDay() {
+        StorageEntity storage;
+        // 특정 날짜 (예: syutong)
+        LocalDate syutongDate = LocalDate.of(2023, 11, 30);
+
+        // 현재 날짜
+        LocalDate currentDate = LocalDate.now();
+
+        // 두 날짜 간의 차이 계산
+        return ChronoUnit.DAYS.between(currentDate, syutongDate);
     }
 }
