@@ -61,8 +61,10 @@ public class StorageController {
     @GetMapping("/list")
     public String list(Model model) throws Exception {
         List<StorageDTO> storageDTOS = storageService.list();
+        long dDay = storageService.calculateDDay();
 
         model.addAttribute("storageDTOS", storageDTOS);
+        model.addAttribute("dDay", dDay);
 
         return "/storage/list";
     }

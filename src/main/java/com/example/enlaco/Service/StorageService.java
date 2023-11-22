@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,5 +87,17 @@ public class StorageService {
         StorageEntity storageEntity = modelMapper.map(storageDTO, StorageEntity.class);
 
         storageRepository.save(storageEntity);
+    }
+    //디데이 구하기
+    public long calculateDDay() {
+        StorageEntity storage;
+        // 특정 날짜 (예: syutong)
+        LocalDate syutongDate = LocalDate.of(2023, 11, 30);
+
+        // 현재 날짜
+        LocalDate currentDate = LocalDate.now();
+
+        // 두 날짜 간의 차이 계산
+        return ChronoUnit.DAYS.between(currentDate, syutongDate);
     }
 }
