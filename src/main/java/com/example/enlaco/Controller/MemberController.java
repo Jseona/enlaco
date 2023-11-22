@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -51,10 +53,8 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login(HttpServletResponse response) throws Exception {
+    public String login() throws Exception {
 
-        Cookie cookie = new Cookie("memberId", "1001");
-        response.addCookie(cookie);
         return "member/login";
     }
 
@@ -65,10 +65,12 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(@CookieValue(name = "memberId", required = false) String memberId, Model model) throws Exception {
-        int mid = Integer.parseInt(memberId);
-        MemberDTO memberDTO = memberService.detail(mid);
+    public String mypage(Principal principal,
+                         Model model) throws Exception {
+        int mid = memberService.findByMemail1(principal.getName());
+        System.out.println("조회한 mid : " + mid);
 
+        MemberDTO memberDTO = memberService.detail(mid);
         List<RecipeDTO> recipeDTOS = memberService.list(mid);
 
         model.addAttribute("memberDTO", memberDTO);
