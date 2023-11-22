@@ -34,7 +34,7 @@ public class StorageService {
         storageRepository.deleteById(sid);
     }
     //개별조회
-    public StorageDTO detail(int sid) throws Exception {
+    public StorageDTO detail(Integer sid) throws Exception {
         StorageEntity storage = storageRepository.findById(sid).orElseThrow();
 
         StorageDTO storageDTO = modelMapper.map(storage, StorageDTO.class);
@@ -90,14 +90,19 @@ public class StorageService {
     }
     //디데이 구하기
     public long calculateDDay() {
-        StorageEntity storage;
-        // 특정 날짜 (예: syutong)
-        LocalDate syutongDate = LocalDate.of(2023, 11, 30);
+        StorageEntity storage = new StorageEntity(); // StorageEntity 객체 초기화
+
+        // StorageEntity에서 syutong 날짜 문자열 가져오기
+        String syutongDateString = storage.getSyutong(); // getSyutong() 메서드를 통해 날짜 문자열 가져오기
+
+        // 가져온 문자열을 LocalDate로 파싱
+        LocalDate syutongDate = LocalDate.parse(syutongDateString);
 
         // 현재 날짜
         LocalDate currentDate = LocalDate.now();
 
         // 두 날짜 간의 차이 계산
-        return ChronoUnit.DAYS.between(currentDate, syutongDate);
+        return ChronoUnit.DAYS.between(syutongDate, currentDate);
     }
+
 }

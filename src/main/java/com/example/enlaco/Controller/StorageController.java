@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -59,15 +62,32 @@ public class StorageController {
 
     //목록
     @GetMapping("/list")
-    public String list(Model model) throws Exception {
-        List<StorageDTO> storageDTOS = storageService.list();
-        long dDay = storageService.calculateDDay();
+    public String list(Model model) {
+        try {
+            List<StorageDTO> storageDTOS = storageService.list();
 
-        model.addAttribute("storageDTOS", storageDTOS);
-        model.addAttribute("dDay", dDay);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate now = LocalDate.now();
+
+            for (StorageDTO storageDTO : storageDTOS) {
+
+                LocalDate endDate = LocalDate.parse(storageDTO.getSyutong(), formatter);
+                long daysUntilEnd = ChronoUnit.DAYS.between(now, endDate);
+                String dDay = "D-" + daysUntilEnd;
+                storageDTO.setDDay(dDay); // StorageDTO에 D-Day 값을 저장
+            }
+
+            model.addAttribute("storageDTOS", storageDTOS);
+
+        } catch (Exception e) {
+            log.error("Error occurred while processing storage list: {}", e.getMessage());
+            // 예외 처리 로직 추가
+        }
 
         return "/storage/list";
     }
+
+
     //수정창
     @GetMapping("/modify")
     public String modifyForm(int sid, Model model) throws Exception {

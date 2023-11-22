@@ -20,4 +20,5 @@ public class StorageDTO {
     private String skeep;
     private Integer rid;
     private Integer mid;
+    private String dDay;
 }
