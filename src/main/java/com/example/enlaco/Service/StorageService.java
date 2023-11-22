@@ -50,20 +50,19 @@ public class StorageService {
     }
     //삽입
     public void insert(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
-        String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
-        if (originalFileName != null) { //기존 파일이 존재하면
-            newFIleName = fileService.uploadFile(imgLocation,
-                    originalFileName, imgFile.getBytes());  //새로운 이미지
+
+        if (imgFile != null && !imgFile.isEmpty()) {
+            String originalFileName = imgFile.getOriginalFilename();
+            newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
         }
+
         storageDTO.setSimg(newFIleName);
 
-
-
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
-
         storageRepository.save(storage);
     }
+
     //수정
     public void modify(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
         StorageEntity storage = storageRepository.findById(storageDTO.getSid()).orElseThrow();

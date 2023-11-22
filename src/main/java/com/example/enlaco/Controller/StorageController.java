@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,15 +43,20 @@ public class StorageController {
     }
     @PostMapping("/insert")
     public String insertProc(@Valid StorageDTO storageDTO, BindingResult bindingResult,
-                             MultipartFile imgFile) throws Exception {
+                             @RequestParam(value = "imgFile", required = false) MultipartFile imgFile) throws Exception {
         if (bindingResult.hasErrors()) {
             return "storage/insert";
         }
 
-        storageService.insert(storageDTO, imgFile);
+        if (imgFile != null && !imgFile.isEmpty()) {
+            storageService.insert(storageDTO, imgFile);
+        } else {
+            storageService.insert(storageDTO, null); // 파일이 없는 경우에도 처리 가능하도록 null 전달
+        }
 
         return "redirect:/storage/list";
     }
+
     //목록
     @GetMapping("/list")
     public String list(Model model) throws Exception {
@@ -62,11 +68,16 @@ public class StorageController {
     }
     //수정창
     @GetMapping("/modify")
-    public String modifyForm() throws Exception {
+    public String modifyForm(int sid, Model model) throws Exception {
+        StorageDTO storageDTO = storageService.detail(sid);
+
+        model.addAttribute("storageDTO", storageDTO);
         return "storage/modify";
     }
     @PostMapping("/modify")
-    public String modifyProc() throws Exception {
+    public String modifyProc(StorageDTO storageDTO, MultipartFile imgFile,
+                             Model model, RedirectAttributes redirectAttributes) throws Exception {
+        storageService.modify(storageDTO, imgFile);
         return "redirect:/storage/list";
     }
     //삭제
