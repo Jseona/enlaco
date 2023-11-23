@@ -81,6 +81,7 @@
                 <br>
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn" style="background-color: #f7931e; color: white" th:onclick="|location.href='/recipe/modify?rid=${recipeDTO.rid}&mid=${mid}'|">수정</button>
+                    <button type="button" class="btn ms-2" style="background-color: #f7931e; color: white" th:onclick="|location.href='/recipe/remove?rid=${recipeDTO.rid}'|">삭제</button>
                 </div>
             </div>
         </div>

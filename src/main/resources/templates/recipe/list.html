@@ -9,6 +9,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 <head>
     <title>엔라꼬</title>
@@ -127,7 +128,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="text-lg-end">
+                <div class="text-lg-end" sec:authorize="isAuthenticated()">
                     <button type="button" class="btn text-white" style="background-color: #E67E22" onclick="location.href='/recipe/insert'">글쓰기</button>
                 </div>
 
