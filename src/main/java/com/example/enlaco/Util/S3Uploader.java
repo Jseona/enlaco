@@ -30,7 +30,7 @@ public class S3Uploader {
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("파일 전환 실패"));
         return upload(uploadFile, dirName);
     }
-
+//
     // S3 파일삭제
     public void deleteFile(String deleteFile, String dirName) throws IOException {
         String fileName = dirName+"/"+deleteFile;

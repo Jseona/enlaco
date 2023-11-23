@@ -93,7 +93,7 @@ public class RecipeService {
         String select = recipe.getRselect();
 
         return select;
-    }
+    }//
     //삽입
     public void insert(int mid, RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
         Optional<MemberEntity> data = memberRepository.findById(mid);
