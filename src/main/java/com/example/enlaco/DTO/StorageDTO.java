@@ -21,4 +21,5 @@ public class StorageDTO {
     private Integer rid;
     private Integer mid;
     private String dDay;
+    private String dDayOver; //유통기한 지남 뱃지
 }

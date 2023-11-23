@@ -73,8 +73,19 @@ public class StorageController {
 
                 LocalDate endDate = LocalDate.parse(storageDTO.getSyutong(), formatter);
                 long daysUntilEnd = ChronoUnit.DAYS.between(now, endDate);
-                String dDay = "D-" + daysUntilEnd;
+                String dDay = "";
+                String dDayOver = ""; //유통기한 지남
+                if (now.isBefore(endDate)) {
+                    dDay = "D-" + daysUntilEnd;
+                } else if (now.equals(endDate)) {
+                    dDay = "D-DAY";
+                } else {
+                    dDay = "D+" + Math.abs(daysUntilEnd);
+                    dDayOver = "유통기한 지남";
+                }
+
                 storageDTO.setDDay(dDay); // StorageDTO에 D-Day 값을 저장
+                storageDTO.setDDayOver(dDayOver);
             }
 
             model.addAttribute("storageDTOS", storageDTOS);
