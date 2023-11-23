@@ -102,7 +102,7 @@
 
     <div id="flex" >
         <div class="image-container" th:each="data:${storageDTOS}">
-            <img th:src="|/images/image/@{${data.simg}}|" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|" style="cursor: pointer">
+            <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${data.simg}|" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|" style="cursor: pointer">
             <div class="expdate badge  blue" th:unless="${data.dDayOver}" th:text="${data.dDay}">D-10</div> <!-- D-Day를 표시하는 부분 -->
             <span class="expdate badge red"  id="utong" th:text="${data.dDayOver}" >Success</span><!--유통기한을 표시하는 부분-->
             <div class="material-name"><!--식재료 이름 칸-->
