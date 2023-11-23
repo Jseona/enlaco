@@ -78,7 +78,11 @@ public class RecipeController {
             return "/recipe/insert";
         }
 
-        recipeService.insert(mid, recipeDTO, imgFile);
+        if (imgFile != null && !imgFile.isEmpty()) {
+            recipeService.insert(mid, recipeDTO, imgFile);
+        } else {
+            recipeService.insert(mid, recipeDTO, null);
+        }
 
         return "redirect:/recipe/list";
     }

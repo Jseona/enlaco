@@ -1,7 +1,9 @@
 package com.example.enlaco.Service;
 
 import com.example.enlaco.DTO.StorageDTO;
+import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.StorageEntity;
+import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.StorageRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +26,8 @@ public class StorageService {
     private String imgLocation;
 
     private final StorageRepository storageRepository;
+    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -33,6 +38,7 @@ public class StorageService {
 
         storageRepository.deleteById(sid);
     }
+
     //개별조회
     public StorageDTO detail(Integer sid) throws Exception {
         StorageEntity storage = storageRepository.findById(sid).orElseThrow();
@@ -41,33 +47,45 @@ public class StorageService {
 
         return storageDTO;
     }
+
     //전체조회
-    public List<StorageDTO> list() throws Exception {
-        List<StorageEntity> storageEntities = storageRepository.findAll();
+    public List<StorageDTO> list(int mid) throws Exception {
+        List<StorageEntity> storageEntities = storageRepository.findByMid(mid);
 
         List<StorageDTO> storageDTOS = Arrays.asList(
                 modelMapper.map(storageEntities, StorageDTO[].class));
 
         return storageDTOS;
     }
+
     //삽입
-    public void insert(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
+    public void insert(int id, StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
+        Optional<MemberEntity> data = memberRepository.findById(id);
+        MemberEntity member = data.orElseThrow();
+
+        String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
 
         if (imgFile != null && !imgFile.isEmpty()) {
-            String originalFileName = imgFile.getOriginalFilename();
             newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
         }
 
         storageDTO.setSimg(newFIleName);
 
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
+        storage.setMemberEntity(member);
+
         storageRepository.save(storage);
     }
 
     //수정
-    public void modify(StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
-        StorageEntity storage = storageRepository.findById(storageDTO.getSid()).orElseThrow();
+    public void modify(String memail, StorageDTO storageDTO, MultipartFile imgFile) throws Exception {
+        Optional<StorageEntity> read = storageRepository.findById(storageDTO.getSid());
+        StorageEntity storage = read.orElseThrow();
+
+        Optional<MemberEntity> data = memberRepository.findById(memberService.findByMemail1(memail));
+        MemberEntity member = data.orElseThrow();
+
         String deleteFile = storage.getSimg();
 
         String originalFileName = imgFile.getOriginalFilename();
@@ -80,14 +98,23 @@ public class StorageService {
 
             newFileName = fileService.uploadFile(imgLocation,
                     originalFileName, imgFile.getBytes());
-            storageDTO.setSimg(newFileName);
+            storage.setSimg(newFileName);
         }
 
-        storageDTO.setSid(storage.getSid());
-        StorageEntity storageEntity = modelMapper.map(storageDTO, StorageEntity.class);
+        /*storageDTO.setSid(storage.getSid());  //밑에서 Entity로 한번에 저장*/
+        StorageEntity update = modelMapper.map(storageDTO, StorageEntity.class);
+        update.setSid(storage.getSid());
+        /*update.setSbuydate(storage.getSbuydate());  //구매날짜*/
+        update.setSyutong(storage.getSyutong());
+        update.setSimg(storage.getSimg());
+        update.setSingre(storage.getSingre());
+        /*update.setSkeep(storage.getSkeep());  //보관방법*/
+        /*update.setSquan(storage.getSquan());  //수량*/
+        update.setMemberEntity(member);
 
-        storageRepository.save(storageEntity);
+        storageRepository.save(update);
     }
+
     //디데이 구하기
     public long calculateDDay() {
         StorageEntity storage = new StorageEntity(); // StorageEntity 객체 초기화
