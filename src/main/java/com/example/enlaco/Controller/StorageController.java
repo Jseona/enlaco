@@ -74,7 +74,7 @@ public class StorageController {
                 String syutong = storageDTO.getSyutong();
 
                 if (syutong == null || syutong.isEmpty()) {
-                    String dDay = "D+999";
+                    String dDay = "D+99";
                     storageDTO.setDDay(dDay);
 
                     // 오류 처리 또는 기본값 설정 등을 수행
