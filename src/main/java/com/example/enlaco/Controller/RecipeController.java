@@ -62,13 +62,15 @@ public class RecipeController {
         int mid = memberService.findByMemail1(writer);
         RecipeDTO recipeDTO = new RecipeDTO();
 
+        System.out.println("principal로 조회한 mid : " + mid);
+
         model.addAttribute("writer", writer);
         model.addAttribute("mid", mid);
         model.addAttribute("recipeDTO", recipeDTO);
         return "recipe/insert";
     }
     @PostMapping("/insert")
-    public String insertProc(@Valid RecipeDTO recipeDTO,
+    public String insertProc(@Valid RecipeDTO recipeDTO, @RequestParam("mid") int mid,
                              BindingResult bindingResult,
                              MultipartFile imgFile
                              ) throws Exception {
@@ -76,7 +78,7 @@ public class RecipeController {
             return "/recipe/insert";
         }
 
-        recipeService.insert(recipeDTO, imgFile);
+        recipeService.insert(mid, recipeDTO, imgFile);
 
         return "redirect:/recipe/list";
     }
