@@ -5,6 +5,7 @@ import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.StorageEntity;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.StorageRepository;
+import com.example.enlaco.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,19 +23,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class StorageService {
-    @Value("${imgLocation}")
-    private String imgLocation;
+    //파일이 저장될 경로
+    @Value("${imgUploadLocation}")
+    private String imgUploadLocation;
 
     private final StorageRepository storageRepository;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
-    private final FileService fileService;
+    //private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
+    private final S3Uploader s3Uploader;
 
     //삭제
     public void remove(int sid) throws Exception {
         StorageEntity read = storageRepository.findById(sid).orElseThrow();
-        fileService.deleteFile(imgLocation, read.getSimg());
+        s3Uploader.deleteFile(read.getSimg(), imgUploadLocation);
 
         storageRepository.deleteById(sid);
     }
@@ -67,9 +70,8 @@ public class StorageService {
         String newFIleName = "";
 
         if (imgFile != null && !imgFile.isEmpty()) {
-            newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
+            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
         }
-
         storageDTO.setSimg(newFIleName);
 
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
@@ -93,24 +95,27 @@ public class StorageService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile.length() != 0) {
-                fileService.deleteFile(imgLocation, deleteFile);
+                s3Uploader.deleteFile(storage.getSimg(), imgUploadLocation);
             }
 
-            newFileName = fileService.uploadFile(imgLocation,
-                    originalFileName, imgFile.getBytes());
-            storage.setSimg(newFileName);
+            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+            storageDTO.setSimg(newFileName);
+            //storage.setSimg(newFileName);
         }
+        storageDTO.setSid(storage.getSid());
 
         /*storageDTO.setSid(storage.getSid());  //밑에서 Entity로 한번에 저장*/
         StorageEntity update = modelMapper.map(storageDTO, StorageEntity.class);
-        update.setSid(storage.getSid());
+
+        //update.setSid(storage.getSid());
         /*update.setSbuydate(storage.getSbuydate());  //구매날짜*/
-        update.setSyutong(storage.getSyutong());
-        update.setSimg(storage.getSimg());
-        update.setSingre(storage.getSingre());
+        //update.setSyutong(storage.getSyutong());
+        //update.setSimg(storage.getSimg());
+        //update.setSingre(storage.getSingre());
         /*update.setSkeep(storage.getSkeep());  //보관방법*/
         /*update.setSquan(storage.getSquan());  //수량*/
-        update.setMemberEntity(member);
+        //update.setMemberEntity(member);
+
 
         storageRepository.save(update);
     }
