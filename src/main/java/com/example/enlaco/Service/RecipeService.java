@@ -5,6 +5,7 @@ import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
+import com.example.enlaco.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,16 +24,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class RecipeService {
-    @Value("c:/enlaco/image/")
-    private String imgLocation;
+    //파일이 저장될 경로
+    @Value("${imgUploadLocation}")
+    private String imgUploadLocation;
     private final RecipeRepository recipeRepository;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
-    private final FileService fileService;
+    //private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
+    //파일 저장을 위한 클래스
+    private final S3Uploader s3Uploader;
 
     //삭제
     public void remove(int rid) throws Exception {
+        //물리적 위치에 저장된 이미지를 삭제
+        RecipeEntity recipeEntity = recipeRepository.findById(rid).orElseThrow(); //조회 -> 저장
+        //deleteFile(파일명, 폴더명)
+        s3Uploader.deleteFile(recipeEntity.getRimg(), imgUploadLocation);
+
+        //레코드를 삭제
         recipeRepository.deleteById(rid);
     }
     //수정
@@ -46,6 +56,7 @@ public class RecipeService {
         Optional<MemberEntity> data = memberRepository.findById(mid);
         MemberEntity member = data.orElseThrow();
 
+        RecipeEntity recipeEntity = recipeRepository.findById(recipeDTO.getRid()).orElseThrow();
         String deleteFile = recipe.getRimg();
 
         String originalFileName = imgFile.getOriginalFilename();
@@ -53,15 +64,16 @@ public class RecipeService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile.length() != 0) {
-                fileService.deleteFile(imgLocation, deleteFile);
+                s3Uploader.deleteFile(recipeEntity.getRimg(), imgUploadLocation);
             }
 
-            newFileName = fileService.uploadFile(imgLocation, originalFileName,
-                    imgFile.getBytes());
-            recipe.setRimg(newFileName);
+            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+            recipeDTO.setRimg(newFileName);
         }
+        recipeDTO.setRid(recipeEntity.getRid());
 
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);
+        /*
         update.setRid(recipe.getRid());
         update.setRclass(recipe.getRclass());
         update.setRgoodcnt(recipe.getRgoodcnt());
@@ -70,6 +82,8 @@ public class RecipeService {
         update.setRwriter(recipe.getRwriter());
         update.setMemberEntity(member);
         update.setRtime(recipe.getRtime());
+
+         */
 
         recipeRepository.save(update);
     }
@@ -81,15 +95,14 @@ public class RecipeService {
         return select;
     }
     //삽입
-    public void insert(int id, RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
-        Optional<MemberEntity> data = memberRepository.findById(id);
+    public void insert(int mid, RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
+        Optional<MemberEntity> data = memberRepository.findById(mid);
         MemberEntity memberEntity = data.orElseThrow();
 
         String originalFileName = imgFile.getOriginalFilename();
         String newFileName = "";
-        if (originalFileName != null) {
-            newFileName = fileService.uploadFile(imgLocation,
-                    originalFileName, imgFile.getBytes());
+        if (originalFileName != null) { //파일이 존재하면
+            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
         }
         recipeDTO.setRimg(newFileName);
 

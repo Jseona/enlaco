@@ -5,8 +5,10 @@ import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.Service.CommentService;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
+import com.example.enlaco.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -32,6 +34,14 @@ public class RecipeController {
     private final CommentService commentService;
     private final MemberService memberService;
 
+    //S3 이미지 정보
+    @Value("${cloud.aws.s3.bucket}")
+    public String bucket;
+    @Value("${cloud.aws.region.static}")
+    public String region;
+    @Value("${imgUploadLocation}")
+    public String folder;
+
     //상세페이지
     @GetMapping("/detail")
     public String detail(Principal principal, int rid, Model model) throws Exception {
@@ -52,6 +62,12 @@ public class RecipeController {
         model.addAttribute("recipeDTO", recipeDTO);
         model.addAttribute("commentDTOS", commentDTOS);
         model.addAttribute("writer", writer);
+
+        //S3 이미지정보전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
+
         return "recipe/detail";
     }
 
@@ -70,15 +86,22 @@ public class RecipeController {
         return "recipe/insert";
     }
     @PostMapping("/insert")
-    public String insertProc(@Valid RecipeDTO recipeDTO, @RequestParam("mid") int mid,
-                             BindingResult bindingResult,
-                             MultipartFile imgFile
+    public String insertProc( @Valid RecipeDTO recipeDTO,
+                              BindingResult bindingResult,
+                              @RequestParam("mid") int mid,
+                             @RequestParam("image")MultipartFile multipartFile
                              ) throws Exception {
         if (bindingResult.hasErrors()) {
-            return "/recipe/insert";
+            return "recipe/insert";
         }
 
-        recipeService.insert(mid, recipeDTO, imgFile);
+
+
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            recipeService.insert(mid, recipeDTO, multipartFile);
+        } else {
+            recipeService.insert(mid, recipeDTO, null); //파일이 없는 경우에도 처리
+        }
 
         return "redirect:/recipe/list";
     }
@@ -110,6 +133,11 @@ public class RecipeController {
         model.addAttribute("lastPage", lastPage);
 
         model.addAttribute("keyword", keyword);
+
+        //s3 이미지 전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
 
 
         return "recipe/list";
