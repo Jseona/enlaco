@@ -63,6 +63,7 @@ public class StorageController {
     //목록
     @GetMapping("/list")
     public String list(Model model) {
+
         try {
             List<StorageDTO> storageDTOS = storageService.list();
 
@@ -70,22 +71,34 @@ public class StorageController {
             LocalDate now = LocalDate.now();
 
             for (StorageDTO storageDTO : storageDTOS) {
+                String syutong = storageDTO.getSyutong();
+
+                if (syutong == null || syutong.isEmpty()) {
+                    String dDay = "D+999";
+                    storageDTO.setDDay(dDay);
+
+                    // 오류 처리 또는 기본값 설정 등을 수행
+                    // 예: throw new IllegalArgumentException("날짜 문자열이 비어있습니다.");
+                    // 또는 기본값을 설정하거나 다른 처리를 수행할 수 있음
+                    continue; // 빈 문자열이면 다음 반복으로 건너뜀
+                }
 
                 LocalDate endDate = LocalDate.parse(storageDTO.getSyutong(), formatter);
                 long daysUntilEnd = ChronoUnit.DAYS.between(now, endDate);
-                String dDay = "";
-                String dDayOver = ""; //유통기한 지남
+                String dDay;
                 if (now.isBefore(endDate)) {
                     dDay = "D-" + daysUntilEnd;
                 } else if (now.equals(endDate)) {
                     dDay = "D-DAY";
                 } else {
                     dDay = "D+" + Math.abs(daysUntilEnd);
-                    dDayOver = "유통기한 지남";
-                }
+                    String dDayOver = "유통기한 지남";
 
-                storageDTO.setDDay(dDay); // StorageDTO에 D-Day 값을 저장
-                storageDTO.setDDayOver(dDayOver);
+                    storageDTO.setDDay(dDay); // StorageDTO에 D-Day 값을 저장
+                    storageDTO.setDDayOver(dDayOver);
+                    continue;
+                }
+                storageDTO.setDDay(dDay);
             }
 
             model.addAttribute("storageDTOS", storageDTOS);
@@ -93,6 +106,7 @@ public class StorageController {
         } catch (Exception e) {
             log.error("Error occurred while processing storage list: {}", e.getMessage());
             // 예외 처리 로직 추가
+
         }
 
         return "/storage/list";
