@@ -110,10 +110,10 @@
                 </div>  <!--상세레시피 입력 줄 끝-->
             </div> <!--레시피 입력 창 끝-->
             <div class="row mt-3 mb-5">
-                <div class="col-sm-6 col-lg-8"></div>
-                <div class="col-sm-6 col-lg-4 d-flex justify-content-end">
+                <div class="col-sm-6 col-lg-7"></div>
+                <div class="col-sm-6 col-lg-5 d-flex justify-content-end">
                     <button type="submit" class="btn" style="background-color: #ffb30e; color: white">수정</button>
-                    <button type="button" class="btn ms-2" style="background-color: #f7931e; color: white" th:onclick="|location.href='/recipe/remove?rid=${recipeDTO.rid}'|">삭제</button>
+                    <button type="button" class="btn btn-secondary ms-2" onclick="history.back()">취소</button>
                 </div>
             </div>
 
