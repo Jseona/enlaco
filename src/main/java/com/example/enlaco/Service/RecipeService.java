@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Member;
 import java.util.Optional;
 
 @Service
@@ -80,7 +81,10 @@ public class RecipeService {
         return select;
     }
     //삽입
-    public void insert(RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
+    public void insert(int id, RecipeDTO recipeDTO, MultipartFile imgFile) throws Exception {
+        Optional<MemberEntity> data = memberRepository.findById(id);
+        MemberEntity memberEntity = data.orElseThrow();
+
         String originalFileName = imgFile.getOriginalFilename();
         String newFileName = "";
         if (originalFileName != null) {
@@ -90,6 +94,7 @@ public class RecipeService {
         recipeDTO.setRimg(newFileName);
 
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);
+        recipe.setMemberEntity(memberEntity);
 
         recipeRepository.save(recipe);
     }
