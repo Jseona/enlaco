@@ -6,8 +6,11 @@ import com.example.enlaco.Service.CommentService;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
 import com.example.enlaco.Util.S3Uploader;
+import jdk.dynalink.beans.StaticClass;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.cfg.Environment;
+import org.jboss.jandex.Index;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.Session;
 import java.security.Principal;
 import java.util.List;
 
@@ -110,7 +115,10 @@ public class RecipeController {
     @GetMapping("/list")
     public String list(@PageableDefault(page = 1) Pageable pageable,
                        @RequestParam(value = "keyword", defaultValue = "") String keyword,
-                       Model model) throws Exception {
+                       Model model, Principal principal, HttpSession session) throws Exception {
+        String email = principal.getName();
+        String username =  email.substring(0,email.lastIndexOf('@'));
+        session.setAttribute("username",username);
         Page<RecipeDTO> recipeDTOS = recipeService.list(keyword, pageable);
 
         //페이지 정보
@@ -139,6 +147,7 @@ public class RecipeController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 //
+        model.addAttribute("username",username);
 
         return "recipe/list";
     }
@@ -155,10 +164,10 @@ public class RecipeController {
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
         int endPage = ((startPage+blockLimit-1)<recipeDTOS.getTotalPages())? startPage+blockLimit-1:recipeDTOS.getTotalPages();
 
-        int prevPage = recipeDTOS.getNumber();
-        int curPage = recipeDTOS.getNumber()+1;
-        int nextPage = recipeDTOS.getNumber()+2;
-        int lastPage = recipeDTOS.getTotalPages();
+        int prevPage = pageable.getPageNumber()-1;
+        int curPage = pageable.getPageNumber();
+        int nextPage = pageable.getPageNumber()+1;
+        int lastPage = pageable.getPageSize();
 
         model.addAttribute("recipeDTOS", recipeDTOS);
 
