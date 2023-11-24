@@ -18,10 +18,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="col-2"></div>
     <div class="col-6"><span class="d-flex justify-content-end" id="member">
         <!--로그인 회원가입-->
+<span th:fragment="username(username)" class="mt-5">
+
     <span onclick="location.href='/member/login'" sec:authorize="isAnonymous()" style="cursor: pointer; margin-top: 30px">로그인</span>&nbsp;&nbsp;&nbsp;
     <span onclick="location.href='/member/insert'" sec:authorize="isAnonymous()" style="cursor: pointer; margin-right: 60px; margin-top: 30px">회원가입</span>
-    <span onclick="location.href='/member/logout'" sec:authorize="isAuthenticated()" style="cursor: pointer; margin-top: 30px">로그아웃</span>
+         <span  sec:authorize="isAuthenticated()" style=" margin-right: 40px; margin-top: 30px">[[${session.username}]]님 환영합니다</span>
+        <span onclick="location.href='/member/logout'" sec:authorize="isAuthenticated()" style="cursor: pointer; margin-top: 30px">로그아웃</span>
         <!--로그인 회원가입 끝-->
+        </span>
 </span>
     </div>
 </div>
