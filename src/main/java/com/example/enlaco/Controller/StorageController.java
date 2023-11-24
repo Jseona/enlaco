@@ -106,7 +106,7 @@ public class StorageController {
                 String syutong = storageDTO.getSyutong();
 
                 if (syutong == null || syutong.isEmpty()) {
-                    String dDay = "D+9999";
+                    String dDay = "D-9999";
                     storageDTO.setDDay(dDay);
 
                     // 오류 처리 또는 기본값 설정 등을 수행
@@ -156,20 +156,32 @@ public class StorageController {
 
     //수정창
     @GetMapping("/modify")
-    public String modifyForm(int sid, Model model) throws Exception {
+    public String modifyForm(Principal principal, int sid, Model model) throws Exception {
+        String writer = principal.getName();
+        int mid = memberService.findByMemail1(writer);
+
         StorageDTO storageDTO = storageService.detail(sid);
 
+        model.addAttribute("writer", writer);
+        model.addAttribute("mid", mid);
         model.addAttribute("storageDTO", storageDTO);
+        //S3 이미지정보전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
+
         return "storage/modify";
     }
     @PostMapping("/modify")
-    public String modifyProc(StorageDTO storageDTO, MultipartFile imgFile,
-                             Principal principal) throws Exception {
+    public String modifyProc(StorageDTO storageDTO, Principal principal,
+                             MultipartFile imgFile, Model model) throws Exception {
         String memail = principal.getName();
 
-        storageService.modify(memail, storageDTO, imgFile);
+        model.addAttribute("mid", memail);
+        storageService.modify(storageDTO, memail, imgFile);
         return "redirect:/storage/list";
     }
+
     //삭제
     @GetMapping("/remove")
     public String remove(int sid, Model model) throws Exception {

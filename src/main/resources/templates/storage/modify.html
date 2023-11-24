@@ -23,6 +23,7 @@
                 <h2 style="padding-bottom: 22px; font-size: 48px">식재료 수정</h2>
                 <form th:action="@{/storage/modify}" method="post"  enctype="multipart/form-data" th:object="${storageDTO}">
                     <input type="hidden" name="sid" th:field="*{sid}">
+                    <input type="hidden" name="mid" th:value="${mid}">
                     <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
                         <div class="col-3 mt-3">
                             <label for="singre" class="form-label">식재료명</label>
@@ -32,7 +33,7 @@
                             <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
                             <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
                             <input type="hidden" name="simg" th:field="*{simg}">
-                            <img th:src="|/images/image/@{${storageDTO.simg}}|" width="150" height="100">
+                            <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/*{simg}|" width="150" height="100">
                             <input type="file" class="form-control" id="simg" name="imgFile">
                         </div>
                     </div>

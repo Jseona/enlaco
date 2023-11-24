@@ -100,8 +100,6 @@ public class RecipeController {
             return "recipe/insert";
         }
 
-
-
         if (multipartFile != null && !multipartFile.isEmpty()) {
             recipeService.insert(mid, recipeDTO, multipartFile);
         } else {
@@ -186,7 +184,10 @@ public class RecipeController {
 
     //수정
     @GetMapping("/modify")
-    public String modifyForm(int rid, Model model) throws Exception {
+    public String modifyForm(Principal principal, int rid, Model model) throws Exception {
+        String writer = principal.getName();
+        int mid = memberService.findByMemail1(writer);
+
         RecipeDTO recipeDTO = recipeService.detail(rid);
         String select = recipeDTO.getRselect();
         System.out.println("recipeDTO에서 가져온 rselect : " + select);
@@ -196,19 +197,30 @@ public class RecipeController {
             System.out.println(list[i]);
         }
 
+        model.addAttribute("writer", writer);
+        model.addAttribute("mid", mid);
         model.addAttribute("recipeDTO", recipeDTO);
         model.addAttribute("list", list);
+
+        //s3 이미지 전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
+
         return "recipe/modify";
     }
     @PostMapping("/modify")
     public String modifyProc(@Valid RecipeDTO recipeDTO,
+                             BindingResult bindingResult,
                              Principal principal,
+                             @RequestParam("mid") int mid,
                              MultipartFile imgFile,
-                             BindingResult bindingResult, Model model) throws Exception {
+                              Model model) throws Exception {
         String memail = principal.getName();
         if (bindingResult.hasErrors()) {
             return "recipe/modify";
         }
+        model.addAttribute("mid", memail);
         recipeService.modify(recipeDTO, memail, imgFile);
 
         return "redirect:/member/mypage";

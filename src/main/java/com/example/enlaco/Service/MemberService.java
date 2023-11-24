@@ -30,6 +30,7 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final RecipeRepository recipeRepository;
+    private final StorageRepository storageRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper = new ModelMapper();
 
@@ -99,6 +100,16 @@ public class MemberService implements UserDetailsService {
 
         return recipeDTOS;
     }
+    //냉장고 조회
+    public List<StorageDTO> storageList(Integer mid) throws Exception {
+        List<StorageEntity> storageEntities = storageRepository.findByMid(mid);
+
+        List<StorageDTO> storageDTOS = Arrays.asList(modelMapper.map(storageEntities, StorageDTO[].class));
+
+        return storageDTOS;
+    }
+
+
     /*public Page<RecipeDTO> myList(int mid, Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
         int pageLimit = 10;
@@ -138,6 +149,13 @@ public class MemberService implements UserDetailsService {
     //이메일로 조회해서 mid 값 뱉어주기
     public int findByMemail1(String memail) throws Exception {
         MemberEntity member = memberRepository.findByMemail(memail);
+        int mid = member.getMid();
+
+        return mid;
+    }
+    //storage용 mid값 뱉어주기
+    public int findByMemail2(String memail) throws Exception {
+        MemberEntity member = memberRepository.findByMemail1(memail);
         int mid = member.getMid();
 
         return mid;

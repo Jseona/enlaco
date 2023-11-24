@@ -54,7 +54,7 @@
                     <hr>
                     <div class="col-sm-5">
                         <div class="fakeimg">
-                            <img th:src="|/images/image/@{${recipeDTO.rimg}}|"  class="img-thumbnail"></div>
+                            <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/${recipeDTO.rimg}|" class="img-thumbnail"></div>
                         <hr class="d-sm-none">
                     </div>
                     <div class="col-sm-7">

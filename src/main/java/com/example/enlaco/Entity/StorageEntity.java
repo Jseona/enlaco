@@ -35,7 +35,7 @@ public class StorageEntity extends BaseEntity {
     @Column(name = "skeep")
     private String  skeep;       //보관 방법
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mid")
     private MemberEntity memberEntity;
 

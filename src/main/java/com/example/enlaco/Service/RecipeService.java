@@ -77,12 +77,12 @@ public class RecipeService {
         update.setRid(recipe.getRid());
         update.setRclass(recipe.getRclass());
         update.setRgoodcnt(recipe.getRgoodcnt());
-        update.setRimg(recipe.getRimg());
+
+        //update.setRselect(recipe.getRselect());
         update.setRviewcnt(recipe.getRviewcnt());
         update.setRwriter(recipe.getRwriter());
         update.setMemberEntity(member);
         update.setRtime(recipe.getRtime());
-
 
 
         recipeRepository.save(update);
@@ -163,7 +163,7 @@ public class RecipeService {
         return recipeDTOS;
     }
 
-    //리스트 조회
+    //자세히 버튼 조회
     public Page<RecipeDTO> listClass(String rtime, String rclass, Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
         int pageLimit = 5;

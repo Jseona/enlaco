@@ -43,7 +43,7 @@
                 <h3>레시피 수정</h3>
                 <div class="row mt-4 mb-3"> <!--메뉴명 입력 줄-->
                     <input type="hidden" name="rid" th:field="*{rid}">
-                    <input type="hidden" name="mid" th:field="*{mid}">
+                    <input type="hidden" name="mid" th:value="${mid}">
                     <div class="col-3 mt-2">
                         <label for="rmenu" class="form-label">메뉴명</label>
                     </div>
@@ -58,11 +58,11 @@
                     </div>
                     <div class="col-9">
                         <input type="hidden" name="rimg" th:field="*{rimg}">
-                        <input type="file" class="form-control" id="rimg" name="image">
+                        <input type="file" class="form-control" id="rimg" name="imgFile">
                     </div>
                 </div>  <!--대표사진 입력 줄 끝-->
                 <div class="row mb-3">
-                    <img th:src="|/images/image/@{${recipeDTO.rimg}}|" alt="대표 사진을 선택해 주세요.">  <!--테스트 이미지 src="../../static/image/포도.jpg"-->
+                    <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/*{rimg}|" alt="대표 사진을 선택해 주세요.">  <!--테스트 이미지 src="../../static/image/포도.jpg"-->
                 </div>
                 <div class="row mt-1 mb-1"> <!--식재료 입력 줄-->
                     <div class="col-3 mt-2">
@@ -107,7 +107,30 @@
                         /*$("#summernote").summernote('code',  '[[${recipeDTO.rcontent}]]');
                         });*/
                     </script>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-sm-5">
+                            <select class="form-select" name="rtime" th:field="*{rtime}">
+                                <option th:value="0" th:selected th:disabled="${someCondition}" >조리 시간</option>
+                                <option th:value="1">간단(10분 이내)</option>
+                                <option th:value="2">정성(20분 이내)</option>
+                                <option th:value="3">고수(30분 이상)</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-5">
+                            <select class="form-select" name="rclass" th:field="*{rclass}">
+                                <option th:value="0" th:selected th:disabled="${someCondition}">분류</option>
+                                <option th:value="1">한끼 뚝딱</option>
+                                <option th:value="2">면류</option>
+                                <option th:value="3">반찬</option>
+                                <option th:value="4">디저트</option>
+                                <option th:value="5">찌개/국</option>
+                                <option th:value="6">인스턴트</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>  <!--상세레시피 입력 줄 끝-->
+
             </div> <!--레시피 입력 창 끝-->
             <div class="row mt-3 mb-5">
                 <div class="col-sm-6 col-lg-7"></div>
