@@ -32,6 +32,7 @@ public class StorageService {
     private final MemberService memberService;
     //private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
+    //파일 저장을 위한 클래스
     private final S3Uploader s3Uploader;
 
     //삭제
@@ -69,9 +70,10 @@ public class StorageService {
         String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
 
-        if (imgFile != null && !imgFile.isEmpty()) {
+        if (originalFileName != null) {
             newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
         }
+
         storageDTO.setSimg(newFIleName);
 
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
@@ -88,6 +90,7 @@ public class StorageService {
         Optional<MemberEntity> data = memberRepository.findById(memberService.findByMemail1(memail));
         MemberEntity member = data.orElseThrow();
 
+        StorageEntity storageEntity = storageRepository.findById(storageDTO.getSid()).orElseThrow();
         String deleteFile = storage.getSimg();
 
         String originalFileName = imgFile.getOriginalFilename();
@@ -95,18 +98,17 @@ public class StorageService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile.length() != 0) {
-                s3Uploader.deleteFile(storage.getSimg(), imgUploadLocation);
+                s3Uploader.deleteFile(storageEntity.getSimg(), imgUploadLocation);
             }
 
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
             storageDTO.setSimg(newFileName);
             //storage.setSimg(newFileName);
         }
-        storageDTO.setSid(storage.getSid());
+
 
         /*storageDTO.setSid(storage.getSid());  //밑에서 Entity로 한번에 저장*/
         StorageEntity update = modelMapper.map(storageDTO, StorageEntity.class);
-
         //update.setSid(storage.getSid());
         /*update.setSbuydate(storage.getSbuydate());  //구매날짜*/
         //update.setSyutong(storage.getSyutong());
@@ -115,7 +117,6 @@ public class StorageService {
         /*update.setSkeep(storage.getSkeep());  //보관방법*/
         /*update.setSquan(storage.getSquan());  //수량*/
         //update.setMemberEntity(member);
-
 
         storageRepository.save(update);
     }

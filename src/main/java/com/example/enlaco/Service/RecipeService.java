@@ -73,7 +73,7 @@ public class RecipeService {
         recipeDTO.setRid(recipeEntity.getRid());
 
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);
-        /*
+
         update.setRid(recipe.getRid());
         update.setRclass(recipe.getRclass());
         update.setRgoodcnt(recipe.getRgoodcnt());
@@ -83,7 +83,7 @@ public class RecipeService {
         update.setMemberEntity(member);
         update.setRtime(recipe.getRtime());
 
-         */
+
 
         recipeRepository.save(update);
     }

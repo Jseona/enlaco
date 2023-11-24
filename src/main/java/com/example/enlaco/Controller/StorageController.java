@@ -46,6 +46,10 @@ public class StorageController {
         StorageDTO storageDTO = storageService.detail(sid);
 
         model.addAttribute("storageDTO", storageDTO);
+        //S3 이미지정보전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
 
         //S3 이미지정보전달
         model.addAttribute("bucket", bucket);
@@ -80,6 +84,8 @@ public class StorageController {
         } else {
             storageService.insert(mid, storageDTO, null); // 파일이 없는 경우에도 처리 가능하도록 null 전달
         }
+
+
 
         return "redirect:/storage/list";
     }
