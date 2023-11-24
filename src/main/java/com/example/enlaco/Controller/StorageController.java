@@ -6,6 +6,7 @@ import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,12 +32,24 @@ public class StorageController {
     private final StorageService storageService;
     private final MemberService memberService;
 
+    //S3 이미지 정보
+    @Value("${cloud.aws.s3.bucket}")
+    public String bucket;
+    @Value("${cloud.aws.region.static}")
+    public String region;
+    @Value("${imgUploadLocation}")
+    public String folder;
+
     //상세보기
     @GetMapping("/detail")
     public String detail(int sid, Model model) throws Exception {
         StorageDTO storageDTO = storageService.detail(sid);
 
         model.addAttribute("storageDTO", storageDTO);
+        //S3 이미지정보전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
 
         return "/storage/detail";
     }
@@ -56,16 +69,18 @@ public class StorageController {
     @PostMapping("/insert")
     public String insertProc(@Valid StorageDTO storageDTO, BindingResult bindingResult,
                              @RequestParam("mid") int mid,
-                             MultipartFile imgFile) throws Exception {
+                             @RequestParam("image")MultipartFile multipartFile) throws Exception {
         if (bindingResult.hasErrors()) {
             return "storage/insert";
         }
 
-        if (imgFile != null && !imgFile.isEmpty()) {
-            storageService.insert(mid, storageDTO, imgFile);
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            storageService.insert(mid, storageDTO, multipartFile);
         } else {
             storageService.insert(mid, storageDTO, null); // 파일이 없는 경우에도 처리 가능하도록 null 전달
         }
+
+
 
         return "redirect:/storage/list";
     }
@@ -124,6 +139,11 @@ public class StorageController {
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("storageDTOS", storageDTOS);
         model.addAttribute("mid", mid);
+
+        //s3 이미지 전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
 
         return "/storage/list";
     }
