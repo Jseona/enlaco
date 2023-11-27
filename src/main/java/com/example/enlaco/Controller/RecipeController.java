@@ -113,10 +113,10 @@ public class RecipeController {
     @GetMapping("/list")
     public String list(@PageableDefault(page = 1) Pageable pageable,
                        @RequestParam(value = "keyword", defaultValue = "") String keyword,
-                       Model model, Principal principal, HttpSession session) throws Exception {
-        String email = principal.getName();
+                       Model model, /*Principal principal,*/ HttpSession session) throws Exception {
+        /*String email = principal.getName();
         String username =  email.substring(0,email.lastIndexOf('@'));
-        session.setAttribute("username",username);
+        session.setAttribute("username",username);*/
         Page<RecipeDTO> recipeDTOS = recipeService.list(keyword, pageable);
 
         //페이지 정보
@@ -145,7 +145,7 @@ public class RecipeController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 //
-        model.addAttribute("username",username);
+        /*model.addAttribute("username",username);*/
 
         return "recipe/list";
     }

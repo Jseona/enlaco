@@ -14,6 +14,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
     //1. 암호의 암호화
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -32,7 +34,8 @@ public class SecurityConfig {
         //로그인 처리에 대한 설정
         http.formLogin()
                 .loginPage("/member/login")
-                .defaultSuccessUrl("/recipe/list")
+                .successHandler(customLoginSuccessHandler)
+                /*.defaultSuccessUrl("/recipe/list")*/
                 .usernameParameter("memail")
                 .passwordParameter("mpwd")
                 .failureUrl("/member/login/error");
@@ -42,6 +45,7 @@ public class SecurityConfig {
         //로그아웃에 대한 설정
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessHandler(logoutSuccessHandler)
                 .logoutSuccessUrl("/");
 
         return http.build();
