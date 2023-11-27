@@ -27,4 +27,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Integer> {
     @Query(value = "SELECT * FROM RecipeEntity WHERE memail=:memail", nativeQuery = true)
     MemberEntity findByMemail1(String memail);
 
+/*
+    @Query(value = "SELECT * FROM StorageEntity WHERE memail=:memail", nativeQuery = true)
+    MemberEntity findByMemail2(String memail);
+*/
 }

@@ -2,10 +2,12 @@ package com.example.enlaco.Controller;
 
 import com.example.enlaco.DTO.MemberDTO;
 import com.example.enlaco.DTO.RecipeDTO;
+import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,14 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final RecipeService recipeService;
+
+    //S3 이미지 정보
+    @Value("${cloud.aws.s3.bucket}")
+    public String bucket;
+    @Value("${cloud.aws.region.static}")
+    public String region;
+    @Value("${imgUploadLocation}")
+    public String folder;
 
     @GetMapping("/insert")
     public String insertForm(Model model) throws Exception {
@@ -112,6 +122,12 @@ public class MemberController {
 
         model.addAttribute("mid", mid);
         model.addAttribute("recipeDTO", recipeDTO);
+
+        //s3 이미지 전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
+
         return "member/myrecipedetail";
     }
 
