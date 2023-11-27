@@ -59,6 +59,8 @@ dependencies {
 
     //S3 적용
     compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+    //flask 서버를 위한 외부 라이브러리
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 tasks.named('test') {
