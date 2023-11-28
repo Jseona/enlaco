@@ -24,6 +24,7 @@
             <div th:each="data:${dto.name}">
                 <p th:text="${data}">"</p>
             </div>
+            <button type="button" th:onclick="|location.href='@{/storage/insert(singre=${dto.name})}'|">식재료 등록</button>
         </div>
         <div class="col-lg-3"></div>
     </div>

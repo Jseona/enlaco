@@ -26,10 +26,12 @@ public class StorageService {
     //파일이 저장될 경로
     @Value("${imgUploadLocation}")
     private String imgUploadLocation;
+    @Value("${imgLocation}")
+    private String imgLocation;
 
     private final StorageRepository storageRepository;
     private final MemberRepository memberRepository;
-    //private final FileService fileService;
+    private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
     //파일 저장을 위한 클래스
     private final S3Uploader s3Uploader;
@@ -69,9 +71,12 @@ public class StorageService {
         String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
 
-        if (originalFileName != null) {
-            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
+        if (imgFile != null && !imgFile.isEmpty()) {
+            newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
         }
+        /*if (originalFileName != null) {
+            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
+        }*/
 
         storageDTO.setSimg(newFIleName);
 

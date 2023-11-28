@@ -6,7 +6,6 @@ import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
-import com.example.enlaco.Util.DeduplcationUtils;
 import com.example.enlaco.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -240,8 +239,7 @@ public class RecipeService {
     //내가 가지고 있는 식재료로 레시피 검색
     public List<RecipeDTO> recipeRecom(int mid) throws Exception {
         String recom = "";
-        List<RecipeDTO> recipeDTOS = null;
-        List<RecipeDTO> recommend = new ArrayList<>();
+        List<RecipeEntity> recommend = new ArrayList<>();
         List<StorageDTO> storageDTOS = storageService.list(mid);
         System.out.println("storageDTOS : " + storageDTOS);
         List<String> list = storageDTOS.stream().map(e -> e.getSingre()).collect(Collectors.toCollection(ArrayList::new));
@@ -253,11 +251,16 @@ public class RecipeService {
             System.out.println("recom : " + recom);
 
             List<RecipeEntity> recipe = recipeRepository.recipeRecom(recom);
-            recipeDTOS = Arrays.asList(modelMapper.map(recipe, RecipeDTO[].class));
-            recommend = DeduplcationUtils.deduplication(recipeDTOS, RecipeDTO::getRid);
+
+            for (RecipeEntity strValue : recipe) {
+                if (!recommend.contains(strValue)) {
+                    recommend.add(strValue);
+                }
+            }
             /*recommend.addAll(recipeDTOS);*/
         }
 
-        return recommend;
+        List<RecipeDTO> recipeDTOS = Arrays.asList(modelMapper.map(recommend, RecipeDTO[].class));
+        return recipeDTOS;
     }
 }

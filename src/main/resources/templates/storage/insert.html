@@ -28,7 +28,7 @@
                             <label for="simg" class="form-label">식재료 사진</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
+                            <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}" th:text="${storageDTO.singre}">
                             <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
                             <input type="file" class="form-control" id="simg" name="image">
                             <p class="text-danger" th:if="${#fields.hasErrors('simg')}" th:errors="*{simg}"> </p>

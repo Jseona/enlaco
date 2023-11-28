@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -239,8 +240,8 @@ public class RecipeController {
 
     //레시피 추천
     @GetMapping("/recom")
-    public String recom(/*@RequestParam(value = "mid", required = false) int mid,*/ Model model) throws Exception {
-        int mid=1002;  //1002번 으로 테스트
+    public String recom(HttpSession session, Model model) throws Exception {
+        int mid = (int) session.getAttribute("mid");
         List<StorageDTO> storageDTOS = storageService.list(mid);
         List<RecipeDTO> recipeDTO = recipeService.recipeRecom(mid);
 
