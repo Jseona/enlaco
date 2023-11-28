@@ -2,15 +2,14 @@ package com.example.enlaco.Controller;
 
 import com.example.enlaco.DTO.CommentDTO;
 import com.example.enlaco.DTO.RecipeDTO;
+import com.example.enlaco.DTO.StorageDTO;
+import com.example.enlaco.Repository.RecipeRepository;
 import com.example.enlaco.Service.CommentService;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
-import com.example.enlaco.Util.S3Uploader;
-import jdk.dynalink.beans.StaticClass;
+import com.example.enlaco.Service.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.cfg.Environment;
-import org.jboss.jandex.Index;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +25,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.websocket.Session;
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 @Log4j2
@@ -38,6 +40,8 @@ public class RecipeController {
     private final RecipeService recipeService;
     private final CommentService commentService;
     private final MemberService memberService;
+    private final StorageService storageService;
+    private final RecipeRepository recipeRepository;
 
     //S3 이미지 정보
     @Value("${cloud.aws.s3.bucket}")
@@ -231,5 +235,18 @@ public class RecipeController {
     public String remove(int rid) throws Exception {
         recipeService.remove(rid);
         return "redirect:/member/mypage";
+    }
+
+    //레시피 추천
+    @GetMapping("/recom")
+    public String recom(/*@RequestParam(value = "mid", required = false) int mid,*/ Model model) throws Exception {
+        int mid=1002;  //1002번 으로 테스트
+        List<StorageDTO> storageDTOS = storageService.list(mid);
+        List<RecipeDTO> recipeDTO = recipeService.recipeRecom(mid);
+
+
+        model.addAttribute("storageDTOS", storageDTOS);
+        model.addAttribute("recipeDTO", recipeDTO);
+        return "/recipe/recommend";
     }
 }

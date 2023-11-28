@@ -1,10 +1,12 @@
 package com.example.enlaco.Service;
 
 import com.example.enlaco.DTO.RecipeDTO;
+import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.RecipeEntity;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
+import com.example.enlaco.Util.DeduplcationUtils;
 import com.example.enlaco.Util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.reflect.Member;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +29,13 @@ public class RecipeService {
     //파일이 저장될 경로
     @Value("${imgUploadLocation}")
     private String imgUploadLocation;
+    @Value("c:/enlaco/image/")
+    private String imgLocation;
     private final RecipeRepository recipeRepository;
     private final MemberRepository memberRepository;
+    private final StorageService storageService;
     private final MemberService memberService;
-    //private final FileService fileService;
+    private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
     //파일 저장을 위한 클래스
     private final S3Uploader s3Uploader;
@@ -101,9 +106,13 @@ public class RecipeService {
 
         String originalFileName = imgFile.getOriginalFilename();
         String newFileName = "";
-        if (originalFileName != null) { //파일이 존재하면
-            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+        if (originalFileName != null) {
+            newFileName = fileService.uploadFile(imgLocation,
+                    originalFileName, imgFile.getBytes());
         }
+        /*if (originalFileName != null) { //파일이 존재하면
+            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+        }*/
         recipeDTO.setRimg(newFileName);
 
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);
@@ -220,11 +229,35 @@ public class RecipeService {
     }
 
     //조회수
-   public void viewcnt(int rid) throws Exception {
+    public void viewcnt(int rid) throws Exception {
         recipeRepository.rviewcnt(rid);
     }
-    //좋아요
+   //좋아요
     public void goodcnt(int rid) throws Exception {
-         recipeRepository.rgoodcnt(rid);
+        recipeRepository.rgoodcnt(rid);
+    }
+
+    //내가 가지고 있는 식재료로 레시피 검색
+    public List<RecipeDTO> recipeRecom(int mid) throws Exception {
+        String recom = "";
+        List<RecipeDTO> recipeDTOS = null;
+        List<RecipeDTO> recommend = new ArrayList<>();
+        List<StorageDTO> storageDTOS = storageService.list(mid);
+        System.out.println("storageDTOS : " + storageDTOS);
+        List<String> list = storageDTOS.stream().map(e -> e.getSingre()).collect(Collectors.toCollection(ArrayList::new));
+        /*List<String> list = Arrays.asList("감자","양파");*/
+        System.out.println("list : " + list);
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            recom = iterator.next();
+            System.out.println("recom : " + recom);
+
+            List<RecipeEntity> recipe = recipeRepository.recipeRecom(recom);
+            recipeDTOS = Arrays.asList(modelMapper.map(recipe, RecipeDTO[].class));
+            recommend = DeduplcationUtils.deduplication(recipeDTOS, RecipeDTO::getRid);
+            /*recommend.addAll(recipeDTOS);*/
+        }
+
+        return recommend;
     }
 }

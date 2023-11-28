@@ -1,5 +1,6 @@
 package com.example.enlaco.Repository;
 
+import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Entity.RecipeEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,4 +46,8 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
 
     //Rid로 조회
     RecipeEntity findByRid(int rid);
+
+    //내가 가지고 있는 식재료로 레시피 검색
+    @Query(value = "select r.* from Recipe r left join Storage s on s.singre where r.rselect like %:recom%", nativeQuery = true)
+    List<RecipeEntity> recipeRecom(String recom);
 }
