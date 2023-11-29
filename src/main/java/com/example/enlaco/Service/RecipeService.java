@@ -105,13 +105,13 @@ public class RecipeService {
 
         String originalFileName = imgFile.getOriginalFilename();
         String newFileName = "";
-        if (originalFileName != null) {
+        /*if (originalFileName != null) {
             newFileName = fileService.uploadFile(imgLocation,
                     originalFileName, imgFile.getBytes());
-        }
-        /*if (originalFileName != null) { //파일이 존재하면
-            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
         }*/
+        if (originalFileName != null) { //파일이 존재하면
+            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+        }
         recipeDTO.setRimg(newFileName);
 
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);

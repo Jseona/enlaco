@@ -71,12 +71,12 @@ public class StorageService {
         String originalFileName = imgFile.getOriginalFilename();
         String newFIleName = "";
 
-        if (imgFile != null && !imgFile.isEmpty()) {
+        /*if (imgFile != null && !imgFile.isEmpty()) {
             newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
-        }
-        /*if (originalFileName != null) {
-            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
         }*/
+        if (originalFileName != null) {
+            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
+        }
 
         storageDTO.setSimg(newFIleName);
 
