@@ -20,14 +20,14 @@
         <div class="row">
             <div class="col-2 col-md-4"></div>
             <div class="col-8 col-md-4">
-                <h2 style="padding-bottom: 22px; font-size: 48px">식재료 수정</h2>
+                <h2 style="padding-bottom: 22px; font-size: xx-large">식재료 수정</h2>
                 <form th:action="@{/storage/modify}" method="post"  enctype="multipart/form-data" th:object="${storageDTO}">
                     <input type="hidden" name="sid" th:field="*{sid}">
                     <input type="hidden" name="mid" th:value="${mid}">
                     <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
                         <div class="col-3 mt-3">
-                            <label for="singre" class="form-label">식재료명</label>
-                            <label for="simg" class="form-label">식재료 사진</label>
+                            <label for="singre" class="form-label fw-bold">식재료명</label>
+                            <label for="simg" class="form-label fw-bold">식재료 사진</label>
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
@@ -39,7 +39,7 @@
                     </div>
                     <div class="row mb-3"> <!-- 유통기한 -->
                         <div class="col-3 mt-2">
-                            <label for="syutong" class="form-label">유통기한</label>
+                            <label for="syutong" class="form-label fw-bold">유통기한</label>
                         </div>
                         <div class="col-9">
                             <input type="date" class="form-control" id="syutong" name="syutong" th:field="*{syutong}">
