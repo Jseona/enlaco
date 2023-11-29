@@ -65,7 +65,7 @@ public class Flask {
 
         //플라스크에서 전달받은 파일을 임시저장
         byte[] decodedImageDate = Base64.getDecoder().decode((String)(jsonobject.get("image")));
-        String outputFilePath = tempFolder+"result.jpg"; //AI결과 파일명
+        String outputFilePath = /*tempFolder+*/"result.jpg"; //AI결과 파일명
         System.out.println("이미지 저장 이름 : " + outputFilePath);
 
         try(FileOutputStream fos = new FileOutputStream(outputFilePath)) {

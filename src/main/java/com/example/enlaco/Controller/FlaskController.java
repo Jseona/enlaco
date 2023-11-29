@@ -20,6 +20,8 @@ public class FlaskController {
     public String region;
     @Value("${imgUploadLocation}")
     public String folder;
+    @Value("${uploadPath}")
+    private String tempFolder;
 
     @Autowired
     private Flask flask;
@@ -34,6 +36,7 @@ public class FlaskController {
         FlaskDTO dto = flask.requestToFlask(file);
 
         model.addAttribute("dto", dto);
+        model.addAttribute("tempFolder", tempFolder);
         return "storage/result";
     }
 }
