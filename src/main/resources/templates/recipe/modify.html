@@ -45,7 +45,7 @@
                     <input type="hidden" name="rid" th:field="*{rid}">
                     <input type="hidden" name="mid" th:value="${mid}">
                     <div class="col-3 mt-2">
-                        <label for="rmenu" class="form-label">메뉴명</label>
+                        <label for="rmenu" class="form-label fw-bold">메뉴명</label>
                     </div>
                     <div class="col-9">
                         <input type="text" th:field="*{rmenu}" class="form-control" id="rmenu" placeholder="메뉴명을 입력해주세요." name="rmenu">
@@ -54,7 +54,7 @@
                 </div>  <!--메뉴명 입력 줄 끝-->
                 <div class="row mb-3"> <!--대표사진 입력 줄-->
                     <div class="col-3 mt-2">
-                        <label for="rimg" class="form-label">대표 사진</label>
+                        <label for="rimg" class="form-label fw-bold">대표 사진</label>
                     </div>
                     <div class="col-9">
                         <input type="hidden" name="rimg" th:field="*{rimg}">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="row mt-1 mb-1"> <!--식재료 입력 줄-->
                     <div class="col-3 mt-2">
-                        <label class="form-label">식재료</label>
+                        <label class="form-label fw-bold">식재료</label>
                     </div>
                 </div>  <!--식재료 입력 줄 끝-->
                 <div id="inputA">
@@ -80,12 +80,12 @@
                 <div class="row mt-3">  <!--식재료 입력창 추가 버튼-->
                     <div class="col-4"></div>
                     <div class="col-4">
-                        <button type="button" id="bnt">추가</button>
+                        <button type="button" id="bnt" class="btn btn-dark d-flex justify-content-end">추가</button>
                     </div>
                     <div class="col-4"></div>
                 </div>  <!--식재료 입력창 추가 버튼 끝-->
                 <div class="row mt-1 mb-1"> <!--상세레시피 입력 줄-->
-                    <label class="form-label">상세 레시피</label>
+                    <label class="form-label fw-bold">상세 레시피</label>
                 </div>
                 <div class="row mt-1 mb-1">
                     <textarea id="summernote" th:field="*{rcontent}"></textarea>
