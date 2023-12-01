@@ -2,6 +2,7 @@ package com.example.enlaco.Controller;
 
 import com.example.enlaco.DTO.FlaskDTO;
 import com.example.enlaco.Util.Flask;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@RequiredArgsConstructor
 public class FlaskController {
     //S3 이미지 정보
     @Value("${cloud.aws.s3.bucket}")
@@ -20,7 +22,7 @@ public class FlaskController {
     public String region;
     @Value("${imgUploadLocation}")
     public String folder;
-    @Value("${uploadPath}")
+    @Value("${tempFolder}")
     private String tempFolder;
 
     @Autowired

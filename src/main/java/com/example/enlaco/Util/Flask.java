@@ -1,6 +1,7 @@
 package com.example.enlaco.Util;
 
 import com.example.enlaco.DTO.FlaskDTO;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,6 +19,7 @@ import java.io.FileOutputStream;
 import java.util.Base64;
 
 @Component
+@RequiredArgsConstructor
 public class Flask {
     @Value("${flask.Server.Url}")
     private String url;
