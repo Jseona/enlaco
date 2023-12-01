@@ -30,7 +30,7 @@ public class FlaskController {
 
     @GetMapping("/storage/image")
     public String image() throws Exception {
-        return "storage/image";
+        return "/storage/image";
     }
 
     @PostMapping("/storage/result")
@@ -39,6 +39,6 @@ public class FlaskController {
 
         model.addAttribute("dto", dto);
         model.addAttribute("tempFolder", tempFolder);
-        return "storage/result";
+        return "/storage/result";
     }
 }

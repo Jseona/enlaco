@@ -3,7 +3,6 @@ package com.example.enlaco.Controller;
 import com.example.enlaco.DTO.CommentDTO;
 import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.DTO.StorageDTO;
-import com.example.enlaco.Repository.RecipeRepository;
 import com.example.enlaco.Service.CommentService;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
@@ -27,11 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 @Log4j2
@@ -42,7 +37,6 @@ public class RecipeController {
     private final CommentService commentService;
     private final MemberService memberService;
     private final StorageService storageService;
-    private final RecipeRepository recipeRepository;
 
     //S3 이미지 정보
     @Value("${cloud.aws.s3.bucket}")
@@ -78,7 +72,7 @@ public class RecipeController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 
-        return "recipe/detail";
+        return "/recipe/detail";
     }
 
     //입력
@@ -93,7 +87,7 @@ public class RecipeController {
         model.addAttribute("writer", writer);
         model.addAttribute("mid", mid);
         model.addAttribute("recipeDTO", recipeDTO);
-        return "recipe/insert";
+        return "/recipe/insert";
     }
     @PostMapping("/insert")
     public String insertProc( @Valid RecipeDTO recipeDTO,
@@ -152,7 +146,7 @@ public class RecipeController {
 //
         /*model.addAttribute("username",username);*/
 
-        return "recipe/list";
+        return "/recipe/list";
     }
 
     //분류 리스트
@@ -184,7 +178,7 @@ public class RecipeController {
         model.addAttribute("rtime", rtime);
         model.addAttribute("rclass", rclass);
 
-        return "recipe/listrclass";
+        return "/recipe/listrclass";
     }
 
     //수정
@@ -212,7 +206,7 @@ public class RecipeController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 
-        return "recipe/modify";
+        return "/recipe/modify";
     }
     @PostMapping("/modify")
     public String modifyProc(@Valid RecipeDTO recipeDTO,

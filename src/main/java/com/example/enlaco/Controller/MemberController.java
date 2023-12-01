@@ -2,7 +2,6 @@ package com.example.enlaco.Controller;
 
 import com.example.enlaco.DTO.MemberDTO;
 import com.example.enlaco.DTO.RecipeDTO;
-import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Service.MemberService;
 import com.example.enlaco.Service.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -42,7 +40,7 @@ public class MemberController {
         MemberDTO memberDTO = new MemberDTO();
 
         model.addAttribute("memberDTO", memberDTO);
-        return "member/insert";
+        return "/member/insert";
     }
     @PostMapping("/insert")
     public String insertProc(@Valid MemberDTO memberDTO,
@@ -65,13 +63,13 @@ public class MemberController {
     @GetMapping("/login")
     public String login() throws Exception {
 
-        return "member/login";
+        return "/member/login";
     }
 
     @GetMapping("/login/error")
     public String loginError(Model model) throws Exception {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해 주세요.");
-        return "member/login";
+        return "/member/login";
     }
 
     @GetMapping("/mypage")
@@ -85,7 +83,7 @@ public class MemberController {
         model.addAttribute("memberDTO", memberDTO);
         model.addAttribute("recipeDTOS", recipeDTOS);
         model.addAttribute("mid", mid);
-        return "member/mypage";
+        return "/member/mypage";
     }
     /*public String mypage(@PageableDefault(page = 1) Pageable pageable,
                          Model model) throws Exception {
@@ -128,7 +126,7 @@ public class MemberController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 
-        return "member/myrecipedetail";
+        return "/member/myrecipedetail";
     }
 
     @PostMapping("/logout")

@@ -68,7 +68,7 @@ public class StorageController {
         model.addAttribute("mid", mid);
         model.addAttribute("storageDTO", storageDTO);
 
-        return "storage/insert";
+        return "/storage/insert";
     }
     @PostMapping("/insert")
     public String insertProc(@Valid StorageDTO storageDTO, BindingResult bindingResult,
@@ -169,7 +169,7 @@ public class StorageController {
         model.addAttribute("region", region);
         model.addAttribute("folder", folder);
 
-        return "storage/modify";
+        return "/storage/modify";
     }
     @PostMapping("/modify")
     public String modifyProc(StorageDTO storageDTO, Principal principal,
