@@ -33,7 +33,7 @@
                             <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
                             <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
                             <input type="hidden" name="simg" th:field="*{simg}">
-                            <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/*{simg}|" width="150" height="100">
+                            <img th:src="*{simg}" width="150" height="100">
                             <input type="file" class="form-control" id="simg" name="imgFile">
                         </div>
                     </div>

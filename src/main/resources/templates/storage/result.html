@@ -17,14 +17,15 @@
         <div class="col-lg-6">
             <h1 class="text-center">YOLOv5 결과 처리</h1>
             <!--<img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/result.jpg|">-->
-            <img src="/images/imageresult.jpg" style="width: 100%">
+            <img src="/images/imageresult.jpg" style="width: 100%" name="imageresult">
             <!--<ul>
                 <li th:each="result:${results}" th:text="${result}"></li>
             </ul>-->
             <div th:each="data:${dto.name}">
                 <p th:text="${data}">"</p>
             </div>
-            <button type="button" th:onclick="|location.href='@{/storage/insert(singre=${dto.name})}'|">식재료 등록</button>
+            <!--<button type="button" th:onclick="|location.href='@{/storage/insert(singre=${dto.name})}'|">식재료 등록</button>-->
+            <button type="button" th:onclick="|location.href='@{/storage/insert}'|">식재료 등록</button>
         </div>
         <div class="col-lg-3"></div>
     </div>

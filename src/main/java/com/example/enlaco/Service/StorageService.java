@@ -26,12 +26,9 @@ public class StorageService {
     //파일이 저장될 경로
     @Value("${imgUploadLocation}")
     private String imgUploadLocation;
-    @Value("${imgLocation}")
-    private String imgLocation;
 
     private final StorageRepository storageRepository;
     private final MemberRepository memberRepository;
-    private final FileService fileService;
     private final ModelMapper modelMapper = new ModelMapper();
     //파일 저장을 위한 클래스
     private final S3Uploader s3Uploader;

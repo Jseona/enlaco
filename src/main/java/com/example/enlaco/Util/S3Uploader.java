@@ -25,6 +25,7 @@ public class S3Uploader {
 
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
+
     //파일업로드
     public String upload(MultipartFile multipartFile, String dirName) throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("파일 전환 실패"));
@@ -33,7 +34,7 @@ public class S3Uploader {
 //
     // S3 파일삭제
     public void deleteFile(String deleteFile, String dirName) throws IOException {
-        String fileName = dirName+"/"+deleteFile;
+        String fileName = deleteFile;
         try {
             amazonS3Client.deleteObject(bucket, fileName);
         } catch(SdkClientException e) {
@@ -50,13 +51,14 @@ public class S3Uploader {
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
 
-        return newFileName;
-        //return uploadImageUrl;
+        //return newFileName;
+        return uploadImageUrl;
     }
 
     // S3로 업로드
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
+
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
