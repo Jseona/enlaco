@@ -19,6 +19,7 @@ public interface StorageRepository extends JpaRepository<StorageEntity, Integer>
 
     @Query(value = "SELECT * FROM StorageEntity WHERE memail=:memail", nativeQuery = true)
     StorageEntity findByMemail1(String memail);
+
 }
 
 

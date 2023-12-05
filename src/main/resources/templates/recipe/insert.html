@@ -50,7 +50,7 @@
                 <input type="hidden" name="mid" th:value="${mid}">
                 <div class="row mt-4 mb-3"> <!--메뉴명 입력 줄-->
                     <div class="col-3 mt-2">
-                        <label for="rmenu" class="form-label fw-bold">메뉴명</label>
+                        <label for="rmenu" class="form-label fw-bold">메뉴명<br>(필수 입력)</label>
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" id="rmenu" placeholder="메뉴명을 입력해주세요." name="rmenu" th:field="*{rmenu}">
@@ -59,10 +59,11 @@
                 </div>  <!--메뉴명 입력 줄 끝-->
                 <div class="row mb-3"> <!--대표사진 입력 줄-->
                     <div class="col-3 mt-2">
-                        <label for="rimg" class="form-label fw-bold">대표 사진</label>
+                        <label for="rimg" class="form-label fw-bold">대표 사진<br>(필수 입력)</label>
                     </div>
                     <div class="col-9">
                         <input type="file" class="form-control" id="rimg" name="image">
+                        <p class="text-danger" th:if="${#fields.hasErrors('rimg')}" th:errors="사진을 올려주세요"> </p>
                     </div>
                 </div>  <!--대표사진 입력 줄 끝-->
 
@@ -71,14 +72,14 @@
                         <label for="rselect" class="form-label fw-bold">식재료</label>
                     </div>
                     <div class="col-9">
-                        <input type="text" class="form-control" id="rselect" placeholder="식재료를 입력해주세요." name="rselect" th:field="*{rselect}">
+                        <input type="text" class="form-control" id="rselect" placeholder="식재료를 입력해주세요." name="rselect" th:value="${rselect}">
                     </div>
                 </div>  <!--식재료 입력 줄 끝-->
                 <div id="inputA">
                     <div class="row"> <!--추가 식재료 입력 줄-->
                         <div class="col-3 mt-2"></div>
                         <div class="col-9">
-                            <input type="text" class="form-control" placeholder="식재료를 입력해주세요." name="rselect" th:field="*{rselect}">
+                            <input type="text" class="form-control" placeholder="식재료를 입력해주세요." name="rselect" th:value="${rselect}">
                         </div>
                     </div>  <!--추가 식재료 입력 줄 끝-->
                 </div>

@@ -59,13 +59,9 @@ public class StorageController {
     }
     //입력창
     @GetMapping("/insert")
-    public String insertForm(Principal principal, Model model) throws Exception {
-        String writer = principal.getName();
-        int mid = memberService.findByMemail1(writer);
+    public String insertForm(Model model) throws Exception {
         StorageDTO storageDTO = new StorageDTO();
 
-        model.addAttribute("writer", writer);
-        model.addAttribute("mid", mid);
         model.addAttribute("storageDTO", storageDTO);
 
         return "/storage/insert";
@@ -73,7 +69,7 @@ public class StorageController {
     @PostMapping("/insert")
     public String insertProc(@Valid StorageDTO storageDTO, BindingResult bindingResult,
                              @RequestParam("mid") int mid,
-                             @RequestParam("image") MultipartFile multipartFile) throws Exception {
+                             @RequestParam(value = "image", required = false, defaultValue = "null") MultipartFile multipartFile) throws Exception {
         if (bindingResult.hasErrors()) {
             return "storage/insert";
         }
