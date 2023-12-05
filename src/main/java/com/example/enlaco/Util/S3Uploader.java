@@ -33,10 +33,9 @@ public class S3Uploader {
     }
 //
     // S3 파일삭제
-    public void deleteFile(String deleteFile, String dirName) throws IOException {
-        String fileName = deleteFile;
+    public void deleteFile(String deleteFile) throws IOException {
         try {
-            amazonS3Client.deleteObject(bucket, fileName);
+            amazonS3Client.deleteObject(bucket, deleteFile);
         } catch(SdkClientException e) {
             throw new IOException("Error deleting file from S3", e);
         }

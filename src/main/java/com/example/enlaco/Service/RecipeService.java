@@ -48,7 +48,7 @@ public class RecipeService {
         RecipeEntity recipeEntity = recipeRepository.findById(rid).orElseThrow(); //조회 -> 저장
         commentRepository.deleteByRecipeId(rid);
         //deleteFile(파일명, 폴더명)
-        s3Uploader.deleteFile(recipeEntity.getRimg(), imgUploadLocation);
+        s3Uploader.deleteFile(recipeEntity.getRimg());
 
         //레코드를 삭제
         recipeRepository.deleteById(rid);
@@ -72,7 +72,7 @@ public class RecipeService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile.length() != 0) {
-                s3Uploader.deleteFile(recipeEntity.getRimg(), imgUploadLocation);
+                s3Uploader.deleteFile(recipeEntity.getRimg());
             }
 
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);

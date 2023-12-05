@@ -36,7 +36,7 @@ public class StorageService {
     //삭제
     public void remove(int sid) throws Exception {
         StorageEntity read = storageRepository.findById(sid).orElseThrow();
-        s3Uploader.deleteFile(read.getSimg(), imgUploadLocation);
+        s3Uploader.deleteFile(read.getSimg());
 
         storageRepository.deleteById(sid);
     }
@@ -109,7 +109,7 @@ public class StorageService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile.length() != 0) {
-                s3Uploader.deleteFile(storageEntity.getSimg(), imgUploadLocation);
+                s3Uploader.deleteFile(storageEntity.getSimg());
             }
 
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
