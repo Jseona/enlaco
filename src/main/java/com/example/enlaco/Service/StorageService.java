@@ -37,7 +37,7 @@ public class StorageService {
     public void remove(int sid, MultipartFile imgFile) throws Exception {
         StorageEntity read = storageRepository.findById(sid).orElseThrow();
         if (imgFile != null) {
-            s3Uploader.deleteFile(read.getSimg(), imgUploadLocation);
+            s3Uploader.deleteFile(read.getSimg());
         }
         storageRepository.deleteById(sid);
     }
@@ -110,7 +110,7 @@ public class StorageService {
 
         if (originalFileName.length() != 0) {
             if (deleteFile != null) {
-                s3Uploader.deleteFile(storageEntity.getSimg(), imgUploadLocation);
+                s3Uploader.deleteFile(storageEntity.getSimg());
             }
 
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);

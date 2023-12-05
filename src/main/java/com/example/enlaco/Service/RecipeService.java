@@ -83,15 +83,14 @@ public class RecipeService {
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);
 
         update.setRid(recipe.getRid());
-        update.setRclass(recipe.getRclass());
+        //update.setRclass(recipe.getRclass());
         update.setRgoodcnt(recipe.getRgoodcnt());
 
         //update.setRselect(recipe.getRselect());
         update.setRviewcnt(recipe.getRviewcnt());
         update.setRwriter(recipe.getRwriter());
         update.setMemberEntity(member);
-        update.setRtime(recipe.getRtime());
-
+        //update.setRtime(recipe.getRtime());
 
         recipeRepository.save(update);
     }
