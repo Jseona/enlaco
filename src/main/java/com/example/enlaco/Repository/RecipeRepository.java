@@ -2,6 +2,7 @@ package com.example.enlaco.Repository;
 
 import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Entity.RecipeEntity;
+import com.example.enlaco.Entity.StorageEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,4 +51,9 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity, Integer> {
     //내가 가지고 있는 식재료로 레시피 검색
     @Query(value = "select r.* from Recipe r left join Storage s on s.singre where r.rselect like %:recom%", nativeQuery = true)
     List<RecipeEntity> recipeRecom(String recom);
+
+    @Query(value = "SELECT r FROM RecipeEntity r JOIN StorageEntity s ON r.rselect LIKE CONCAT('%', s.singre, '%') WHERE r.memberEntity.mid=s.memberEntity.mid")
+    List<RecipeEntity> findByRecipeRecom();
+
+
 }

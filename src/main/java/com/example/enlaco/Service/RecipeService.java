@@ -41,6 +41,7 @@ public class RecipeService {
 
     //삭제
     public void remove(int rid) throws Exception {
+
         //물리적 위치에 저장된 이미지를 삭제
         RecipeEntity recipeEntity = recipeRepository.findById(rid).orElseThrow(); //조회 -> 저장
         //deleteFile(파일명, 폴더명)
@@ -103,16 +104,20 @@ public class RecipeService {
         Optional<MemberEntity> data = memberRepository.findById(mid);
         MemberEntity memberEntity = data.orElseThrow();
 
-        String originalFileName = imgFile.getOriginalFilename();
-        String newFileName = "";
+        if(imgFile!=null) {
+            String originalFileName = imgFile.getOriginalFilename();
+            String newFileName = "";
         /*if (originalFileName != null) {
             newFileName = fileService.uploadFile(imgLocation,
                     originalFileName, imgFile.getBytes());
         }*/
-        if (originalFileName != null) { //파일이 존재하면
-            newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+            if (originalFileName != null) { //파일이 존재하면
+                newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
+            }
+            recipeDTO.setRimg(newFileName);
+        }else {
+            recipeDTO.setRimg(null);
         }
-        recipeDTO.setRimg(newFileName);
 
         RecipeEntity recipe = modelMapper.map(recipeDTO, RecipeEntity.class);
         recipe.setMemberEntity(memberEntity);
@@ -263,4 +268,11 @@ public class RecipeService {
         List<RecipeDTO> recipeDTOS = Arrays.asList(modelMapper.map(recommend, RecipeDTO[].class));
         return recipeDTOS;
     }
+
+    //레시피 추천
+    public void RecipeRecommend() throws Exception {
+        recipeRepository.findByRecipeRecom();
+    }
+
+
 }
