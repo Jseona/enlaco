@@ -82,6 +82,14 @@ public class StorageService {
 
         storageRepository.save(storage);
     }
+    public void aiInsert(int id, StorageDTO storageDTO, String name) throws Exception {
+        Optional<MemberEntity> data = memberRepository.findById(id);
+        MemberEntity member = data.orElseThrow();
+        storageDTO.setSimg(name);
+        StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
+        storage.setMemberEntity(member);
+        storageRepository.save(storage);
+    }
 
     //수정
     public void modify(StorageDTO storageDTO, String memail,  MultipartFile imgFile) throws Exception {

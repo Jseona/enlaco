@@ -16,18 +16,41 @@
         <div class="col-lg-3"></div>
         <div class="col-lg-6">
             <h1 class="text-center">YOLOv5 결과 처리</h1>
-            <!--<img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/result.jpg|">-->
-            <img src="/images/imageresult.jpg" style="width: 100%" name="imageresult">
-            <!--<ul>
-                <li th:each="result:${results}" th:text="${result}"></li>
-            </ul>-->
-            <div th:each="data:${dto.name}">
-                <p th:text="${data}">"</p>
-            </div>
-            <!--<button type="button" th:onclick="|location.href='@{/storage/insert(singre=${dto.name})}'|">식재료 등록</button>-->
-            <button type="button" th:onclick="|location.href='@{/storage/insert}'|">식재료 등록</button>
+            <form th:action="@{/storage/AIinsert}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="mid" th:value="${session.mid}">
+                <input type="hidden" id="simg" name="imageName" th:value="${imageName}">
+                <!-- S3에  <img th:src="|https://${bucket}.s3.${region}.amazonaws.com/${folder}/result.jpg|">-->
+                <img src="/images/imageresult.jpg" style="width: 100%">
+                <script type="text/javascript">
+                    var img = document.querySelector("img"); // img 태그 객체
+
+                    var bstr = atob(img.src.split(",")[1]);
+                    var n = bstr.length;
+                    var u8arr = new Uint8Array(n);
+
+                    while(n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+
+                    var file = new File([u8arr], "imgresult", {type:"mime"});
+
+                    console.log(file);
+                    console.log(file.size);
+                    //출처: https://haenny.tistory.com/213 [Haenny:티스토리]
+                </script>
+                <!--<ul>
+                    <li th:each="result:${results}" th:text="${result}"></li>
+                </ul>-->
+                <div th:each="data:${dto.name}">
+                    <input type="text" class="form-control" name="singre" th:value="${data}">
+                </div>
+                <!--<button type="button" th:onclick="|location.href='@{/storage/insert(singre=${dto.name})}'|">식재료 등록</button>-->
+                <button type="submit" class="btn text-white fw-bold" style="background-color:#f7931e">식재료 등록</button>
+                <button type="button" class="btn btn-secondary ms-2" onclick="history.back()">다시하기</button>
+            </form>
         </div>
         <div class="col-lg-3"></div>
+
     </div>
 
 </div>

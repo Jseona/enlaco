@@ -23,7 +23,7 @@
                 <form th:action="@{/storage/insert}" method="post" enctype="multipart/form-data" th:object="${storageDTO}">
                     <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
                         <div class="col-3 mt-3">
-                            <input type="hidden" name="mid" th:value="${mid}">
+                            <input type="hidden" name="mid" th:value="${session.mid}">
                             <label for="singre" class="form-label fw-bold">식재료명</label>
                             <label for="simg" class="form-label fw-bold">식재료 사진</label>
                         </div>
