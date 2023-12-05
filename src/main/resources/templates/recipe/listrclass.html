@@ -119,8 +119,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:if="recipeDTO" th:each="data:${recipeDTOS}">
-                        <td> <img th:src="${data.rimg}}" width="150" height="100"> </td>
+                    <tr style="cursor: pointer" th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:if="recipeDTOS" th:each="data:${recipeDTOS}">
+                        <td> <img th:src="${data.rimg}" width="150" height="100"> </td>
                         <td th:text="${data.rmenu}">김치찌개</td>
                         <td th:text="${data.rwriter}">작성자1</td>
                         <td th:text="${data.rviewcnt}">10</td>
