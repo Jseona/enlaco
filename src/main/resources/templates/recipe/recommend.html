@@ -17,16 +17,16 @@
     <table class="table table-hover">
       <thead>
       <tr>
+        <th></th>
         <th>레시피명</th>
         <th>재료</th>
-        <th></th>
       </tr>
       </thead>
       <tbody>
       <tr th:onclick="|location.href='@{/recipe/detail(rid=${data.rid})}'|" th:each="data:${recipeDTO}">
+        <td><img th:src="${data.rimg}" width="150" height="100"></td>
         <td th:text="${data.rmenu}">레시피명</td>
         <td th:text="${data.rselect}">재료</td>
-        <td></td>
       </tr>
       </tbody>
     </table>
