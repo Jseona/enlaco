@@ -61,6 +61,7 @@ dependencies {
     compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
     //flask 서버를 위한 외부 라이브러리
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    //implementation 'com.amazonaws:aws-java-sdk-s3:1.12.174'
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
     implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.581'
 

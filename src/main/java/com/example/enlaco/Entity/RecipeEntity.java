@@ -3,6 +3,7 @@ package com.example.enlaco.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,5 +46,7 @@ public class RecipeEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mid")
     private MemberEntity memberEntity;        //회원 번호 / 외래키
+
+
 
 }

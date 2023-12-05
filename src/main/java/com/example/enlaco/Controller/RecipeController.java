@@ -78,10 +78,9 @@ public class RecipeController {
     //입력
     @GetMapping("/insert")
     public String insertForm(Principal principal, Model model) throws Exception {
+        RecipeDTO recipeDTO = new RecipeDTO();
         String writer = principal.getName();
         int mid = memberService.findByMemail1(writer);
-        RecipeDTO recipeDTO = new RecipeDTO();
-
         System.out.println("principal로 조회한 mid : " + mid);
 
         model.addAttribute("writer", writer);
@@ -92,10 +91,15 @@ public class RecipeController {
     @PostMapping("/insert")
     public String insertProc( @Valid RecipeDTO recipeDTO,
                               BindingResult bindingResult,
+                              Model model,
                               @RequestParam("mid") int mid,
-                             @RequestParam("image")MultipartFile multipartFile
+                             @RequestParam(value = "image", required = false, defaultValue = "null")MultipartFile multipartFile
                              ) throws Exception {
+
         if (bindingResult.hasErrors()) {
+            model.addAttribute("mid", mid);
+            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
+            model.addAttribute("rselect", rrsel);
             return "recipe/insert";
         }
 
@@ -117,6 +121,7 @@ public class RecipeController {
         String username =  email.substring(0,email.lastIndexOf('@'));
         session.setAttribute("username",username);*/
         Page<RecipeDTO> recipeDTOS = recipeService.list(keyword, pageable);
+
 
         //페이지 정보
         int blockLimit = 5;

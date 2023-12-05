@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class RecipeDTO {
     private Integer rid;
     private String  rimg;
-    @NotEmpty(message = "메뉴명을 입력하세요")
+    @NotBlank(message = "메뉴명을 입력하세요")
     private String  rmenu;
     private String  rcontent;
     private String  rwriter;
