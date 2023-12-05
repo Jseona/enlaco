@@ -93,7 +93,7 @@ public class RecipeController {
                               BindingResult bindingResult,
                               Model model,
                               @RequestParam("mid") int mid,
-                             @RequestParam(value = "image", required = false, defaultValue = "null")MultipartFile multipartFile
+                              @RequestParam(value = "image") MultipartFile multipartFile
                              ) throws Exception {
 
         if (bindingResult.hasErrors()) {
@@ -106,8 +106,13 @@ public class RecipeController {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             recipeService.insert(mid, recipeDTO, multipartFile);
         } else {
-            recipeService.insert(mid, recipeDTO, null); //파일이 없는 경우에도 처리
+            model.addAttribute("mid", mid);
+            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
+            model.addAttribute("rselect", rrsel);
+            return "recipe/insert";
         }
+            //recipeService.insert(mid, recipeDTO, null); //파일이 없는 경우에도 처리
+
 
         return "redirect:/recipe/list";
     }
@@ -182,6 +187,11 @@ public class RecipeController {
 
         model.addAttribute("rtime", rtime);
         model.addAttribute("rclass", rclass);
+
+        //s3 이미지 전달
+        model.addAttribute("bucket", bucket);
+        model.addAttribute("region", region);
+        model.addAttribute("folder", folder);
 
         return "/recipe/listrclass";
     }

@@ -65,17 +65,16 @@ public class StorageService {
         Optional<MemberEntity> data = memberRepository.findById(id);
         MemberEntity member = data.orElseThrow();
 
-        String originalFileName = imgFile.getOriginalFilename();
-        String newFIleName = "";
-
-        /*if (imgFile != null && !imgFile.isEmpty()) {
-            newFIleName = fileService.uploadFile(imgLocation, originalFileName, imgFile.getBytes());
-        }*/
-        if (originalFileName != null) {
-            newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
+        if (imgFile!=null) {
+            String originalFileName = imgFile.getOriginalFilename();
+            String newFIleName = "";
+            if (originalFileName != null) {
+                newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
+            }
+            storageDTO.setSimg(newFIleName);
+        } else {
+            storageDTO.setSimg(null);
         }
-
-        storageDTO.setSimg(newFIleName);
 
         StorageEntity storage = modelMapper.map(storageDTO, StorageEntity.class);
         storage.setMemberEntity(member);
