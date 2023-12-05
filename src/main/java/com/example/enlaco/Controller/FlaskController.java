@@ -44,7 +44,7 @@ public class FlaskController {
 
     @PostMapping("/storage/result")
     public String result(@RequestParam("file") MultipartFile file, Model model) throws Exception {
-        String imageName = s3Uploader.upload(file, tempFolder);
+        String imageName = s3Uploader.upload(file, folder);
         System.out.println("imageName : " + imageName);
         FlaskDTO dto = flask.requestToFlask(file);
         StorageDTO storageDTO = new StorageDTO();
