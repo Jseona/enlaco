@@ -69,7 +69,7 @@ public class StorageController {
     @PostMapping("/insert")
     public String insertProc(@Valid StorageDTO storageDTO, BindingResult bindingResult,
                              @RequestParam("mid") int mid,
-                             @RequestParam("image") MultipartFile multipartFile) throws Exception {
+                             @RequestParam(value = "image", required = false, defaultValue = "null") MultipartFile multipartFile) throws Exception {
         if (bindingResult.hasErrors()) {
             return "storage/insert";
         }
