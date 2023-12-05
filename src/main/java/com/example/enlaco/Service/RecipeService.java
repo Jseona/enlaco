@@ -4,6 +4,7 @@ import com.example.enlaco.DTO.RecipeDTO;
 import com.example.enlaco.DTO.StorageDTO;
 import com.example.enlaco.Entity.MemberEntity;
 import com.example.enlaco.Entity.RecipeEntity;
+import com.example.enlaco.Repository.CommentRepository;
 import com.example.enlaco.Repository.MemberRepository;
 import com.example.enlaco.Repository.RecipeRepository;
 import com.example.enlaco.Util.S3Uploader;
@@ -32,6 +33,7 @@ public class RecipeService {
     private String imgLocation;
     private final RecipeRepository recipeRepository;
     private final MemberRepository memberRepository;
+    private final CommentRepository commentRepository;
     private final StorageService storageService;
     private final MemberService memberService;
     private final FileService fileService;
@@ -43,6 +45,7 @@ public class RecipeService {
     public void remove(int rid) throws Exception {
         //물리적 위치에 저장된 이미지를 삭제
         RecipeEntity recipeEntity = recipeRepository.findById(rid).orElseThrow(); //조회 -> 저장
+        commentRepository.deleteByRecipeId(rid);
         //deleteFile(파일명, 폴더명)
         s3Uploader.deleteFile(recipeEntity.getRimg(), imgUploadLocation);
 
@@ -130,7 +133,7 @@ public class RecipeService {
     //전체조회
     public Page<RecipeDTO> list(String keyword, Pageable pageable) throws Exception {
         int curPage = pageable.getPageNumber()-1;
-        int pageLimit = 10;
+        int pageLimit = 9;
 
         Pageable newPage = PageRequest.of(curPage, pageLimit,
                 Sort.by(Sort.Direction.DESC,"rviewcnt"));

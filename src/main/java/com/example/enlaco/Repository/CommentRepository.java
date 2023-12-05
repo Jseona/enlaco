@@ -11,4 +11,7 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
     @Query(value = "SELECT * FROM Comment WHERE recipeid =:rid", nativeQuery = true)
     List<CommentEntity> findByRecipeId(Integer rid);
+
+    @Query(value = "delete from comment where recipeid=:rid",nativeQuery = true)
+    void deleteByRecipeId(Integer rid);
 }
