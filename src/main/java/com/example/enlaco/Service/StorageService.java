@@ -34,10 +34,11 @@ public class StorageService {
     private final S3Uploader s3Uploader;
 
     //삭제
-    public void remove(int sid) throws Exception {
+    public void remove(int sid, MultipartFile imgFile) throws Exception {
         StorageEntity read = storageRepository.findById(sid).orElseThrow();
-        s3Uploader.deleteFile(read.getSimg());
-
+        if (imgFile != null) {
+            s3Uploader.deleteFile(read.getSimg(), imgUploadLocation);
+        }
         storageRepository.deleteById(sid);
     }
 
@@ -67,7 +68,7 @@ public class StorageService {
 
         if (imgFile!=null) {
             String originalFileName = imgFile.getOriginalFilename();
-            String newFIleName = "";
+            String newFIleName = null;
             if (originalFileName != null) {
                 newFIleName = s3Uploader.upload(imgFile, imgUploadLocation);
             }
@@ -105,17 +106,18 @@ public class StorageService {
         String deleteFile = storage.getSimg();
 
         String originalFileName = imgFile.getOriginalFilename();
-        String newFileName = "";
+        String newFileName = null;
 
         if (originalFileName.length() != 0) {
-            if (deleteFile.length() != 0) {
-                s3Uploader.deleteFile(storageEntity.getSimg());
+            if (deleteFile != null) {
+                s3Uploader.deleteFile(storageEntity.getSimg(), imgUploadLocation);
             }
 
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
             storageDTO.setSimg(newFileName);
             //storage.setSimg(newFileName);
         }
+
         storageDTO.setSid(storage.getSid());  //밑에서 Entity로 한번에 저장*/
 
         StorageEntity update = modelMapper.map(storageDTO, StorageEntity.class);

@@ -215,7 +215,6 @@ public class RecipeService {
             }
         }
 
-
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())
                 .rimg(data.getRimg())

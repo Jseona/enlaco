@@ -179,8 +179,8 @@ public class StorageController {
 
     //삭제
     @GetMapping("/remove")
-    public String remove(int sid, Model model) throws Exception {
-        storageService.remove(sid);
+    public String remove(int sid, MultipartFile imgFile, Model model) throws Exception {
+        storageService.remove(sid, imgFile);
         return "redirect:/storage/list";
     }
 }
