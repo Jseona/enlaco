@@ -149,15 +149,6 @@ public class RecipeService {
         } else {
             recipeEntities = recipeRepository.findAll(newPage);
         }
-        /*
-        if(rtime.equals("rtime1")) {
-            recipeEntities = recipeRepository.searchRtimeRclass("rtime1", pageable);
-        } else if (rtime.equals("rtime2")) {
-
-        }
-
-         */
-
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())

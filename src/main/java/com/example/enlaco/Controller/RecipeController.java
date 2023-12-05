@@ -159,7 +159,7 @@ public class RecipeController {
         return "/recipe/list";
     }
 
-    //분류 리스트
+    //자세히 보기 리스트
     @GetMapping("/listClass")
     public String recipeClass(@RequestParam(value = "rtime", defaultValue = "") String rtime,
                               @RequestParam(value = "rclass", defaultValue = "") String rclass,
@@ -171,10 +171,10 @@ public class RecipeController {
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber()/blockLimit)))-1) * blockLimit+1;
         int endPage = ((startPage+blockLimit-1)<recipeDTOS.getTotalPages())? startPage+blockLimit-1:recipeDTOS.getTotalPages();
 
-        int prevPage = pageable.getPageNumber()-1;
-        int curPage = pageable.getPageNumber();
-        int nextPage = pageable.getPageNumber()+1;
-        int lastPage = pageable.getPageSize();
+        int prevPage = recipeDTOS.getNumber();
+        int curPage = recipeDTOS.getNumber()+1;
+        int nextPage = recipeDTOS.getNumber()+2;
+        int lastPage = recipeDTOS.getTotalPages();
 
         model.addAttribute("recipeDTOS", recipeDTOS);
 
