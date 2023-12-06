@@ -39,14 +39,16 @@
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <label for="repwd" class="input-group-text w-25">비밀번호 확인</label>
-                    <input type="password" class="form-control" id="repwd" name="repwd">
+                    <input type="password" class="form-control" id="repwd" name="repwd" onchange="chckdpwd()">
                 </div>
                 <script type="text/javascript">
                     function chckdpwd() {
-                        var p1 = document.getElementById('mpwd').value;
-                        var p2 = document.getElementById('repwd').value;
-                        if (p1 != p2) {
-                            alert("비밀번호가 일치 하지 않습니다.");
+                        var p1 = document.getElementById("mpwd");
+                        var p2 = document.getElementById("repwd");
+                        if (p1.value != p2.value) {
+                            p2.setCustomValidity("비밀번호가 일치 하지 않습니다.");
+                        } else {
+                            p2.setCustomValidity('');
                         }
                     }
                 </script>
@@ -63,7 +65,7 @@
                     <input type="date" class="form-control" th:field="*{mbirth}" id="mbirth" name="mbirth">
                 </div>
                 <div class="text-lg-end">
-                    <button type="submit" onclick="chckdpwd()" class="btn text-white" style="background-color: #f7931e">회원가입</button>
+                    <button type="submit" class="btn text-white" style="background-color: #f7931e">회원가입</button>
                     <button type="reset" class="btn text-white" style="background-color: #f7931e">취소</button>
                 </div>
             </form>
