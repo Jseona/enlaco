@@ -31,11 +31,11 @@
             <form action="/member/insert" method="post" th:object="${memberDTO}">
                 <div class="input-group mb-3 mt-3 ">
                     <label for="memail" class="input-group-text w-25">이메일</label>
-                    <input type="email" class="form-control" th:field="*{memail}" id="memail" name="memail">
+                    <input type="email" class="form-control" th:field="*{memail}" id="memail" name="memail" required>
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <label for="mpwd" class="input-group-text w-25">비밀번호</label>
-                    <input type="password" class="form-control" th:field="*{mpwd}" id="mpwd" name="mpwd">
+                    <input type="password" class="form-control" th:field="*{mpwd}" id="mpwd" name="mpwd" required>
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <label for="repwd" class="input-group-text w-25">비밀번호 확인</label>
@@ -54,15 +54,15 @@
                 </script>
                 <div class="input-group mb-3 mt-3">
                     <label for="mnick" class="input-group-text w-25">닉네임</label>
-                    <input type="text" class="form-control" th:field="*{mnick}" id="mnick" name="mnick">
+                    <input type="text" class="form-control" th:field="*{mnick}" id="mnick" name="mnick" required>
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <label for="mphone" class="input-group-text w-25">전화번호</label>
-                    <input type="tel" class="form-control" th:field="*{mphone}" id="mphone" name="mphone">
+                    <input type="tel" class="form-control" th:field="*{mphone}" id="mphone" name="mphone" required>
                 </div>
                 <div class="input-group mb-3 mt-3">
                     <label for="mbirth" class="input-group-text w-25">생년월일</label>
-                    <input type="date" class="form-control" th:field="*{mbirth}" id="mbirth" name="mbirth">
+                    <input type="date" class="form-control" th:field="*{mbirth}" id="mbirth" name="mbirth" required>
                 </div>
                 <div class="text-lg-end">
                     <button type="submit" class="btn text-white" style="background-color: #f7931e">회원가입</button>
