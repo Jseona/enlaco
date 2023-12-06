@@ -78,6 +78,7 @@ public class RecipeService {
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
             recipeDTO.setRimg(newFileName);
         }
+
         recipeDTO.setRid(recipeEntity.getRid());
 
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);

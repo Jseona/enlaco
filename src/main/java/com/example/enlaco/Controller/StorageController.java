@@ -168,7 +168,9 @@ public class StorageController {
         return "/storage/modify";
     }
     @PostMapping("/modify")
-    public String modifyProc(StorageDTO storageDTO, Principal principal,
+    public String modifyProc(@Valid StorageDTO storageDTO,
+                             BindingResult bindingResult,
+                             Principal principal,
                              MultipartFile imgFile, Model model) throws Exception {
         String memail = principal.getName();
 

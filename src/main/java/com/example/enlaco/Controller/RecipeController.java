@@ -75,47 +75,7 @@ public class RecipeController {
         return "/recipe/detail";
     }
 
-    //입력
-    @GetMapping("/insert")
-    public String insertForm(Principal principal, Model model) throws Exception {
-        RecipeDTO recipeDTO = new RecipeDTO();
-        String writer = principal.getName();
-        int mid = memberService.findByMemail1(writer);
-        System.out.println("principal로 조회한 mid : " + mid);
 
-        model.addAttribute("writer", writer);
-        model.addAttribute("mid", mid);
-        model.addAttribute("recipeDTO", recipeDTO);
-        return "/recipe/insert";
-    }
-    @PostMapping("/insert")
-    public String insertProc( @Valid RecipeDTO recipeDTO,
-                              BindingResult bindingResult,
-                              Model model,
-                              @RequestParam("mid") int mid,
-                              @RequestParam(value = "image") MultipartFile multipartFile
-                             ) throws Exception {
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("mid", mid);
-            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
-            model.addAttribute("rselect", rrsel);
-            return "recipe/insert";
-        }
-
-        if (multipartFile != null && !multipartFile.isEmpty()) {
-            recipeService.insert(mid, recipeDTO, multipartFile);
-        } else {
-            model.addAttribute("mid", mid);
-            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
-            model.addAttribute("rselect", rrsel);
-            return "recipe/insert";
-        }
-            //recipeService.insert(mid, recipeDTO, null); //파일이 없는 경우에도 처리
-
-
-        return "redirect:/recipe/list";
-    }
 
     //목록
     @GetMapping("/list")
@@ -196,6 +156,54 @@ public class RecipeController {
         return "/recipe/listrclass";
     }
 
+    //입력
+    @GetMapping("/insert")
+    public String insertForm(Principal principal, Model model) throws Exception {
+        RecipeDTO recipeDTO = new RecipeDTO();
+        String writer = principal.getName();
+        int mid = memberService.findByMemail1(writer);
+        System.out.println("principal로 조회한 mid : " + mid);
+
+        model.addAttribute("writer", writer);
+        model.addAttribute("mid", mid);
+        model.addAttribute("recipeDTO", recipeDTO);
+        return "/recipe/insert";
+    }
+    @PostMapping("/insert")
+    public String insertProc( @Valid RecipeDTO recipeDTO,
+                              BindingResult bindingResult,
+                              Model model,
+                              @RequestParam("mid") int mid,
+                              @RequestParam(value = "image") MultipartFile multipartFile
+    ) throws Exception {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("mid", mid);
+            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
+            //model.addAttribute("rselect", rrsel);
+            return "recipe/insert";
+        }
+        /*
+        // rselect에 입력 안 했을 때 다시 입력하게
+        if (recipeDTO.getRselect().trim().equals(",") || recipeDTO.getRselect().trim().isEmpty()) {
+            model.addAttribute("mid", mid);
+            return "recipe/insert";
+        }
+         */
+
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            recipeService.insert(mid, recipeDTO, multipartFile);
+        } else {
+            model.addAttribute("mid", mid);
+            String rrsel = new RecipeDTO().getRselect(); // 검증 오류 뜰 때 재료창에 쉼표 제거하기 위해 초기화
+            //model.addAttribute("rselect", rrsel);
+            return "recipe/insert";
+        }
+
+        //recipeService.insert(mid, recipeDTO, null); //파일이 없는 경우에도 처리
+        return "redirect:/recipe/list";
+    }
+
     //수정
     @GetMapping("/modify")
     public String modifyForm(Principal principal, int rid, Model model) throws Exception {
@@ -232,6 +240,7 @@ public class RecipeController {
                               Model model) throws Exception {
         String memail = principal.getName();
         if (bindingResult.hasErrors()) {
+
             return "recipe/modify";
         }
         model.addAttribute("mid", memail);
