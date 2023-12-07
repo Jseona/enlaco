@@ -37,7 +37,7 @@ public class S3Uploader {
         try {
             amazonS3Client.deleteObject(bucket, deleteFile);
         } catch(SdkClientException e) {
-            throw new IOException("Error deleting file from S3", e);
+            /*throw new IOException("Error deleting file from S3", e);*/
         }
     }
 

@@ -30,10 +30,10 @@
                             <label for="simg" class="form-label fw-bold">식재료 사진</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
+                            <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}" required>
                             <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
                             <input type="hidden" name="simg" th:field="*{simg}">
-                            <img th:if="*{simg != null}" th:src="*{simg}" width="200" height="200">
+                            <img th:if="*{simg != null}" th:src="*{simg}" width="200" height="200" onerror="this.src='/image/이미지 없음.png'">
                             <img th:unless="*{simg != null}" src="/image/이미지 없음.png" width="200" height="200">
                             <input type="file" class="form-control" id="simg" name="imgFile">
                         </div>
