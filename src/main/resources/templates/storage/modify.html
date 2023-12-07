@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <div class="text-lg-end">
-                        <button type="submit" class="btn text-white fw-bold" style="background-color:#f7931e">수&emsp;정</button>
-                        <button class="btn text-white" type="button" style="background-color: #f7931e; margin-left: 3%" th:onclick="|location.href='@{/storage/remove(sid=${storageDTO.sid})}'|">삭제</button>
+                        <button type="submit" class="btn text-white fw-bold" id="btn">수정</button>
+                        <button class="btn btn-outline-dark fw-bold" type="button" style="margin-left: 3%" th:onclick="|location.href='@{/storage/remove(sid=${storageDTO.sid})}'|">삭제</button>
                     </div>
                 </form>
             </div>

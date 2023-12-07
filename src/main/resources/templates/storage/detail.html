@@ -41,12 +41,9 @@ layout:decorate="~{layouts/layout}">
             <!--유통기한 끋-->
         </div>
         <!--등록 버튼-->
-        <div class="mb-3 mt-1">
-            <div class="row">
-                <div class="col text-lg-end text-sm-end text-end">
-                    <button class="btn text-white" type="button" style="background-color: #ffb30e;" th:onclick="|location.href='@{/storage/modify(sid=${storageDTO.sid})}'|">수정</button>
-                    <button class="btn text-white" type="button" style="background-color: #f7931e; margin-left: 3%" th:onclick="|location.href='@{/storage/remove(sid=${storageDTO.sid})}'|">삭제</button>
-                </div>
+        <div class="mb-3 mt-1 col text-lg-end">
+                    <button class="btn text-white fw-bold" type="button" id="btn" th:onclick="|location.href='@{/storage/modify(sid=${storageDTO.sid})}'|">수정</button>
+                    <button class="btn btn-outline-dark fw-bold" type="button"  th:onclick="|location.href='@{/storage/remove(sid=${storageDTO.sid})}'|">삭제</button
             </div>
 
         </div>

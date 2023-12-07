@@ -30,26 +30,38 @@
 <div layout:fragment="content">
     <div class="container mt-4">
         <div class="row">
-            <div class="col-2 col-md-4"></div>
-            <div class="col-8 col-md-4">
+            <div class="col-2 col-md-3"></div>
+            <div class="col-8 col-md-6">
+                <div class="row">
+                    <div class="col-8">
                 <h2 style="padding-bottom: 22px; font-size: xx-large">식재료 등록</h2>
-                <button type="button" id="yolo" class="btn text-white fw-bold float-end mt-3" th:onclick="|location.href='@{/storage/image}'|" style="background-color:#f7931e">사진으로 등록55</button>
+                    </div>
+                    <div class="col-4">
+                <button type="button" id="yolo" class="btn text-white fw-bold float-end" th:onclick="|location.href='@{/storage/image}'|" >사진으로 등록</button>
+                    </div>
+                </div>
                 <form th:action="@{/storage/insert}" method="post" enctype="multipart/form-data" th:object="${storageDTO}">
                     <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
                         <div class="col-3 mt-3">
                             <input type="hidden" name="mid" th:value="${session.mid}">
                             <label for="singre" class="form-label fw-bold">식재료명</label>
-                            <label for="simg" class="form-label fw-bold">식재료 사진</label>
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
                             <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-3 mt-3">
+                        <label for="simg" class="form-label fw-bold">식재료 사진</label>
+                        </div>
+                        <div class="col-9">
                             <input type="file" class="form-control" id="simg" name="image">
                             <p class="text-danger" th:if="${#fields.hasErrors('simg')}" th:errors="*{simg}"> </p>
                         </div>
                     </div>
                     <div class="row mb-3"> <!-- 유통기한 -->
-                        <div class="col-3 mt-2">
+                        <div class="col-3 mt-3">
                             <label for="syutong" class="form-label fw-bold">유통기한</label>
                         </div>
                         <div class="col-9">
@@ -57,12 +69,12 @@
                         </div>
                     </div>
                     <div class="text-lg-end">
-                        <button type="submit" class="btn text-white fw-bold" style="background-color:#f7931e">등&emsp;록</button>
-                        <button type="reset" class="btn text-white fw-bold" style="background-color:#f7931e">취 &emsp;소</button>
+                        <button type="submit" class="btn text-white fw-bold" id="btn">등록</button>
+                        <button type="reset" class="btn btn-outline-dark fw-bold">취소</button>
                     </div>
                 </form>
             </div>
-            <div class="col-2 col-md-4"></div>
+            <div class="col-2 col-md-3"></div>
         </div>
     </div>
 </div>
