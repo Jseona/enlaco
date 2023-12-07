@@ -68,6 +68,7 @@
                 <div class="row mt-4 mb-3"> <!--메뉴명 입력 줄-->
                     <input type="hidden" name="rid" th:field="*{rid}">
                     <input type="hidden" name="mid" th:value="${mid}">
+                    <input type="hidden" name="rwriter" th:value="${session.mnickname}" th:field="*{rwriter}">
                     <div class="col-3 mt-2">
                         <label for="rmenu" class="form-label fw-bold">메뉴명</label>
                     </div>
