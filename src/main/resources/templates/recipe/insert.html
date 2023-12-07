@@ -21,6 +21,30 @@
     <!--추가 식재료 입력 창 띄워주는 스크립트-->
     <script>
         $(document).ready(function() {
+            $("#submitBtn").click(function() {
+                var menuName = $("#rmenu").val().trim();
+                var imageFile = $("#rimg").val().trim();
+                var ingredients = $("input[name='rselect']");
+
+                if (menuName === '' || imageFile === '') {
+                    alert("메뉴명과 사진은 필수 입력 항목입니다.");
+                    return false; // 제출을 막습니다.
+                }
+
+                var ingredientsEntered = false;
+                ingredients.each(function() {
+                    if ($(this).val().trim() !== '') {
+                        ingredientsEntered = true;
+                        return false; // 재료가 하나라도 입력되었다면 루프를 종료합니다.
+                    }
+                });
+
+                if (!ingredientsEntered) {
+                    alert("재료는 필수 입력 항목입니다.");
+                    return false; // 제출을 막습니다.
+                }
+            });
+
             $("#bnt").click(function() {
                 $("#inputA").append("<div class=\"row mt-2 mb-1\">" +
                     "                    <div class=\"col-3 mt-2\"></div>\n" +
@@ -31,6 +55,7 @@
             });
         });
     </script>
+
     <style>
         #btn btn-orange {
             background-color:rgb(230,128,34);
@@ -69,10 +94,12 @@
 
                 <div class="row mt-1 mb-1"> <!--식재료 입력 줄-->
                     <div class="col-3 mt-2">
-                        <label for="rselect" class="form-label fw-bold">식재료</label>
+                        <label for="rselect" class="form-label fw-bold">식재료<br>(필수입력)</label>
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" id="rselect" placeholder="식재료를 입력해주세요." name="rselect" th:value="${rselect}">
+                        <p id="rselectError" class="text-danger"></p> <!-- 재료 입력 오류 메시지 -->
+                    </div>
                     </div>
                 </div>  <!--식재료 입력 줄 끝-->
                 <div id="inputA">
@@ -83,7 +110,7 @@
                         </div>
                     </div>  <!--추가 식재료 입력 줄 끝-->
                 </div>
-                <div class="row mt-3">  <!--식재료 입력창 추가 버튼-->
+                <div class="row mt-3 ">  <!--식재료 입력창 추가 버튼-->
                     <div class="col-3"></div>
                     <div class="col-9">
                         <button type="button" id="bnt" class="btn btn-dark d-flex justify-content-end">추가</button>
@@ -138,7 +165,7 @@
             <div class="row mt-3 mb-5">
                 <div class="col-sm-9 col-lg-10"></div>
                 <div class="col-sm-3 col-lg-2 d-flex justify-content-end">
-                    <button type="submit" class="btn text-white fw-bold" style="background-color:#f7931e">등록</button>
+                    <button type="submit" id="submitBtn" class="btn text-white fw-bold" style="background-color:#f7931e">등록</button>
                 </div>
             </div>
         </form>

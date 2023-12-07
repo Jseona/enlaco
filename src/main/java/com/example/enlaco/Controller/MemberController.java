@@ -7,6 +7,7 @@ import com.example.enlaco.Service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,9 +53,11 @@ public class MemberController {
 
         try {
             memberService.saveMember(memberDTO);
-            redirectAttributes.addAttribute("errorMessage", "가입을 축하합니다.");
         } catch (IllegalStateException e) {
             redirectAttributes.addAttribute("errorMessage", e.getMessage());
+            return "member/insert";
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addAttribute("errorMessage", "이메일이나 닉네임 중 이미 사용중인 값이 있습니다.");
             return "member/insert";
         }
         return "redirect:/";

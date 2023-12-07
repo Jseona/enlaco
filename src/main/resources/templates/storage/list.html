@@ -101,11 +101,15 @@
     <h3 class="mt-3 mb-5" style="font-size: xx-large">냉장고</h3>
         </div>
         <div class="col-lg-3 col-sm-5">
-    <button type="button" id="yolo" class="btn text-white fw-bold float-end mt-3" th:onclick="|location.href='@{/storage/image}'|" style="background-color:#f7931e">사진으로 식재료 등록</button>
+    <button type="button" id="yolo" class="btn text-white fw-bold float-end mt-3" th:onclick="|location.href='@{/recipe/recom}'|" style="background-color:#f7931e">레시피 추천</button>
     </div>
     <div id="flex" >
         <div class="image-container" th:each="data:${storageDTOS}">
-            <img th:src="${data.simg}" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|" style="cursor: pointer">
+            <img th:if="${data.simg != null}" th:src="${data.simg}" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|"
+                 style="cursor: pointer">
+            <img th:unless="${data.simg != null}" src="/image/이미지 없음.png" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|"
+                 style="cursor: pointer">
+            <!-- <img th:src="${data.simg}" width="200" height="200" th:onclick="|location.href='@{/storage/modify(sid=${data.sid})}'|" style="cursor: pointer"> -->
             <div class="expdate badge  blue" th:unless="${data.dDayOver}" th:text="${data.dDay}">D-10</div> <!-- D-Day를 표시하는 부분 -->
             <span class="expdate badge red"  th:text="${data.dDayOver}" >Success</span><!--유통기한을 표시하는 부분-->
             <div class="material-name"><!--식재료 이름 칸-->

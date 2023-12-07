@@ -78,6 +78,7 @@ public class RecipeService {
             newFileName = s3Uploader.upload(imgFile, imgUploadLocation);
             recipeDTO.setRimg(newFileName);
         }
+
         recipeDTO.setRid(recipeEntity.getRid());
 
         RecipeEntity update = modelMapper.map(recipeDTO, RecipeEntity.class);
@@ -149,15 +150,6 @@ public class RecipeService {
         } else {
             recipeEntities = recipeRepository.findAll(newPage);
         }
-        /*
-        if(rtime.equals("rtime1")) {
-            recipeEntities = recipeRepository.searchRtimeRclass("rtime1", pageable);
-        } else if (rtime.equals("rtime2")) {
-
-        }
-
-         */
-
 
         Page<RecipeDTO> recipeDTOS = recipeEntities.map(data-> RecipeDTO.builder()
                 .rid(data.getRid())

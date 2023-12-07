@@ -12,309 +12,45 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome-ie7.min.css">
     <!--[endif]-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript">
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                document.getElementById('preview').src = "";
-            }
-        }
-    </script>
-    <style>
-        @import "https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400";
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-
-
-        .container {
-            position: relative;
-            width: auto;
-            height: auto;
-        }
-
-        form.signUp {
-            position: relative;
-            text-align: center;
-            background: #fff;
-            width: 510px;
-            height: 470px;
-            border-radius: 5px;
-            padding: 30px 20px 0 20px;
-            box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.25);
-            box-sizing: border-box;
-            margin:0 auto;
-        }
-
-        p {
-            font-family: "Roboto", sans-serif;
-            font-weight: 100;
-            text-transform: uppercase;
-            font-size: 12px;
-            color: #87613d;
-            margin-bottom: 40px;
-        }
-
-        p > span {
-            padding-top: 3px;
-            display: block;
-            font-weight: 400;
-            font-size: 9px;
-        }
-
-        h3 {
-            font-family: "Dosis";
-            font-size: 35px;
-            text-transform: uppercase;
-            color: #87613d;
-            margin-bottom: 30px;
-        }
-
-
-
-        button.fb {
-            border: none;
-            background: #3b5998;
-            width: 160px;
-            height: 25px;
-            font-family: "Roboto", sans-serif;
-            font-size: 12px;
-            color: #fff;
-            text-transform: uppercase;
-            border-radius: 4px;
-            border: 1px solid #29487d;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: all 0.3s linear;
-        }
-        button.fb:hover {
-            background: #fff;
-            color: #3b5998;
-        }
-
-        button.form-btn {
-            position: absolute;
-            width: 50%;
-            height: 60px;
-            bottom: 0;
-            border: 1;
-            border-color: rgba(255, 125, 0, 0.45);
-            font-family: "Dosis";
-            font-size: 24px;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        button.form-btn.sx {
-            left: 0;
-            border-radius: 0 0 0 5px;
-            background-color: rgba(255, 125, 0, 0.65);
-            color: #fff;
-            transition: all 0.3s linear;
-        }
-
-        button.form-btn.sx:hover {
-            background-color: rgba(255, 125, 0, 0.35);
-            color: #fff;
-        }
-
-        button.form-btn.sx.back {
-            background-color: rgba(0, 0, 0, 0.15);
-            transition: all 0.3s linear;
-        }
-
-        button.form-btn.sx.back:hover {
-            background-color: rgba(0, 0, 0, 0.35);
-        }
-
-        button.form-btn.dx {
-            right: 0;
-            border-radius: 0 0 5px 0;
-            background-color: rgba(255, 125, 0, 0.65);
-            color: #fff;
-        }
-
-        button.form-btn.dx:hover {
-            right: 0;
-            border-radius: 0 0 5px 0;
-            background-color: rgba(255, 125, 0, 0.35);
-            color: #fff;
-        }
-
-        input.aa {
-            border: none;
-            border-bottom: 1px solid #ffc185;
-            width: 85%;
-            font-family: "Roboto";
-            color: rgba(255, 125, 0);
-            text-align: left;
-            font-size: 21px;
-            font-weight: 100;
-            margin-bottom: 25px;
-        }
-
-        ::-webkit-input-placeholder {
-            color: rgba(255, 125, 0);
-            font-family: "Roboto";
-            font-weight: 100;
-        }
-
-        :-moz-placeholder {
-            color: #ffc185;
-            font-family: "Roboto";
-            font-weight: 100;
-        }
-
-        ::-moz-placeholder {
-            color: #ffc185;
-            font-family: "Roboto";
-            font-weight: 100;
-        }
-
-        :-ms-input-placeholder {
-            color: #ffc185;
-            font-family: "Roboto";
-            font-weight: 100;
-        }
-
-        .signIn input,
-        .signUp .w100 {
-            width: 100%;
-        }
-
-        .signIn {
-            z-index: 1;
-            transform: perspective(100px) translate3d(100px, 0px, -30px);
-            opacity: 0.5;
-        }
-
-        .signUp {
-            z-index: 2;
-        }
-
-        .active-dx {
-            animation-name: foregrounding-dx;
-            animation-duration: 0.9s;
-            animation-fill-mode: forwards;
-        }
-
-        .active-sx {
-            animation-name: foregrounding-sx;
-            animation-duration: 0.9s;
-            animation-fill-mode: forwards;
-        }
-
-        .inactive-dx {
-            animation-name: overshadowing-dx;
-            animation-duration: 0.9s;
-            animation-fill-mode: forwards;
-        }
-
-        .inactive-sx {
-            animation-name: overshadowing-sx;
-            animation-duration: 0.9s;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes overshadowing-dx {
-            0% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(0px, 0px, 0px);
-                opacity: 1;
-                box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
-            }
-            100% {
-                z-index: 1;
-                transform: perspective(100px) translate3d(100px, 0px, -30px);
-                opacity: 0.5;
-                box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
-            }
-        }
-
-        @keyframes overshadowing-sx {
-            0% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(0px, 0px, 0px);
-                opacity: 1;
-                box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);
-            }
-            100% {
-                z-index: 1;
-                transform: perspective(100px) translate3d(-100px, 0px, -30px);
-                opacity: 0.5;
-                box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
-            }
-        }
-
-        @keyframes foregrounding-dx {
-            0% {
-                z-index: 1;
-                transform: perspective(100px) translate3d(100px, 0px, -30px);
-                opacity: 0.5;
-            }
-            50% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(400px, 0px, -30px);
-            }
-            100% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(0px, 0px, 0px);
-                opacity: 1;
-            }
-        }
-
-        @keyframes foregrounding-sx {
-            0% {
-                z-index: 1;
-                transform: perspective(100px) translate3d(-100px, 0px, -30px);
-                opacity: 0.5;
-            }
-            50% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(-400px, 0px, -30px);
-            }
-            100% {
-                z-index: 2;
-                transform: perspective(100px) translate3d(0px, 0px, 0px);
-                opacity: 1;
-            }
-        }
-        input[type=file]::file-selector-button {
-
-
-           float: right;
-        }
-
-    </style>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container mt-4">
-                <div class="container justify-content-center">
-                    <form class="signUp" th:action="@{/storage/insert}" method="post" enctype="multipart/form-data" th:object="${storageDTO}">
-                        <h3>식재료 등록</h3>
-                        </p>
-                        <input type="hidden" name="mid" th:value="${session.mid}">
-                        <input   name="singre" th:field="*{singre}" class="aa" type="text" placeholder="식재료명"  />
-                        <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
-                        <input class="aa"  type="file" placeholder="식재료 사진"  name="image" onchange="readURL(this);" />
-                        <img id="preview" style="height: 100px;width: 100px; float: left;margin-left: 30px;
-                        margin-bottom: 10px"/>
-                        <p class="text-danger" th:if="${#fields.hasErrors('simg')}" th:errors="*{simg}"> </p>
-                        <input class="aa" type="date" name="syutong" th:field="*{syutong}"  placeholder="유통기한"  />
-                        <button class="form-btn sx log-in" type="submit">등록</button>
-                        <button class="form-btn dx" type="reset">취소</button>
-                    </form>
-                </div>
+        <div class="row">
+            <div class="col-2 col-md-4"></div>
+            <div class="col-8 col-md-4">
+                <h2 style="padding-bottom: 22px; font-size: xx-large">식재료 등록</h2>
+                <form th:action="@{/storage/insert}" method="post" enctype="multipart/form-data" th:object="${storageDTO}">
+                    <div class="row mb-3"> <!--식재료명, 대표사진 입력 -->
+                        <div class="col-3 mt-3">
+                            <input type="hidden" name="mid" th:value="${session.mid}">
+                            <label for="singre" class="form-label fw-bold">식재료명</label>
+                            <label for="simg" class="form-label fw-bold">식재료 사진</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="singre" name="singre" th:field="*{singre}">
+                            <p class="text-danger" th:if="${#fields.hasErrors('singre')}" th:errors="*{singre}"> </p>
+                            <input type="file" class="form-control" id="simg" name="image">
+                            <p class="text-danger" th:if="${#fields.hasErrors('simg')}" th:errors="*{simg}"> </p>
+                        </div>
+                    </div>
+                    <div class="row mb-3"> <!-- 유통기한 -->
+                        <div class="col-3 mt-2">
+                            <label for="syutong" class="form-label fw-bold">유통기한</label>
+                        </div>
+                        <div class="col-9">
+                            <input type="date" class="form-control" id="syutong" name="syutong" th:field="*{syutong}">
+                        </div>
+                    </div>
+                    <div class="text-lg-end">
+                        <button type="submit" class="btn text-white fw-bold" style="background-color:#f7931e">등&emsp;록</button>
+                        <button type="reset" class="btn text-white fw-bold" style="background-color:#f7931e">취 &emsp;소</button>
+                    </div>
+                </form>
             </div>
-
+            <div class="col-2 col-md-4"></div>
         </div>
+    </div>
+</div>
 </body>
 </html>
