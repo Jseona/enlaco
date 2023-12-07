@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -58,6 +57,7 @@ public class MemberController {
             redirectAttributes.addAttribute("errorMessage", e.getMessage());
             return "member/insert";
         } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addAttribute("errorMessage", "이메일이나 닉네임 중 이미 사용중인 값이 있습니다.");
             return "member/insert";
         }
         return "redirect:/";
