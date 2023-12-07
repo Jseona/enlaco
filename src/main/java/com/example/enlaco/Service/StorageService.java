@@ -103,7 +103,7 @@ public class StorageService {
         MemberEntity member = data.orElseThrow();
 
         StorageEntity storageEntity = storageRepository.findById(storageDTO.getSid()).orElseThrow();
-        String deleteFile = storage.getSimg();
+        String deleteFile = storageEntity.getSimg();
 
         String originalFileName = imgFile.getOriginalFilename();
         String newFileName = null;
