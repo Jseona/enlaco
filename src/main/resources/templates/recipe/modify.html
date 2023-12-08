@@ -18,44 +18,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-    <!--추가 식재료 입력 창 띄워주는 스크립트-->
-    <script>
-        $(document).ready(function() {
-            $("#submitBtn").click(function() {
-                var menuName = $("#rmenu").val().trim();
-                var imageFile = $("#rimg").val().trim();
-                var ingredients = $("input[name='rselect']");
-
-                if (menuName === '' || imageFile === '') {
-                    alert("메뉴명과 사진은 필수 입력 항목입니다.");
-                    return false; // 제출을 막습니다.
-                }
-
-                var ingredientsEntered = false;
-                ingredients.each(function() {
-                    if ($(this).val().trim() !== '') {
-                        ingredientsEntered = true;
-                        return false; // 재료가 하나라도 입력되었다면 루프를 종료합니다.
-                    }
-                });
-
-                if (!ingredientsEntered) {
-                    alert("재료는 필수 입력 항목입니다.");
-                    return false; // 제출을 막습니다.
-                }
-            });
-
-            $("#bnt").click(function() {
-                $("#inputA").append("<div class=\"row mt-2 mb-1\">" +
-                    "                    <div class=\"col-3 mt-2\"></div>\n" +
-                    "                    <div class=\"col-9\">\n" +
-                    "                        <input type=\"text\" class=\"form-control\" placeholder=\"식재료를 입력해주세요.\" name=\"rselect\">\n" +
-                    "                    </div>\n" +
-                    "                </div>");
-            });
-        });
-    </script>
-
 </head>
 <body>
 <div layout:fragment="content">
@@ -89,26 +51,83 @@
                 <div class="row mb-3">
                     <img th:src="*{rimg}" alt="대표 사진을 선택해 주세요.">  <!--테스트 이미지 src="../../static/image/포도.jpg"-->
                 </div>
-                <div class="row mt-1 mb-1"> <!--식재료 입력 줄-->
-                    <div class="col-3 mt-2">
-                        <label class="form-label fw-bold">식재료</label>
-                    </div>
-                </div>  <!--식재료 입력 줄 끝-->
-                <div id="inputA">
-                    <div class="row mt-2" th:each="list : ${list}"> <!--추가 식재료 입력 줄-->
-                        <div class="col-3 mt-2"></div>
-                        <div class="col-9">
-                            <input type="text" th:value="${list}" class="form-control" placeholder="식재료를 입력해주세요." name="rselect">
-                        </div>
-                    </div>  <!--추가 식재료 입력 줄 끝-->
-                </div>
-                <div class="row mt-3">  <!--식재료 입력창 추가 버튼-->
-                    <div class="col-4"></div>
-                    <div class="col-4">
-                        <button type="button" id="bnt" class="btn btn-dark d-flex justify-content-end">추가</button>
-                    </div>
-                    <div class="col-4"></div>
-                </div>  <!--식재료 입력창 추가 버튼 끝-->
+
+
+                <!--추가 식재료 입력 창 띄워주는 스크립트-->
+                <script>
+                    var oTbl;
+                    function insRow() {
+                        oTbl = document.getElementById("addTable");
+                        var oRow = oTbl.insertRow();
+                        oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex};
+                        var oCell = oRow.insertCell();
+
+                        var frmTag = "<div class='row mb-2'>" +
+                                "<div class='col-10'>" +
+                                "<input type='text' class='form-control' placeholder='식재료를 입력해주세요.' name='rselect' id='rselect' th:value='${rselect}'>" +
+                                "</div>" +
+                                "<div class='col-2'>" +
+                                "<button class='btn btn-link' type='button'>" +
+                                "   <img src='/image/close.png' width='25' height='25' onclick='delRow()' style='cursor:hand'>" +
+                                "</button>" +
+                                "</div>" +
+                                "</div>";
+                        oCell.innerHTML = frmTag;
+                    }
+
+                    function delRow() {
+                        oTbl.deleteRow(oTbl.clickedRowIndex);
+                    }
+
+                    function delDiv() {
+                        const div = document.getElementById('row');
+                        if (document.getElementById('row').length <= 1) {
+                            div.remove();
+                        }
+                    }
+                </script>
+
+                <table class="mt-2" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                            <tr>
+                                <td width="26%">
+                                    <label class="form-label fw-bold">식재료<br><font size="2" color="red">(필수 입력)</font></label>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr th:each="list:${list}">
+                                <td width="26%"></td>
+                                <td>
+                                    <div class="row mb-2" id="row">
+                                        <div class="col-12">
+                                            <input type="text" th:value="${list}" class="form-control" placeholder="식재료를 입력해주세요." name="rselect" id="rselect">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="26%"></td>
+                                <td>
+                                    <table width="100%" id="addTable" cellspacing="0" cellpadding="0" border="0"></table>
+                                </td>
+                            </tr>
+                        </table>
+                    </tr>
+                    <tr>
+                        <table width="100%">
+                            <td width="26%"></td>
+                            <td height="50px">
+                                <button type="button" class="btn btn-dark" style="cursor:hand" onclick="insRow()">추가</button>
+                            </td>
+                            <td height="50px">
+                                <button type="button" class="btn btn-outline-danger" style="cursor:hand" onclick="delDiv()">기존 데이터 삭제</button>
+                            </td>
+                        </table>
+                    </tr>
+                </table>
+
+
                 <div class="row mt-1 mb-1"> <!--상세레시피 입력 줄-->
                     <label class="form-label fw-bold">상세 레시피</label>
                 </div>
@@ -160,7 +179,7 @@
             <div class="row mt-3 mb-5">
                 <div class="col-sm-6 col-lg-7"></div>
                 <div class="col-sm-6 col-lg-5 text-lg-end">
-                    <button type="submit" id="btn" class="btn fw-bold" style="color: white">수정</button>
+                    <button type="submit" class="btn fw-bold" style="color: white">수정</button>
                     <button type="button" class="btn btn-outline-dark fw-bold " onclick="history.back()">취소</button>
                 </div>
             </div>
