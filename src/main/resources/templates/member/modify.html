@@ -27,31 +27,15 @@
     <div class="row mt-3">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <h2>회원가입</h2>
-            <form action="/member/insert" method="post" th:object="${memberDTO}">
+            <h2>내 정보</h2>
+            <form th:action="@{/member/modify}" method="post" th:object="${memberDTO}">
+                <input type="hidden" name="mid" th:value="${mid}">
+
                 <div class="input-group mb-3 mt-3 ">
                     <label for="memail" class="input-group-text w-25">이메일</label>
-                    <input type="email" class="form-control" th:field="*{memail}" id="memail" name="memail" required>
+                    <input type="email" class="form-control" th:field="*{memail}" id="memail" name="memail" readonly>
                 </div>
-                <div class="input-group mb-3 mt-3">
-                    <label for="mpwd" class="input-group-text w-25">비밀번호</label>
-                    <input type="password" class="form-control" th:field="*{mpwd}" id="mpwd" name="mpwd" required>
-                </div>
-                <div class="input-group mb-3 mt-3">
-                    <label for="repwd" class="input-group-text w-25">비밀번호 확인</label>
-                    <input type="password" class="form-control" id="repwd" name="repwd" onchange="chckdpwd()">
-                </div>
-                <script type="text/javascript">
-                    function chckdpwd() {
-                        var p1 = document.getElementById("mpwd");
-                        var p2 = document.getElementById("repwd");
-                        if (p1.value != p2.value) {
-                            p2.setCustomValidity("비밀번호가 일치 하지 않습니다.");
-                        } else {
-                            p2.setCustomValidity('');
-                        }
-                    }
-                </script>
+
                 <div class="input-group mb-3 mt-3">
                     <label for="mnick" class="input-group-text w-25">닉네임</label>
                     <input type="text" class="form-control" th:field="*{mnick}" id="mnick" name="mnick" required>
@@ -66,9 +50,10 @@
                 </div>
                 <div class="text-lg-end">
                     <button type="reset" class="btn btn-outline-dark fw-bold" >취소</button>
-                    <button type="submit" class="btn text-white fw-bold" id="btn">회원가입</button>
+                    <button type="submit" class="btn text-white fw-bold" id="btn">수정</button>
                 </div>
             </form>
+
         </div>
         <div class="col-md-4"></div>
 
