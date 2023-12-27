@@ -26,7 +26,7 @@ dependencies {
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     //보안인증(디자인 작업 시에는 생략 후 끝나면 다시 적용)
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     //타임리프에 보안 적용
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     //타임리프
@@ -56,6 +56,15 @@ dependencies {
     //맵퍼
     implementation 'org.modelmapper:modelmapper:3.1.0'
     //나중에 썸네일 자동 등록 같은 것도 추가 등록 해주기
+
+    //S3 적용
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+    //flask 서버를 위한 외부 라이브러리
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    //implementation 'com.amazonaws:aws-java-sdk-s3:1.12.174'
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.581'
+
 }
 
 tasks.named('test') {
